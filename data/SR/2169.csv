@@ -1,0 +1,13 @@
+sentences
+This memo does not specify an Internet standard of any kind.
+The protocol used for the client to communicate with the resolver is not specified in the NAPTR proposal.
+"Therefore, we use ""THTTP"" as the identifier for this protocol to leave ""HTTP"" for later developments."
+The response is assumed to be an entity with normal headers and body unless stated otherwise.
+(N2L is the only request that need not return a body).
+HTTP/1.0 clients should be sent the 302 (Moved temporarily) status code unless the resolver has particular reasons for using 301 (moved permanently) or 304 (not modified) codes.
+"If the client has requested the result be returned as text/html or application/html, the result should be a valid HTML docment containing the fragment: <UL> <LI><A HREF=""...url 1..."">...url 1...</A> <LI><A HREF=""...url 2..."">...url 2...</A> etc. </UL> where the strings ...url n... are replaced by the n'th URL in the list."
+This document does not specify the content of any response to a URC request.
+"While URNs are supposed to identify one and only one resource, that does not mean that a resource may have one and only one URN."
+"As the weathermap example shows, some of the equivalances will be transitory, so the standard HTTP mechanisms for communicating cachability MUST be honored."
+Any lines beginning with the '#' character are comment lines and are ignored during processing.
+"The results from resolvers may be the target of spoofing, especially once electronic commerce transactions are common and there is money to be made by directing users to pirate repositories rather than repositories which pay royalties to rightsholders."

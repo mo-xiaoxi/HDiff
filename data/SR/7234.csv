@@ -1,0 +1,209 @@
+sentences
+"An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it."
+"A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests."
+"Any client or server MAY employ a cache, though a cache cannot be used by a server that is acting as a tunnel."
+A shared cache is a cache that stores responses to be reused by more than one user; shared caches are usually (but not always) deployed as a part of an intermediary.
+"A stored response is considered ""fresh"", as defined in Section 4.2, if the response can be reused without ""validation"" (checking with the origin server to see if the cached response remains valid for this request)."
+"When a cached response is not fresh, it might still be reusable if it can be freshened by validation (Section 4.3) or if the origin is unavailable (Section 4.2.4)."
+"The key words ""MUST"", ""MUST NOT"", ""REQUIRED"", ""SHALL"", ""SHALL NOT"", ""SHOULD"", ""SHOULD NOT"", ""RECOMMENDED"", ""MAY"", and ""OPTIONAL"" in this document are to be interpreted as described in [RFC2119]."
+"The delta-seconds rule specifies a non-negative integer, representing time in seconds."
+delta-seconds  = 1*DIGIT
+A recipient parsing a delta-seconds value and converting it to binary form ought to use an arithmetic type of at least 31 bits of non-negative integer range.
+"If a cache receives a delta-seconds value greater than the greatest integer it can represent, or if any of its subsequent calculations overflows, the cache MUST consider the value to be either 2147483648 (2^31) or the greatest positive integer it can conveniently represent."
+"The value 2147483648 is here for historical reasons, effectively represents infinity (over 68 years), and does not need to be stored in binary form; an implementation could produce it as a canned string if any overflow occurs, even if the calculations are performed with an arithmetic type incapable of directly representing that number."
+What matters here is that an overflow be detected and not treated as a negative value in later calculations.
+"Although caching is an entirely OPTIONAL feature of HTTP, it can be assumed that reusing a cached response is desirable and that such reuse is the default behavior when no requirement or local configuration prevents it."
+"Therefore, HTTP cache requirements are focused on preventing a cache from either storing a non-reusable response or reusing a stored response inappropriately, rather than mandating that caches always store and reuse particular responses."
+"However, it is also possible to cache permanent redirects, negative results (e.g., 404 (Not Found)), methods other than GET if the method's definition allows such caching and defines something suitable for use as a cache key."
+"However, since HTTP caches in common use today are typically limited to caching responses to GET, many caches simply decline other methods and use only the URI as the primary cache key."
+"A cache MUST NOT store a response to any request, unless: o"
+"The request method is understood by the cache and defined as being cacheable, and o  the response status code is understood by the cache, and o  the ""no-store"" cache directive (see Section 5.2) does not appear in request or response header fields, and o  the ""private"" response directive (see Section 5.2.2.6) does not appear in the response, if the cache is shared, and o  the Authorization header field (see Section 4.2 of [RFC7235]) does not appear in the request, if the cache is shared, unless the response explicitly allows it (see Section 3.2), and o  the response either: *  contains an Expires header field (see Section 5.3), or *  contains a max-age response directive (see Section 5.2.2.8), or *  contains a s-maxage response directive (see Section 5.2.2.9) and the cache is shared, or *  contains a Cache Control Extension (see Section 5.2.3) that allows it to be cached, or *  has a status code that is defined as cacheable by default (see Section 4.2.2), or Note that any of the requirements listed above can be overridden by a cache-control extension; see Section 5.2.3."
+"Note that, in normal operation, some caches will not store a response that has neither a cache validator nor an explicit expiration time, as such responses are not usually useful to store."
+"However, caches are not prohibited from storing such responses."
+"If the request method is GET, the response status code is 200 (OK), and the entire response header section has been received, a cache MAY store an incomplete response message body if the cache entry is recorded as incomplete."
+"However, a cache MUST NOT store incomplete or partial-content responses if it does not support the Range and Content-Range header fields or if it does not understand the range units used in those fields."
+"A cache MAY complete a stored incomplete response by making a subsequent range request ([RFC7233]) and combining the successful response with the stored entry, as defined in Section 3.3."
+A cache MUST NOT use an incomplete response to answer requests unless the response has been made complete or the request is partial and specifies a range that is wholly within the incomplete response.
+A cache MUST NOT send a partial response to a client without explicitly marking it as such using the 206 (Partial Content) status code.
+A shared cache MUST NOT use a cached response to a request with an Authorization header field (Section 4.2 of [RFC7235]) to satisfy any subsequent request unless a cache directive that allows such responses to be stored is present in the response.
+"""s-maxage"" response directives are not allowed to be served stale (Section 4.2.4) by shared caches."
+"In particular, a response with either ""max-age=0, must-revalidate"" or ""s-maxage=0"" cannot be used to satisfy a subsequent request without revalidating it on the origin server."
+"When combining the new response with one or more stored responses, a cache MUST: o  delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5); o  retain any Warning header fields in the stored response with warn-code 2xx; and, o  use other header fields provided in the new response, aside from Content-Range, to replace all instances of the corresponding header fields in the stored response."
+"When presented with a request, a cache MUST NOT reuse a stored response, unless: o  The presented effective request URI (Section 5.5 of [RFC7230]) and that of the stored response match, and o  the request method associated with the stored response allows it to be used for the presented request, and o  selecting header fields nominated by the stored response (if any) match those presented (see Section 4.1), and (Section 5.4), nor the no-cache cache directive (Section 5.2.1), unless the stored response is successfully validated (Section 4.3), and o  the stored response does not contain the no-cache cache directive (Section 5.2.2.2), unless it is successfully validated (Section 4.3), and o  the stored response is either: *  fresh (see Section 4.2), or *  allowed to be served stale (see Section 4.2.4), or *  successfully validated (see Section 4.3)."
+"A cache MUST write through requests with methods that are unsafe (Section 4.2.1 of [RFC7231]) to the origin server; i.e., a cache is not allowed to generate a reply to such a request before having forwarded the request and having received a corresponding response."
+"It can also forward the request with ""Cache-Control: max-age=0"" or ""Cache-Control: no-cache"" to disambiguate which response to use."
+A cache that does not have a clock available MUST NOT use stored responses without revalidating them upon every use.
+"When a cache receives a request that can be satisfied by a stored response that has a Vary header field (Section 7.1.4 of [RFC7231]), it MUST NOT use that response unless all of the selecting header request (i.e., that associated with the stored response), and the presented request."
+"The selecting header fields from two requests are defined to match if and only if those in the first request can be transformed to those in the second request by applying any of the following: o  adding or removing whitespace, where allowed in the header field's syntax o  combining multiple header fields with the same field name (see Section 3.2 of [RFC7230]) o  normalizing both header field values in a way that is known to have identical semantics, according to the header field's specification (e.g., reordering field values when order is not significant; case-normalization, where values are defined to be case-insensitive)"
+"If (after any normalization that might take place) a header field is absent from a request, it can only match another request if it is also absent there."
+"A Vary header field-value of ""*"" always fails to match."
+"If no selected response is available, the cache cannot satisfy the presented request."
+A fresh response is one whose age has not yet exceeded its freshness lifetime.
+"Conversely, a stale response is one where it has."
+"An explicit expiration time is the time at which the origin server intends that a stored response can no longer be used by a cache without further validation, whereas a heuristic expiration time is assigned by a cache when no explicit expiration time is available."
+"When a response is ""fresh"" in the cache, it can be used to satisfy subsequent requests without contacting the origin server, thereby improving efficiency."
+"Generally, origin servers will assign future explicit expiration times to responses in the belief that the representation is not likely to change in a semantically significant way before the expiration time is reached."
+"If an origin server wishes to force a cache to validate every request, it can assign an explicit expiration time in the past to indicate that the response is already stale."
+Compliant caches will normally validate a stale cached response before reusing it for subsequent requests (see Section 4.2.4).
+"Since origin servers do not always provide explicit expiration times, caches are also allowed to use a heuristic to determine an expiration time under certain circumstances (see Section 4.2.2)."
+"If a cache recipient's internal implementation of time has less resolution than the value of an HTTP-date, the recipient MUST internally represent a parsed Expires date as the nearest time equal to or earlier than the received value."
+o  A cache recipient MUST NOT allow local time zones to influence the calculation or comparison of an age or expiration time.
+A cache recipient SHOULD consider a date with a zone abbreviation other than GMT or UTC to be invalid for calculating expiration.
+Note that freshness applies only to cache operation; it cannot be used to force a user agent to refresh its display or reload a resource.
+"A cache can calculate the freshness lifetime (denoted as freshness_lifetime) of a response by using the first match of the following: o  If the cache is shared and the s-maxage response directive (Section 5.2.2.9) is present, use its value, or o  If the max-age response directive (Section 5.2.2.8) is present, use its value, or o  If the Expires response header field (Section 5.3) is present, use its value minus the value of the Date response header field, or o  Otherwise, no explicit expiration time is present in the response."
+"Note that this calculation is not vulnerable to clock skew, since all of the information comes from the origin server."
+"(e.g., two Expires header fields, multiple Cache-Control: max-age directives), the directive's value is considered invalid."
+Caches are encouraged to consider responses that have invalid freshness information to be stale.
+"Since origin servers do not always provide explicit expiration times, a cache MAY assign a heuristic expiration time when an explicit time is not specified, employing algorithms that use other header field values (such as the Last-Modified time) to estimate a plausible expiration time."
+"This specification does not provide specific algorithms, but does impose worst-case constraints on their results."
+A cache MUST NOT use heuristics to determine freshness when an explicit expiration time is present in the stored response.
+"Because of the requirements in Section 3, this means that, effectively, heuristics can only be used on responses without explicit freshness whose status codes are defined as cacheable by default (see Section 6.1 of [RFC7231]), and those responses without explicit freshness that have been marked as explicitly cacheable (e.g., with a ""public"" response directive)."
+"If the response has a Last-Modified header field (Section 2.2 of [RFC7232]), caches are encouraged to use a heuristic expiration value that is no more than some fraction of the interval since that time."
+"When a heuristic is used to calculate freshness lifetime, a cache SHOULD generate a Warning header field with a 113 warn-code (see Section 5.5.4) in the response if its current_age is more than 24 hours and such a warning is not already present."
+"In practice, this has not been widely implemented."
+"Therefore, origin servers are encouraged to send explicit directives (e.g., Cache-Control: no-cache) if they wish to preclude caching."
+"A ""stale"" response is one that either has explicit expiry information or is allowed to have heuristic expiry calculated, but is not fresh according to the calculations in Section 4.2."
+"A cache MUST NOT generate a stale response if it is prohibited by an explicit in-protocol directive (e.g., by a ""no-store"" or ""no-cache"" cache directive, a ""must-revalidate"" cache-response-directive, or an applicable ""s-maxage"" or ""proxy-revalidate"" cache-response-directive; see Section 5.2.2)."
+"A cache MUST NOT send stale responses unless it is disconnected (i.e., it cannot contact the origin server or otherwise find a forward path) or doing so is explicitly allowed (e.g., by the max-stale request directive; see Section 5.2.1)."
+A cache SHOULD generate a Warning header field with the 110 warn-code (see Section 5.5.1) in stale responses.
+"Likewise, a cache SHOULD generate a 112 warn-code (see Section 5.5.3) in stale responses if the cache is disconnected."
+"A cache SHOULD NOT generate a new Warning header field when forwarding a response that does not have an Age header field, even if the response is already stale."
+A cache need not validate a response that merely became stale in transit.
+"When a cache has one or more stored responses for a requested URI, but cannot serve any of them (e.g., because they are not fresh, or one cannot be selected; see Section 4.1), it can use the conditional request mechanism [RFC7232] in the forwarded request to give the next inbound server an opportunity to select a valid stored response to use, updating the stored metadata in the process, or to replace the stored response(s) with a new response."
+"When sending a conditional request for cache validation, a cache sends one or more precondition header fields containing validator metadata from its stored response(s), which is then compared by recipients to determine whether a stored response is equivalent to a current representation of the resource."
+"A cache MUST NOT evaluate server, found in a request with semantics that cannot be satisfied with a cached response, or applied to a target resource for which it has no stored responses; such preconditions are likely intended for some other (inbound) server."
+The If-Match and If-Unmodified-Since conditional header fields are not applicable to a cache.
+A request containing an If-None-Match header field (Section 3.2 of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses in comparison to whichever stored response is selected by the cache.
+"If the field-value is ""*"", or if the field-value is a list of entity-tags and at least one of them matches the entity-tag of the selected stored response, a cache recipient SHOULD generate a 304 (Not Modified) response (using the metadata of the selected stored response) instead of sending that stored response."
+"When a cache decides to revalidate its own stored responses for a request that contains an If-None-Match list of entity-tags, the cache MAY combine the received list with a list of entity-tags from its own stored set of responses (fresh or stale) and send the union of the two lists as a replacement If-None-Match header field value in the forwarded request."
+"If a stored response contains only partial content, the cache MUST NOT include its entity-tag in the union unless the request is for a range that would be fully satisfied by that partial stored response."
+"If the response to the forwarded request is 304 (Not Modified) and has an ETag header field value with an entity-tag that is not in the client's list, the cache MUST generate a 200 (OK) response for the client by reusing its corresponding stored response, as updated by the 304 response metadata (Section 4.3.4)."
+"If an If-None-Match header field is not present, a request containing an If-Modified-Since header field (Section 3.3 of [RFC7232]) indicates that the client wants to validate one or more of its own stored responses by modification date."
+"A cache recipient SHOULD generate a 304 (Not Modified) response (using the metadata of the selected stored response) if one of the following cases is true: 1) the selected stored response has a Last-Modified field-value that is earlier than or equal to the conditional timestamp; 2) no Last-Modified field is present in the selected stored response, but it has a Date field-value that is earlier than or equal to the conditional timestamp; or, 3) neither Last-Modified nor Date is having been received at a time earlier than or equal to the conditional timestamp."
+Cache handling of a response to a conditional request is dependent upon its status code: o  A 304 (Not Modified) response status code indicates that the stored response can be updated and reused; see Section 4.3.4.
+"o  A full response (i.e., one with a payload body) indicates that none of the stored responses nominated in the conditional request is suitable."
+"o  However, if a cache receives a 5xx (Server Error) response while attempting to validate a response, it can either forward this response to the requesting client, or act as if the server failed to respond."
+"When a cache receives a 304 (Not Modified) response and already has one or more stored 200 (OK) responses for the same cache key, the cache needs to identify which of the stored responses are updated by this new response and then update the stored response(s) with the new information provided in the 304 response."
+"If none of the stored responses contain the same strong validator, then the cache MUST NOT use the new response to update any stored responses."
+"If the new response does not include any form of validator (such as in the case where a client generates an If-Modified-Since request from a source other than the Last-Modified response header field), and there is only one stored response, and that stored response also lacks a validator, then that stored response is selected for update."
+"If a stored response is selected for update, the cache MUST: o  delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5); o  retain any Warning header fields in the stored response with warn-code 2xx; and, o  use other header fields provided in the 304 (Not Modified) response to replace all instances of the corresponding header fields in the stored response."
+"A response to the HEAD method is identical to what an equivalent request made with a GET would have been, except it lacks a body."
+This property of HEAD responses can be used to invalidate or update a cached GET response if the more efficient conditional GET request mechanism is not available (due to no validators being present in the stored response) or if transmission of the representation body is not desired even if it has changed.
+"For each of the stored responses that could have been selected, if the stored response and HEAD response have matching values for any received validator fields (ETag and Last-Modified) and, if the HEAD response has a Content-Length header field, the value of Content-Length matches that of the stored response, the cache SHOULD update the stored response as described below; otherwise, the cache SHOULD consider the stored response to be stale."
+"HEAD response, the cache MUST: o  delete any Warning header fields in the stored response with warn-code 1xx (see Section 5.5); o  retain any Warning header fields in the stored response with warn-code 2xx; and, o  use other header fields provided in the HEAD response to replace all instances of the corresponding header fields in the stored response and append new header fields to the stored response's header section unless otherwise restricted by the Cache-Control header field."
+A cache MUST invalidate the effective Request URI (Section 5.5 of [RFC7230]) as well as the URI(s) in the Location and Content-Location response header fields (if present) when a non-error status code is received in response to an unsafe request method.
+"However, a cache MUST NOT invalidate a URI from a Location or Content-Location response header field if the host part of that URI differs from the host part in the effective request URI (Section 5.5 of [RFC7230])."
+This helps prevent denial-of-service attacks.
+A cache MUST invalidate the effective request URI (Section 5.5 of [RFC7230]) when it receives a non-error response to a request with a method whose safety is unknown.
+"Here, a ""non-error response"" is one with a 2xx (Successful) or 3xx (Redirection) status code."
+"""Invalidate"" means that the cache will either remove all stored responses related to the effective request URI or will mark these as ""invalid"" and in need of a mandatory validation before they can be sent in response to a subsequent request."
+Note that this does not guarantee that all appropriate responses are invalidated.
+"For example, a state-changing request might invalidate responses in the caches it travels through, but relevant responses still might be stored in other caches that it has not."
+"The Age field-value is a non-negative integer, representing time in seconds (see Section 1.2.1)."
+The presence of an Age header field implies that the response was not generated or validated by the origin server for this request.
+"However, lack of an Age header field does not imply the origin was contacted, since the response might have been received from an HTTP/1.0 cache that does not implement Age."
+Such cache directives are unidirectional in that the presence of a directive in a request does not imply that the same directive is to be given in the response.
+See Section 5.2.3 for information about how Cache-Control directives defined elsewhere are handled.
+Note: Some HTTP/1.0 caches might not implement Cache-Control.
+"A proxy, whether or not it implements a cache, MUST pass cache directives through in forwarded messages, regardless of their significance to that application, since the directives might be applicable to all recipients along the request/response chain."
+It is not possible to target a directive to a specific cache.
+"cache-directive = token [ ""="" ( token / quoted-string ) ]"
+"For the cache directives defined below, no argument is defined (nor allowed) unless stated otherwise."
+"The ""max-age"" request directive indicates that the client is unwilling to accept a response whose age is greater than the specified number of seconds."
+"Unless the max-stale request directive is also present, the client is not willing to accept a stale response."
+"This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age=""5""'."
+A sender SHOULD NOT generate the quoted-string form.
+"The ""max-stale"" request directive indicates that the client is willing to accept a response that has exceeded its freshness lifetime."
+"If max-stale is assigned a value, then the client is willing to accept a response that has exceeded its freshness lifetime by no more than the specified number of seconds."
+"If no value is assigned to max-stale, then the client is willing to accept a stale response of any age."
+"This directive uses the token form of the argument syntax: e.g., 'max-stale=10' not 'max-stale=""10""'."
+A sender SHOULD NOT generate the quoted-string form.
+Argument syntax: delta-seconds (see Section 1.2.1) willing to accept a response whose freshness lifetime is no less than its current age plus the specified time in seconds.
+"This directive uses the token form of the argument syntax: e.g., 'min-fresh=20' not 'min-fresh=""20""'."
+A sender SHOULD NOT generate the quoted-string form.
+"The ""no-cache"" request directive indicates that a cache MUST NOT use a stored response to satisfy the request without successful validation on the origin server."
+"The ""no-store"" request directive indicates that a cache MUST NOT store any part of either this request or any response to it."
+"""MUST NOT store"" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it."
+This directive is NOT a reliable or sufficient mechanism for ensuring privacy.
+"In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping."
+"Note that if a request containing this directive is satisfied from a cache, the no-store request directive does not apply to the already stored response."
+"The ""no-transform"" request directive indicates that an intermediary (whether or not it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230]."
+"If it receives this directive, a cache SHOULD either respond using a stored response that is consistent with the other constraints of the request, or respond with operated as a unified system with good internal connectivity, a member cache MAY forward such a request within that group of caches."
+"The ""must-revalidate"" response directive indicates that once it has become stale, a cache MUST NOT use the response to satisfy subsequent requests without successful validation on the origin server."
+"The must-revalidate directive ought to be used by servers if and only if failure to validate a request on the representation could result in incorrect operation, such as a silently unexecuted financial transaction."
+"The ""no-cache"" response directive indicates that the response MUST NOT be used to satisfy a subsequent request without successful validation on the origin server."
+"This allows an origin server to prevent a cache from using it to satisfy a request without contacting it, even by caches that have been configured to send stale responses."
+"If the no-cache response directive specifies one or more field-names, then a cache MAY use the response to satisfy a subsequent request, subject to any other restrictions on caching."
+"However, any header fields in the response that have the field-name(s) listed MUST NOT be sent in the response to a subsequent request without successful revalidation with the origin server."
+The field-names given are not limited to the set of header fields defined by this specification.
+Field names are case-insensitive.
+sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+"Note: Although it has been back-ported to many implementations, some HTTP/1.0 caches will not recognize or obey this directive."
+"Also, no-cache response directives with field-names are often handled by caches as if an unqualified no-cache directive was received; i.e., the special handling for the qualified form is not widely implemented."
+"The ""no-store"" response directive indicates that a cache MUST NOT store any part of either the immediate request or response."
+"""MUST NOT store"" in this context means that the cache MUST NOT intentionally store the information in non-volatile storage, and MUST make a best-effort attempt to remove the information from volatile storage as promptly as possible after forwarding it."
+This directive is NOT a reliable or sufficient mechanism for ensuring privacy.
+"In particular, malicious or compromised caches might not recognize or obey this directive, and communications networks might be vulnerable to eavesdropping."
+"The ""no-transform"" response directive indicates that an intermediary (regardless of whether it implements a cache) MUST NOT transform the payload, as defined in Section 5.7.2 of [RFC7230]."
+Argument syntax: #field-name is intended for a single user and MUST NOT be stored by a shared cache.
+"A private cache MAY store the response and reuse it for later requests, even if the response would normally be non-cacheable."
+"That is, a shared cache MUST NOT store the specified field-names(s), whereas it MAY store the remainder of the response message."
+The field-names given are not limited to the set of header fields defined by this specification.
+Field names are case-insensitive.
+This directive uses the quoted-string form of the argument syntax.
+A sender SHOULD NOT generate the token form (even if quoting appears not to be needed for single-entry lists).
+"This usage of the word ""private"" only controls where the response can be stored; it cannot ensure the privacy of the message content."
+"Also, private response directives with field-names are often handled by caches as if an unqualified private directive was received; i.e., the special handling for the qualified form is not widely implemented."
+"The ""proxy-revalidate"" response directive has the same meaning as the must-revalidate response directive, except that it does not apply to private caches."
+"The ""max-age"" response directive indicates that the response is to be considered stale after its age is greater than the specified number of seconds."
+"This directive uses the token form of the argument syntax: e.g., 'max-age=5' not 'max-age=""5""'."
+A sender SHOULD NOT generate the quoted-string form.
+A sender SHOULD NOT generate the quoted-string form.
+"Both the new directive and the old directive are supplied, such that applications that do not understand the new directive will default to the behavior specified by the old directive, and those that understand the new directive will recognize it as modifying the requirements associated with the old directive."
+A cache that does not recognize the community cache-extension would ignore it and adhere to the private directive.
+"The ""Expires"" header field gives the date/time after which the response is considered stale."
+See Section 4.2 for further discussion of the freshness model.
+"The presence of an Expires field does not imply that the original resource will change or cease to exist at, before, or after that time."
+"In both these cases, the value in Expires is only intended for recipients that have not yet implemented the Cache-Control field."
+An origin server without a clock MUST NOT generate an Expires field unless its value represents a fixed time in the past (always expired) or its value has been associated with the resource by a system or user with a reliable clock.
+"Historically, HTTP required the Expires field-value to be no more than a year in the future."
+"While longer freshness lifetimes are no longer prohibited, extremely large values have been demonstrated to cause problems (e.g., clock overflows due to use of 32-bit integers for time values), and many caches will evict a response far sooner than that."
+"The ""Pragma"" header field allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a ""no-cache"" request that they will understand (as Cache-Control was not defined until HTTP/1.1)."
+"When the Cache-Control header field is also present and understood in a request, Pragma is ignored."
+"Pragma           = 1#pragma-directive pragma-directive = ""no-cache"" / extension-pragma extension-pragma = token [ ""="" ( token / quoted-string ) ]"
+"When the Cache-Control header field is not present in a request, caches MUST consider the no-cache request pragma-directive as having the same effect as if ""Cache-Control: no-cache"" were present (see Section 5.2.1)."
+"When sending a no-cache request, a client ought to include both the pragma and cache-control directives, unless Cache-Control: no-cache is purposefully omitted to target other Cache-Control response directives at HTTP/1.1 caches."
+"Cache-Control: max-age=30 Pragma: no-cache will constrain HTTP/1.1 caches to serve a response no older than 30 seconds, while precluding implementations that do not understand Cache-Control from serving a cached response."
+"Note: Because the meaning of ""Pragma: no-cache"" in responses is not specified, it does not provide a reliable replacement for ""Cache-Control: no-cache"" in them."
+"The use of a warning, rather than an error status code, distinguishes these responses from true failures."
+"Warning       = 1#warning-value warning-value = warn-code SP warn-agent SP warn-text [ SP warn-date ] warn-code  = 3DIGIT warn-agent = ( uri-host [ "":"" port ] ) / pseudonym ; the name or pseudonym of the server adding ; the Warning header field, for use in debugging ; a single ""-"" is recommended when agent unknown warn-text  = quoted-string warn-date  = DQUOTE HTTP-date DQUOTE"
+"Multiple warnings can be generated in a response (either by the origin server or by a cache), including multiple warnings with the same warn-code number that only differ in warn-text."
+"A user agent that receives one or more Warning header fields SHOULD inform the user of as many of them as possible, in the order that they appear in the response."
+"The first digit indicates whether the Warning is required to be deleted from a stored response after validation: o  1xx warn-codes describe the freshness or validation status of the response, and so they MUST be deleted by a cache after validation."
+"They can only be generated by a cache when validating a cached entry, and MUST NOT be generated in any other situation."
+"o  2xx warn-codes describe some aspect of the representation that is not rectified by a validation (for example, a lossy compression of the representation) and they MUST NOT be deleted by a cache after validation, unless a full response is sent, in which case they MUST be."
+"sent to a recipient known to implement only HTTP/1.0, the sender MUST include in each corresponding warning-value a warn-date that matches the Date header field in the message."
+"Warning: 112 - ""network down"" ""Sat, 25 Aug 2012 23:34:45 GMT"""
+"It is advisory only, and its content does not affect interpretation of the warn-code."
+"If a recipient that uses, evaluates, or displays Warning header fields receives a warn-date that is different from the Date value in the same message, the recipient MUST exclude the warning-value containing that warn-date before storing, forwarding, or using the message."
+This allows recipients to exclude warning-values that were improperly retained after a cache validation.
+"If all of the warning-values are excluded, the recipient MUST exclude the Warning header field as well."
+A cache SHOULD generate this whenever the sent response is stale.
+"A cache SHOULD generate this when sending a stale response because an attempt to validate the response failed, due to an inability to reach the server."
+A cache SHOULD generate this if it is intentionally disconnected from the rest of the network for a period of time.
+A cache SHOULD generate this if it heuristically chose a freshness lifetime greater than 24 hours and the response's age is greater than 24 hours.
+"A system receiving this warning MUST NOT take any automated action, besides presenting the warning to the user."
+A system receiving this warning MUST NOT take any automated action.
+The freshness model (Section 4.2) does not necessarily apply to history mechanisms.
+"This does not prohibit the history mechanism from telling the user that a view might be stale or from honoring cache directives (e.g., Cache-Control: no-store)."
+It has been created and is now maintained at <http://www.iana.org/assignments/http-cache-directives>.
+"What it means for a directive to be specified multiple times, o  When the directive does not take an argument, what it means when an argument is present, o  When the directive requires an argument, what it means when it is missing, o  Whether the directive is specific to requests, responses, or able to be used in either."
+It has been created and is now maintained at <http://www.iana.org/assignments/http-warn-codes>.
+"HTTP header fields are registered within the ""Message Headers"" registry maintained at <http://www.iana.org/assignments/message-headers/>."
+"This section is meant to inform developers, information providers, and users of known security concerns specific to HTTP caching."
+"Caches expose additional potential vulnerabilities, since the contents of the cache represent an attractive target for malicious exploitation."
+"Because cache contents persist after an HTTP request is complete, an attack on the cache can reveal information long after a user believes that the information has been removed from the network."
+"In particular, various attacks might be amplified by being stored in a shared cache; such ""cache poisoning"" attacks use the cache to distribute a malicious payload to many clients, and are especially effective when an attacker can use implementation flaws, elevated privileges, or other techniques to insert such a response into a cache."
+One common attack vector for cache poisoning is to exploit differences in message parsing on proxies and in user agents; see Section 3.3.3 of [RFC7230] for the relevant requirements.
+"For example, if two users share a cache, and the first one browses to a site, the second may be able to detect that the other has been to that site, because the resources from it load more quickly, thanks to the cache."
+Note that the Set-Cookie response header field [RFC6265] does not inhibit caching; a cacheable response with a Set-Cookie header field can be (and often is) used to satisfy subsequent requests to caches.

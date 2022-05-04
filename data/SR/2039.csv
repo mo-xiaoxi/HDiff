@@ -1,0 +1,23 @@
+sentences
+This becomes a difficult task when a single organization is responsible for a number of servers.
+"Additionally, a formal definition of what has to be managed and how to manage it tends to lead to integrated and improved performance and fault management."
+"It may be possible to realize the new paradigm of ""Customer Network Management"" to provide this information to the content provider."
+Customer network management is desirable to allow each content provider on a server to access information about his own documents independent of the rest.
+Various organizations may be interested in SNMP manageable WWW clients and proxies as well.
+The WWW server generally reports errors via logging facilities.
+The format of the log file is not well defined.
+It is required that a standard facility for error reporting be utilized.
+Provide an indication of the quality of service the WWW server is providing.
+This creates an impressive list of attributes to be implemented.
+A definition of various levels of management of a WWW server is desired so that the implementor may scale his implementation in chunks which may include various components of each section.
+"For instance, this may allow customer network management without requiring the other groups being implemented."
+Much of this information is however more detailed than many WWW server managers require for service level requirements.
+"Unfortunately, the mapping between running software and installed software is difficult since it is related by a foreign key (Product ID) which does not appear to be required to exist in either table [6]."
+There is no provision to represent a group of processes which together perform some task (IE an application made up of multiple processes).
+"The other two MIBs defined by MADMAN, MTA MIB [7] and DSA MIB [8], are not relevant to the management of WWW services."
+The existing MIBs are largely orthogonal as demonstrated by the diagram below.
+"It should be noted that the running software of the Host Resources includes ALL software running on the host, while the running element table of the system application MIB only includes ""interesting"" processes of monitored applications."
+Error and fault management attributes are required to address requirements for tracking specific activity of the web server.
+An extension to the association table would be helpful to provide information as to what is being transmitted.
+"It is the opinion of this author that there will still remain specific instrumentation for WWW servers that can not, and should not, be covered in the Network Services Monitoring and Application MIBs."
+Security issues are not discussed in this memo.

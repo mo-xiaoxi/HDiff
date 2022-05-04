@@ -1,0 +1,19 @@
+sentences
+Entities composing web pages to provide services over [HTTP] frequently have the problem of not knowing what [MIME] types have handlers installed at a user's browser.
+"Sending a response with a MIME type that is not supported frequently results in interrupting the flow of the user experience, browser queries as to what to do with the data being provided, and, of course, failure to provide the behavior that would have occurred had the correct MIME type handler been installed."
+This document describes reasonable techniques to solve this problem for most of the browsers actually deployed on the Internet as of early 2000.
+"The problem should be solved by the Hyper Text Transport Protocol [HTTP] request ""Accept"" header which lists accepted [MIME] types."
+This header is present in both Version 1.0 and 1.1 of HTTP and its content is supposed to be a list of MIME types and subtypes that are accepted.
+The syntax for script use appears to be a Hyper Text Markup Language (HTML) comment so that browsers that do not support scripting will ignore such items.
+NOTE: ActiveX is a trademark of Microsoft and was originally called Sweeper.
+"This fields allow ""wallet"" software acting for the consumer to convey standardized information to a merchant, including information as to what payment related protocols are supported at the customer site."
+This work is likely to lead to superior methods to implement the functionality described herein.
+"In general, the use of JavaScript and, even more so, ActiveX is dangerous because they are so powerful."
+JavaScript or ActiveX from a web page could be invisibly damaging to the client.
+"SCRIPT LANGUAGE=""JavaScript""> <!-- hide JavaScript from non-JavaScript browsers // Ultimate client-side JavaScript client sniff. // (C) Netscape Communications 1999. //     Permission granted to reuse and distribute. //"
+"Of(""16bit"")!=-1) ); // NOTE: On Opera 3.0, the userAgent string includes ""Windows 95/NT4"" // on all Win32, so you can't distinguish between Win95 and WinNT."
+NOTE: Reliable detection of Win98 may not be possible. //
+"It appears that: //  - On Nav 4.x and before you'll get plain ""Windows"" in userAgent. //  - On Mercury client, the 32-bit version will return ""Win98"", but //    the 16-bit version running on Win98 will still return ""Win95""."
+"This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

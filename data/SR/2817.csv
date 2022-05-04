@@ -1,0 +1,37 @@
+sentences
+"The Upgrade mechanism also solves the ""virtual hosting"" problem."
+"As HTTP/1.1 usage has grown more prevalent, more ISPs are offering name-based virtual hosting, thus delaying IP address space exhaustion."
+"TLS (and SSL) have been hobbled by the same limitation as earlier versions of HTTP: the initial handshake does not specify the intended hostname, relying exclusively on the IP address."
+"For example, there is no dependency between TLS's record markers and or certificates and HTTP/1.1's chunked encoding or authentication."
+"This memo defines the ""TLS/1.0"""
+"Intermediate proxies must establish an end-to-end tunnel before applying those operations, as explained in Section 5.
+Keywords ""MUST"", ""MUST NOT"", ""REQUIRED"", ""SHOULD"", ""SHOULD NOT"" and ""MAY"" that appear in this document are to be interpreted as described in RFC 2119 [11]."
+"If an unsecured response would be unacceptable, a client MUST send an OPTIONS request first to complete the switch to TLS/1.0 (if possible)."
+Note that the protocol tokens listed in the Upgrade header of a 101 Switching Protocols response specify an ordered 'bottom-up' stack.
+"As specified in  HTTP/1.1 [1], Section 10.1.2: ""The server will switch protocols to those defined by the response's Upgrade header field immediately after the empty line which terminates the 101 response""."
+"Any TLS handshake failure MUST lead to disconnection, per the TLS error alert specification."
+"A server MAY indicate that a client request can not be completed without TLS using the ""426 Upgrade Required"" status code, which MUST include an an Upgrade header field specifying the token of the required TLS version."
+The server SHOULD include a message body in the 426 response which indicates in human readable form the reason for the error and describes any alternative courses which may be available to the user.
+"If a User Agent sends a request with an Upgrade header to a proxy, it is requesting a change to the protocol between itself and the proxy, not an end-to-end change."
+"Since Upgrade is a hop-by-hop header, a proxy that does not recognize 426 might remove the accompanying Upgrade header and prevent the client from determining the required protocol switch."
+This hop-by-hop definition of Upgrade was a deliberate choice.
+"It allows for incremental deployment on either side of proxies, and for optimized protocols between cascaded proxies without the knowledge of the parties that are not a part of the change."
+"The usual caveats also apply: data may be discarded if the eventual response is negative, and the connection may be reset with no response if more than one TCP segment is outstanding."
+A proxy MUST NOT respond with any 2xx status code unless it has either a direct or tunnel connection established to the authority.
+"If at any point either one of the peers gets disconnected, any outstanding data that came from that peer will be passed to the other one, and after that also the other connection will be terminated by the proxy."
+"If there is outstanding data to that peer undelivered, that data will be discarded."
+"Reliable, interoperable negotiation of Upgrade features requires an unambiguous failure signal."
+User agents that do not understand Upgrade: preclude this.
+"Suppose that a 3xx code had been assigned for ""Upgrade Required""; a user agent that did not recognize it would treat it as 300."
+"Since it did not know to Upgrade to incorporate the TLS layer, it would at best fail again at the new URL."
+"It is NOT required that specifications for upgrade tokens be made publicly available, but the contact information for the registration SHOULD be."
+The risk is only present if the server is willing to vend such information over both a secure and an insecure channel in the first place.
+"If the client knows for a fact that a server is TLS-compliant, it can insist on it by only sending an Upgrade request with a no-op method like OPTIONS."
+"Since TLS compliance should be considered a feature of the server and not the resource at hand, it should be sufficient to send it once, and let clients cache that fact."
+"While nothing in this memo affects the definition of the 'https' URI scheme, widespread adoption of this mechanism for HyperText content could use 'http' to identify both secure and non-secure resources."
+A generic TCP tunnel is fraught with security risks.
+"It was widely implemented by HTTP proxies, but was never made a part of any IETF Standards Track document."
+"The method name CONNECT was reserved, but not defined in [1]."
+"This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

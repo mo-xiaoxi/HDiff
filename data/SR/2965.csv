@@ -1,0 +1,114 @@
+sentences
+"The IESG notes that this mechanism makes use of the .local top-level domain (TLD) internally when handling host names that don't contain any dots, and that this mechanism might not work in the expected way should an actual ."
+The fully qualified domain name is preferred; use of numeric IP addresses is strongly discouraged.
+"If a host name contains no dots, the effective host name is that name with the string .local appended to it."
+"If the absoluteURI has no explicit port, the request-port is the HTTP default, 80."
+The request-port of a cookie is the request-port of the request in which a Set-Cookie2 response header was returned to the user agent.
+"Note that domain-match is not a commutative operation: a.b.c.com domain-matches .c.com, but not the reverse."
+"The key words ""MAY"", ""MUST"", ""MUST NOT"", ""OPTIONAL"", ""RECOMMENDED"", ""REQUIRED"", ""SHALL"", ""SHALL NOT"", ""SHOULD"", ""SHOULD NOT"" in this document are to be interpreted as described in RFC 2119 [RFC2119]."
+This document describes a way to create stateful sessions with HTTP requests and responses.
+Neither clients nor servers are required to support cookies.
+A server MAY refuse to provide content to a client that does not return the cookies it sends.
+Attributes (names) (attr) are case-insensitive.
+The syntax above allows whitespace between the attribute and the = sign.
+"It MAY send back to the client a Set-Cookie2 response header with the same or different information, or it MAY send no Set-Cookie2 header at all."
+Servers MAY return Set-Cookie2 response headers with any response.
+The syntax for attribute-value pairs was shown earlier.
+"If an attribute appears more than once in a cookie, the client SHALL use only the value associated with the first appearance of the attribute; a client MUST ignore values after the first."
+"However, because the cookie's NAME must come first in a Set-Cookie2 response header, the NAME and its VALUE cannot be confused with an attribute-value pair."
+NAMEs that begin with $ are reserved and MUST NOT be used by applications.
+The Discard attribute instructs the user agent to discard the cookie unconditionally when the user agent terminates.
+The value of the Domain attribute specifies the domain for which the cookie is valid.
+"If an explicitly specified value does not start with a dot, the user agent supplies a leading dot."
+"The value of the Max-Age attribute is delta-seconds, the lifetime of the cookie in seconds, a decimal non-negative integer."
+"When the age is greater than delta-seconds seconds, the client SHOULD discard the cookie."
+A value of zero means the cookie SHOULD be discarded immediately.
+"Port[=""portlist""]"
+"The Secure attribute (with no value) directs the user agent to use only (unspecified) secure means to contact the origin server whenever it sends back this cookie, to protect the confidentially and authenticity of the information in the cookie."
+"When it sends a ""secure"" cookie back to a server, the user agent SHOULD use no less than the same level of security as was used when it received the cookie from the server."
+"Caching ""public"" documents is desirable."
+"""Private documents"", for example those that contain information strictly private to a session, SHOULD NOT be cached in shared caches."
+"If the cookie is intended for use by a single user, the Set-Cookie2 header SHOULD NOT be cached."
+HTTP/1.1 servers MUST send Expires: old-date (where old-date is a date long in the past) on responses containing Set-Cookie2 response headers unless they know for certain (by out of band means) that there are no HTTP/1.0 proxies in the response chain.
+The default behavior is dictated by the presence or absence of a Max-Age attribute.
+The default behavior is to discard the cookie when the user agent exits.
+"If absent, the user agent MAY send the cookie over an insecure channel."
+"To prevent possible security or privacy violations, a user agent rejects a cookie according to rules below."
+The value for the Path attribute is not a prefix of the request-URI.
+"The value for the Domain attribute contains no embedded dots, and the value is not .local."
+The effective host name that derives from the request-host does not domain-match the Domain attribute.
+"The request-host is a HDN (not IP address) and has the form HD, where D is the value of the Domain attribute, and H is a string that contains one or more dots."
+"The Port attribute has a ""port-list"", and the request-port was not in the list."
+"A Set-Cookie2 with Domain=.com or Domain=.com., will always be rejected, because there is no embedded dot."
+"*  A Set-Cookie2 with Port=""80,8000"" will be accepted if the request was made to port 80 or 8000 and will be rejected otherwise."
+"If a user agent receives a Set-Cookie2 response header whose NAME is the same as that of a cookie it has previously stored, the new cookie supersedes the old when: the old and new Domain attribute values compare equal, using a case- insensitive string-compare; and, the old and new Path attribute values string-compare equal (case-sensitive)."
+"However, if the Set- Cookie2 has a value for Max-Age of zero, the (old and new) cookie is discarded."
+"Otherwise a cookie persists (resources permitting) until whichever happens first, then gets discarded: its Max-Age lifetime is exceeded; or, if the Discard attribute is set, the user agent terminates the session."
+The user agent SHOULD NOT send any cookies in this context.
+"The user agent MAY discard any cookie it receives in this context that the user has not, through some user agent mechanism, deemed acceptable."
+"User agents SHOULD allow the user to control cookie destruction, but they MUST NOT extend the cookie's lifetime beyond that controlled by the Discard and Max-Age attributes."
+Otherwise the attribute SHOULD be omitted from the Cookie request header.
+Otherwise the attribute SHOULD be omitted from the Cookie request header.
+"Otherwise, if the Port attribute was absent from the Set-Cookie2 header, the attribute likewise MUST be omitted from the Cookie request header."
+Note that there is neither a Comment nor a CommentURL attribute in the Cookie request header corresponding to the ones in the Set- Cookie2 response header.
+The user agent does not return the comment information to the origin server.
+The origin server's effective host name MUST domain-match the Domain attribute of the cookie.
+"By default (no Port attribute), the cookie MAY be sent to any port."
+"If the attribute is present but has no value (e.g., Port), the cookie MUST only be sent to the request-port it was received from."
+Max-Age Selection Cookies that have expired should have been discarded and thus are not forwarded to an origin server.
+"Note: For backward compatibility, the separator in the Cookie header is semi-colon (;) everywhere."
+Sending Cookies in Unverifiable Transactions  Users MUST have control over sessions in order to ensure privacy.
+"To simplify implementation and to prevent an additional layer of complexity where adequate safeguards exist, however, this document distinguishes between transactions that are verifiable and those that are unverifiable."
+A transaction is unverifiable if the user does not have that option.
+"Typically the origin transaction, the transaction that the user initiates, is verifiable, and that transaction may directly or indirectly induce the user agent to make unverifiable transactions."
+An unverifiable transaction is to a third-party host if its request- host U does not domain-match the reach R of the request-host O in the origin transaction.
+"When it makes an unverifiable transaction, a user agent MUST disable all cookie processing (i.e., MUST NOT send cookies, and MUST NOT accept any received cookies) if the transaction is to a third-party host."
+This restriction prevents a malicious service author from using unverifiable transactions to induce a user agent to start or continue a session with a server in a different domain.
+"The starting or continuation of such sessions could be contrary to the privacy expectations of the user, and could also be a security problem."
+"User agents MAY offer configurable options that allow the user agent, or any autonomous programs that the user agent executes, to ignore the above rule, so long as these override options default to ""off""."
+Many current user agents already provide a review option that would render many links verifiable.
+"(Though not implemented on current user agents, a similar technique could be used for a button used to submit a form -- the user agent could display the action to be taken if the user were to select that button.)"
+"However, even this would not make all links verifiable; for example, links to automatically loaded images would not normally be subject to ""mouse pointer"" verification."
+"While such an option does provide a crude review mechanism, some users might not consider it acceptable for this purpose."
+"When it receives a Cookie header, the origin server SHOULD treat cookies with NAMEs whose prefix is $ specially, as an attribute for the cookie."
+Proxies MUST NOT introduce Set-Cookie2 (Cookie) headers of their own in proxy responses (requests).
+Most detail of request and response headers has been omitted.
+Assume the user agent has no stored cookies.
+"POST /acme/process HTTP/1.1 Cookie: $Version=""1""; Customer=""WILE_E_COYOTE""; $Path=""/acme""; Part_Number=""Rocket_Launcher_0001""; $Path=""/acme""; Shipping=""FedEx""; $Path=""/acme"" [form data]"
+All detail of request and response headers has been omitted.
+Assume the user agent has no stored cookies.
+"Here, the second cookie's Path attribute /acme/ammo is not a prefix of the request URL, /acme/parts/, so the cookie does not get forwarded to the server."
+"how and when to garbage-collect the database entry, in case the user agent terminates the session by, for example, exiting."
+The information in a Set-Cookie2 response header MUST be retained in its entirety.
+"If for some reason there is inadequate space to store the cookie, it MUST be discarded, not truncated."
+Denial of Service Attacks
+"Otherwise a malicious server could attempt to flood a user agent with many cookies, or large cookies, on successive responses, which would force out cookies the user agent had received from other servers."
+A user should be able to find out how a web site plans to use information in a cookie and should be able to choose whether or not those policies are acceptable.
+to let the user examine and delete the contents of a cookie at any time.
+"When the user agent terminates execution, it SHOULD let the user discard all state information."
+"Alternatively, the user agent MAY ask the user whether state information should be retained; the default should be ""no""."
+NOTE: User agents should probably be cautious about using files to store cookies long-term.
+"If a user runs more than one instance of the user agent, the cookies could be commingled or otherwise corrupted."
+URL is preferred because of the opportunity to provide richer information in a multiplicity of languages.
+"A malicious intermediary could alter the headers as they travel in either direction, with unpredictable results."
+"For less sensitive information, or when the content of the header is a database key, an origin server should be vigilant to prevent a bad Cookie value from causing failures."
+"The restrictions on the value of the Domain attribute, and the rules concerning unverifiable transactions, are meant to reduce the ways that cookies can ""leak"" to the ""wrong"" site."
+Therefore a request-host is limited as to what values it can set for Domain.
+"We consider it acceptable for hosts host1.foo.com and host2.foo.com to share cookies, but not a.com and b.com."
+The server at victim.cracker.edu should detect that the second cookie was not one it originated by noticing that the Domain attribute is not for itself and ignore it.
+"For example, a malicious server could embed cookie information for host a.com in a URI for a CGI on host b.com."
+User agent implementors are strongly encouraged to prevent this sort of exchange whenever possible.
+"While it is common practice to use them this way, cookies are not designed or intended to be used to hold authentication information, such as account names and passwords."
+"Unless such cookies are exchanged over an encrypted path, the account information they contain is highly vulnerable to perusal and theft."
+"It would not carry any origin-server-defined state, however."
+"Existing cookie implementations, based on the Netscape specification, use the Set-Cookie (not Set-Cookie2) header."
+User agents that receive in the same response both a Set-Cookie and Set-Cookie2 response header for the same cookie MUST discard the Set-Cookie information and use only the Set-Cookie2 information.
+"That is, if a user agent that follows both this specification and Netscape's original specification receives a Set-Cookie2 response header, and the NAME and the Domain and Path attributes match (per the Cookie Management section) a Netscape-style cookie, the Netscape-style cookie MUST be discarded, and the user agent MUST retain only the cookie adhering to this specification."
+The Cookie2 header advises the server that the user agent understands new-style cookies.
+A server that does not understand new-style cookies will simply ignore the Cookie2 request header.
+"Some caches, such as those conforming to HTTP/1.0, will inevitably cache the Set-Cookie2 and Set-Cookie headers, because there was no mechanism to suppress caching of headers prior to HTTP/1.1."
+"As long as caches obey instructions not to cache documents (following Expires: <a date in the past> or Pragma: no-cache (HTTP/1.0), or Cache- control:  no-cache (HTTP/1.1)) uncachable documents present no problem."
+"The Set-Cookie2 and Set-Cookie headers are stored in the cache, and, although the document is stale (expired), the cache returns the document in response to later requests, including cached headers."
+"This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

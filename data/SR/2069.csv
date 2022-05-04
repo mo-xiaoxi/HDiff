@@ -1,0 +1,89 @@
+sentences
+"This scheme is not considered to be a secure method of user authentication, as the user name and password are passed over the network in an unencrypted form."
+The Digest Access Authentication scheme is not intended to be a complete answer to the need for security in the World Wide Web.
+This scheme provides no encryption of object content.
+The intent is simply to create a weak access authentication method which avoids the most serious flaws of Basic authentication.
+"In this way, the password is never sent in the clear."
+"Just as with the Basic scheme, the username and password must be prearranged in some fashion which is not addressed by this document."
+The digest authentication scheme described in this document suffers from many known limitations.
+It is intended as a replacement for basic authentication and nothing more.
+It is a password-based system and (on the server side) suffers from all the same problems of any password system.
+"In particular, no provision is made in this protocol for the initial secure arrangement between user and server to establish the user's password."
+"Users and implementors should be aware that this protocol is not as secure as kerberos, and not as secure as any client-side private-key scheme."
+"Nevertheless it is better than nothing, better than what is commonly used with telnet and ftp, and better than Basic authentication."
+"If this keyword is omitted or empty, the client should assume that the domain consists of all URIs on the responding server."
+"Specifically, since the string is passed in the header lines as a quoted string, the double-quote character is not allowed."
+With a nonce of this form a server would normally recalculate the nonce after receiving the client authentication header and reject the request if it did not match the nonce from that header.
+In this way the server can limit the reuse of a nonce to the IP address to which it was issued and limit the time of the nonce's validity.
+The nonce is opaque to the client.
+"A string of data, specified by the server, which should be returned by the client unchanged."
+"stale A flag, indicating that the previous request from the client was rejected because the nonce value was stale."
+"If stale is TRUE (in upper or lower case), the client may wish to simply retry the request with a new encrypted response, without reprompting the user for a new username and password."
+The server should only set stale to true if it receives a request for which the nonce is invalid but with a valid digest for that nonce (indicating that the client knows the correct username/password).
+"If this not present it is assumed to be ""MD5""."
+"The client is expected to retry the request, passing an Authorization header line, which is defined as follows."
+"and the user Mufasa has password ""CircleOfLife"" then H(A1) would be H(Mufasa:myhost@testrealm.com:CircleOfLife) with no quotation marks in the digested string."
+No white space is allowed in any of the strings to which the digest function H() is applied unless that white space exists in the quoted strings or entity body whose contents make up the string to be digested.
+Life with no white space on either side of the colons.
+"Likewise, the other strings digested by H() must not have white space on either side of the colons which delimit their fields unless that white space was in the quoted strings or entity body being digested."
+This altered (but presumably semantically equivalent) request would not result in the same digest as that calculated by the client.
+"If an entity does not have a digest-uri-value or a header corresponding to one of the entity-info fields, then that field is left empty in the computation of entity-info."
+"For example the value of the entity-info associated with POST data which has content-type ""text/plain"", no content-encoding and a length of 255 bytes would be H(:text/plain:255:::)."
+"Similarly a request may not have a ""Date"" header."
+In this case the date field of the entity-digest should be empty.
+"In the entity-info and entity-digest computations, except for the blank after the comma in ""rfc1123-date"", there must be no white space between ""words"" and ""tspecials"", and exactly one blank between ""words"" (see section 2.2 of [2])."
+"The HTTP/1.1 protocol specifies that when a shared cache (see section 13.10 of [2]) has received a request containing an Authorization header and a response from relaying that request, it MUST NOT return that response as a reply to any other request, unless one of two Cache-control (see section 14.9 of [2]) directives was present in the response."
+The optional digest allows the client to verify that the body of the response has not been changed en-route.
+The server would probably not bother generating this header for CGI output.
+"Then, the server must perform the same MD5 operation performed by the client, and compare the result to the given response-digest."
+Note that the HTTP server does not actually need to know the user's clear text password.
+"The server may choose to accept the old Authorization header information, even though the nonce value included might not be fresh."
+"Alternatively, the server could return a 401 response with a new nonce value, causing the client to retry the request."
+"TRUE with this response, the server hints to the client that the request should be retried with the new nonce, without reprompting the user for a new username and password."
+"For example, a server could be responsible for authenticating content which actually sits on another server."
+"The client will retry the request, at which time the server may respond with a 301/302 redirection, pointing to the URI on the second server."
+"That is, they must forward the WWW-Authenticate, Authentication-info and Authorization headers untouched."
+"If a proxy wants to authenticate a client before a request is forwarded to the server, it can be done using the Proxy- Authenticate and Proxy-Authorization headers described in section 2.5 below."
+"It is possible that a server may want to require Digest as its authentication method, even if the server does not know that the client supports it."
+A client is encouraged to fail gracefully if the server specifies any authentication scheme it cannot handle.
+"The URI of the document is ""http://www.nowhere.org/dir/index.html""."
+"Both client and server know that the username for this document is ""Mufasa"", and the password is ""CircleOfLife""."
+"It might receive an ""HTTP/1.1 401 Unauthorized"" header followed by both a WWW-Authenticate and a Proxy-Authenticate header."
+"However, it can never receive more than one Proxy-Authenticate header since such headers are only for immediate connections and must not be passed on by proxies."
+Digest Authentication does not provide a strong authentication mechanism.
+That is not its intent.
+In particular digest authentication cannot be used for any transaction requiring encrypted content.
+Nevertheless many functions remain for which digest authentication is both useful and appropriate.
+Both Digest and Basic Authentication are very much on the weak end of the security strength spectrum.
+"This not only permits him to access anything in the database, but, often worse, will permit access to anything else the user protects with the same password."
+"By contrast, with Digest Authentication the eavesdropper only gets access to the transaction in question and not to the user's password."
+"The information gained by the eavesdropper would permit a replay attack, but only with a request for the same document, and even that might be difficult."
+A replay attack against digest authentication would usually be pointless for a simple GET request since an eavesdropper would already have seen the only document he could obtain with a replay.
+This is because the URI of the requested document is digested in the client response and the server will only deliver that document.
+"However, this could be problematic if it caused a CGI script to take some action on the server."
+A good digest implementation can do this in various ways.
+"The server created ""nonce"" value is implementation dependent, but if it contains a digest of the client IP, a time-stamp, and a private server key (as recommended above) then a replay attack is not simple."
+An attacker must convince the server that the request is coming from a false IP address and must cause the server to deliver the document to an IP address different from the address to which it believes it is sending the document.
+Digesting the client IP and time- stamp in the nonce permits an implementation which does not maintain state between transactions.
+For applications where no possibility of replay attack can be tolerated the server can use one-time response digests which will not be honored for a second use.
+"This requires the overhead of the server remembering which digests have been used until the nonce time-stamp (and hence the digest built with it) has expired, but it effectively protects against replay attacks."
+"Instead of maintaining a list of the values of used digests, a server would hash these values and require re-authentication whenever a hash collision occurs."
+"Both Basic and Digest authentication are vulnerable to ""man in the middle"" attacks, for example, from a hostile or compromised proxy."
+"It might also be a good idea for the browser to be configured to demand Digest authentication in general, or from specific sites."
+"Of course, this is still much harder than a comparable attack against Basic Authentication."
+"A simple but effective attack is just to remove the field, so that the client will not be able to use it to detect modifications to the response entity."
+"More subtly, the attacker can alter any of the entity-headers not incorporated in the computation of the digest, The attacker can alter most of the request headers in the client's request, and can alter any response header in the origin-server's reply, except those headers whose values are incorporated into the ""digest"" field."
+Alteration of Accept* or User-Agent request headers can only result in a denial of service attack that returns content in an unacceptable media type or language.
+Alteration of cache control headers also can only result in denial of service.
+"Alteration of Referer or From is not important, as these are only hints."
+Basic Authentication is vulnerable to spoofing by counterfeit servers.
+"If a user can be led to believe that she is connecting to a host containing information protected by a password she knows, when in fact she is connecting to a hostile server, then the hostile server can request a password, store it away for later use, and feign an error."
+"This type of attack is more difficult with Digest Authentication -- but the client must know to demand that Digest authentication be used, perhaps using some of the techniques described above to counter ""man-in-the-middle"" attacks."
+"The security implications of this are that if this password file is compromised, then an attacker gains immediate access to documents on the server using this realm."
+"It means that if one digest authentication password file is compromised, it does not automatically compromise others with the same username and password (though it does expose them to brute force attack)."
+The inability of the client to authenticate the server is a weakness of Digest Authentication.
+By modern cryptographic standards Digest Authentication is weak.
+"It remedies many, but not all, weaknesses of Basic Authentication."
+In particular the structure of the nonce (which is dependent on the server implementation) may affect the ease of mounting a replay attack.
+"A range of server options is appropriate since, for example, some implementations may be willing to accept the server overhead of one-time nonces or digests to eliminate the possibility of replay while others may satisfied with a nonce like the one recommended above restricted to a single IP address and with a limited lifetime."
+"The bottom line is that *any* compliant implementation will be relatively weak by cryptographic standards, but *any* compliant implementation will be far superior to Basic Authentication."

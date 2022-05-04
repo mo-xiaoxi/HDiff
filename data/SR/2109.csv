@@ -1,0 +1,85 @@
+sentences
+The fully qualified domain name is preferred; use of numeric IP addresses is strongly discouraged.
+"Note that domain-match is not a commutative operation: a.b.c.com domain-matches .c.com, but not the reverse."
+Attributes (names) (attr) are case-insensitive.
+The syntax above allows whitespace between the attribute and the = sign.
+"It may send back to the client a Set-Cookie response header with the same or different information, or it may send no Set-Cookie header at all."
+Servers may return a Set-Cookie response headers with any response.
+An origin server may include multiple Set-Cookie headers in a response.
+"Informally, the Set-Cookie response header comprises the token Set- Cookie:, followed by a comma-separated list of one or more cookies."
+The syntax for attribute-value pairs was shown earlier.
+"If an attribute appears more than once in a cookie, the behavior is undefined."
+NAMEs that begin with $ are reserved for other uses and must not be used by applications.
+The delta-seconds value is a decimal non- negative integer.
+"After delta-seconds seconds elapse, the client should discard the cookie."
+A value of zero means the cookie should be discarded immediately.
+The Secure attribute (with no value) directs the user agent to use only (unspecified) secure means to contact the origin server whenever it sends back this cookie.
+"Caching ""public"" documents is desirable."
+"For example, if the origin server wants to use a public document such as a ""front door"" page as a sentinel to indicate the beginning of a session for which a Set- Cookie response header must be generated, the page should be stored in caches ""pre-expired"" so that the origin server will see further requests."
+"""Private documents"", for example those that contain information strictly private to a session, should not be cached in shared caches."
+"If the cookie is intended for use by a single user, the Set-cookie header should not be cached."
+"To suppress caching of the Set-Cookie header: Cache-control: no- cache=""set-cookie""."
+"To allow caching of a document, but to require that proxy caches (not user agent caches) validate it before returning it to the client: Cache-control: proxy-revalidate."
+HTTP/1.1 servers must send Expires: old-date (where old-date is a date long in the past) on responses containing Set-Cookie response headers unless they know for certain (by out of band means) that there are no downsteam HTTP/1.0 proxies.
+The default behavior is to discard the cookie when the user agent exits.
+"Path   Defaults to the path of the request URL that generated the Set-Cookie response, up to, but not including, the right-most /."
+"If absent, the user agent may send the cookie over an insecure channel."
+The value for the Path attribute is not a prefix of the request- URI.
+The value for the Domain attribute contains no embedded dots or does not start with a dot.
+The value for the request-host does not domain-match the Domain attribute.
+"The request-host is a FQDN (not IP address) and has the form HD, where D is the value of the Domain attribute, and H is a string that contains one or more dots."
+"A Set-Cookie with Domain=.com or Domain=.com., will always be rejected, because there is no embedded dot."
+A Set-Cookie with Domain=ajax.com will be rejected because the value for Domain does not begin with a dot.
+"However, if the Set- Cookie has a value for Max-Age of zero, the (old and new) cookie is discarded."
+"Otherwise cookies accumulate until they expire (resources permitting), at which time they are discarded."
+User agents should allow the user to control cookie destruction.
+Otherwise the attribute should be omitted from the Cookie request header.
+Otherwise the attribute should be omitted from the Cookie request header.
+Note that there is no Comment attribute in the Cookie request header corresponding to the one in the Set-Cookie response header.
+The user agent does not return the comment information to the origin server.
+Max-Age Selection Cookies that have expired should have been discarded and thus are not forwarded to an origin server.
+"Note: For backward compatibility, the separator in the Cookie header is semi-colon (;) everywhere."
+"To simplify implementation and to prevent an additional layer of complexity where adequate safeguards exist, however, this document distinguishes between transactions that are verifiable and those that are unverifiable."
+A transaction is unverifiable if the user does not have that option.
+"Typically the origin transaction, the transaction that the user initiates, is verifiable, and that transaction may directly or indirectly induce the user agent to make unverifiable transactions."
+"When it makes an unverifiable transaction, a user agent must enable a session only if a cookie with a domain attribute D was sent or received in its origin transaction, such that the host name in the Request-URI of the unverifiable transaction domain-matches D."
+This restriction prevents a malicious service author from using unverifiable transactions to induce a user agent to start or continue a session with a server in a different domain.
+"The starting or continuation of such sessions could be contrary to the privacy expectations of the user, and could also be a security problem."
+"User agents may offer configurable options that allow the user agent, or any autonomous programs that the user agent executes, to ignore the above rule, so long as these override options default to ""off""."
+Many current user agents already provide a review option that would render many links verifiable.
+"(Though not implemented on current user agents, a similar technique could be used for a button used to submit a form -- the user agent could display the action to be taken if the user were to select that button.)"
+"However, even this would not make all links verifiable; for example, links to automatically loaded images would not normally be subject to ""mouse pointer"" verification."
+"While such an option does provide a crude review mechanism, some users might not consider it acceptable for this purpose."
+$Path is an attribute whose value (/acme) defines the Path attribute that was used when the Customer cookie was defined in a Set-Cookie response header.
+Proxies must not introduce Set-Cookie (Cookie) headers of their own in proxy responses (requests).
+Most detail of request and response headers has been omitted.
+Assume the user agent has no stored cookies.
+"Because the request URLs all have /acme as a prefix, and that matches the Path attribute, each request contains all the cookies received so far."
+All detail of request and response headers has been omitted.
+Assume the user agent has no stored cookies.
+"Here, the second cookie's Path attribute /acme/ammo is not a prefix of the request URL, /acme/parts/, so the cookie does not get forwarded to the server."
+"how and when to garbage-collect the database entry, in case the user agent terminates the session by, for example, exiting."
+"If for some reason there is inadequate space to store the cookie, it must be discarded, not truncated."
+"Otherwise a malicious server could attempt to flood a user agent with many cookies, or large cookies, on successive responses, which would force out cookies the user agent had received from other servers."
+"When the user agent terminates execution, it should let the user discard all state information."
+"Alternatively, the user agent may ask the user whether state information should be retained; the default should be ""no""."
+NOTE: User agents should probably be cautious about using files to store cookies long-term.
+"If a user runs more than one instance of the user agent, the cookies could be commingled or otherwise messed up."
+"The restrictions on the value of the Domain attribute, and the rules concerning unverifiable transactions, are meant to reduce the ways that cookies can ""leak"" to the ""wrong"" site."
+"We consider it acceptable for hosts host1.foo.com and host2.foo.com to share cookies, but not a.com and b.com."
+"For less sensitive information, or when the content of the header is a database key, an origin server should be vigilant to prevent a bad Cookie value from causing failures."
+The server at victim.cracker.edu should detect that the second cookie was not one it originated by noticing that the Domain attribute is not for itself and ignore it.
+"For example, a malicious server could embed cookie information for host a.com in a URI for a CGI on host b.com."
+"It would not carry any origin-server-defined state, however."
+This proposal adds attribute-value pairs to the Cookie request header in a compatible way.
+"An ""old"" client that receives a ""new"" cookie will ignore attributes it does not understand; it returns what it does understand to the origin server."
+"An ""old"" server that receives a ""new"" cookie will see what it thinks are many cookies with names that begin with a $, and it will ignore them."
+"(The ""old"" server expects these cookies to be separated by semi-colon, not comma.)"
+"A ""new"" server can detect cookies that have passed through an ""old"" client, because they lack a $Version attribute."
+"Note that the Expires date format contains embedded spaces, and that ""old"" cookies did not have quotes around values."
+"In Netscape's original proposal, the values in attribute-value pairs did not accept ""-quoted strings."
+"Origin servers should be cautious about sending values that require quotes unless they know the receiving user agent understands them (i.e., ""new"" cookies)."
+"In Netscape's original proposal, no whitespace was permitted around the = that separates attribute-value pairs."
+"Some caches, such as those conforming to HTTP/1.0, will inevitably cache the Set-Cookie header, because there was no mechanism to suppress caching of headers prior to HTTP/1.1."
+"As long as caches obey instructions not to cache documents (following Expires: <a date in the past> or Pragma: no-cache (HTTP/1.0), or Cache-control: no-cache (HTTP/1.1)) uncachable documents present no problem."
+"The Set-Cookie header is stored in the cache, and, although the document is stale (expired), the cache returns the document in response to later requests, including cached headers."

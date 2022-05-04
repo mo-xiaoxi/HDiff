@@ -1,0 +1,139 @@
+sentences
+The World Wide Web (WWW) is a distributed hypermedia system which has gained widespread acceptance among Internet users.
+The ease of use of the Web has prompted its widespread employment as a client/server architecture for many applications.
+Many such applications require the client and server to be able to authenticate each other and exchange sensitive information confidentially.
+It is designed to coexist with HTTP's messaging model and to be easily integrated with HTTP applications.
+"Secure HTTP provides a variety of security mechanisms to HTTP clients and servers, providing the security service options appropriate to the wide range of potential end uses possible for the World-Wide Web."
+"S-HTTP aware clients can communicate with S-HTTP oblivious servers and vice-versa, although such transactions obviously would not use S-HTTP security features."
+"S-HTTP does not require client-side public key certificates (or public keys), as it supports symmetric key-only operation modes."
+"While S-HTTP is able to take advantage of ubiquitous certification infrastructures, its deployment does not require it."
+"S-HTTP supports end-to-end secure transactions, in contrast with the original HTTP authorization mechanisms which require the client to attempt access and be denied before the security mechanism is employed."
+"With S-HTTP, no sensitive data need ever be sent over the network in the clear."
+"S-HTTP provides full flexibility of cryptographic algorithms, modes and parameters."
+"Using this data, the sender applies the enhancements to the message clear-text to create the S-HTTP message."
+"In order to recover an S-HTTP message, the receiver needs to read the headers to discover which cryptographic transformations were performed on the message, then remove the transformations using some combination of the sender's and receiver's keying material, while taking note of which enhancements were applied."
+"Any message may be signed, authenticated, encrypted, or any combination of these (including no protection)."
+"Additionally, a challenge-response (""nonce"") mechanism is provided to allow parties to assure themselves of transaction freshness."
+"In the former case, the symmetric-key cryptosystem parameter is passed encrypted under the receiver's public key."
+This technique requires neither the use of public key cryptography nor encryption.
+"The provision of this mechanism is motivated by our bias that the action of ""signing"" a transaction should be explicit and conscious for the user, whereas many authentication needs (i.e., access control) can be met with a lighter-weight mechanism that retains the scalability advantages of public-key cryptography for key exchange."
+"The protocol provides a simple challenge-response mechanism, allowing both parties to insure the freshness of transmissions."
+"However, the range of headers is different and the bodies are typically cryptographically enhanced."
+"Typically, the rel path section should be replaced by ""*"" to minimize the information passed to in the clear."
+(e.g. http://www.terisa.com/*); proxies should remove the appropriate amount of this information to minimize the threat of traffic analysis.
+Note that the status in the Secure HTTP response line does not indicate anything about the success or failure of the unwrapped HTTP request.
+Servers should always use 200 OK provided that the Secure HTTP processing is successful.
+"This prevents analysis of success or failure for any request, which the correct recipient can determine from the encapsulated data."
+All data and fields in header lines should be treated as case insensitive unless otherwise specified.
+Linear whitespace [RFC-822] should be used only as a token separator unless otherwise quoted.
+"This document refers to the header block following the S-HTTP request/response line and preceding the successive CRLFs collectively as ""S-HTTP headers""."
+"But in any case, final headers should themselves always be S-HTTP encapsulated, so that the applicable S-HTTP/HTTP headers are never passed unenhanced."
+S-HTTP encapsulation of non-HTTP data is a useful mechanism for passing pre-enhanced data (especially presigned data) without requiring that the HTTP headers themselves be pre-enhanced.
+One use of this is to permit in-band communication of session keys for return encryption in the case where one of the parties does not have a key pair.
+"While chaining ciphers require an Initialization Vector (IV) [FIPS- 81] to start off the chaining, that information is not carried by this field."
+CoveredDEK> is the protected Data Encryption Key (a.k.a. transaction key) under which the encapsulated message was encrypted.
+"In order to avoid name collisions, cover key namespaces must be maintained separately by host and port."
+The original HMAC construction is for the use of a key with length equal to the length of the hash output.
+It is noteworthy (though obvious) that this technique does not increase the strength of short keys.
+"The use of a 'Null' key-spec implies that a zero length key was used, and therefore that the MAC merely represents a hash of the message text and (optionally) the time."
+The special key-spec 'DEK' refers to the Data Exchange Key used to encrypt the following message body (it is an error to use the DEK key-spec in situations where the following message body is unencrypted).
+"If the time is omitted from the MAC-Info line, it should simply not be included in the hash."
+The content of the message is largely dependent upon the values of the Content-Privacy-Domain and Content-Transfer-Encoding fields.
+"If the Content-Privacy-Domain is MOSS, the content should consist of a MOSS Security Multipart as described in RFC1847."
+"It is expected that once the privacy enhancements have been removed, the resulting (possibly protected) contents will be a normal HTTP request."
+"Alternately, the content may be another Secure-HTTP message, in which case privacy enhancements should be unwrapped until clear content is obtained or privacy enhancements can no longer be removed."
+"(This permits embedding of enhancements, such as sequential Signed and Enveloped enhancements.)"
+Note that the 'auth' protection mode of S-HTTP is provided independently of CMS coding via the MAC-Info header of section 2.3.6 since CMS does not support a 'KeyDigested
+"However, since multipart/signed does not convey keying material, is is acceptable to use multipart/mixed where the first part is application/mosskey-data and the second part is multipart/mixed in order to convey certificates for use in verifying the signature."
+"When both encryption and signature are applied by the same agent, signature should in general be applied before encryption."
+"In general, HTTP [RFC-2616] headers should appear in the inner content (i.e. the message/http) of an S-HTTP message but should not appear in the S-HTTP message wrapper for security reasons."
+"However, certain headers need to be visible to agents which do not have access to the encapsulated data."
+These headers may appear in the S-HTTP headers as well.
+This header should be used to disambiguate among multiple potential security contexts within which this message could be interpreted.
+"If these fields do not match, the server should respond with a 400 status code."
+The Connection field has precisely the same semantics in S-HTTP headers as it does in HTTP headers.
+Binding cryptographic options to anchors using HTML extensions is the topic of the companion document [SHTML] and will not be treated here.
+"We define new headers (to be used in the encapsulated HTTP header, not in the S-HTTP header) to permit negotiation of these matters."
+recv-optional:'
+recv-required:'
+The agent will not process messages without this enhancement.
+recv-refused:'
+The agent will not process messages with this enhancement.
+"When encountering an agent which refuses this enhancement, the agent will not provide it, and when encountering an agent which requires it, this agent will provide it."
+orig-refused:'
+The agent will never generate the enhancement.
+The behavior of agents which discover that they are communicating with an incompatible agent is at the discretion of the agents.
+It is inappropriate to blindly persist in a behavior that is known to be unacceptable to the other party.
+"Plausible responses include simply terminating the connection, or, in the case of a server response, returning 'Not implemented 501'."
+"If any <Key-Val> is left undefined, it should be assumed to be set to the default."
+Using simply <cipher> for such a cipher shall be read as the maximum range possible with the given cipher.
+Since NIST-DSS and RSA use variable length moduli the parametrization syntax of section 3.2.3 should be used.
+Commas should be escaped with backslashes if they appear in the regexps.
+Commas should be escaped with backslashes if they appear in the regexps.
+"DNs are considered to be represented as specified in RFC1779, the order of fields and whitespace between fields is not significant."
+"All RFC1779 values should use ',' as a separator rather than ';', since ';' is used as a statement separator in S-HTTP."
+"For a given negotiation option type, defaults for a given mode-action pair (such as 'orig-required') are implicitly merged unless explicitly overridden."
+The keyword 'null' should be used to indicate that it is inappropriate for use with ANY cipher.
+"If a Key-Assign with the reply lifetime appears in a CRYPTOPTS block, it indicates that it is good for at least one (but perhaps only one) dereference of this anchor."
+Assigning to a key that already exists causes that key to be overwritten.
+"The key information is carried in this header line must be in the inner secured HTTP request, therefore use in unencrypted messages is not permitted."
+"Nonces are opaque, transient, session-oriented identifiers which may be used to provide demonstrations of freshness."
+This header is used by an originator to specify what value is to be returned in the reply.
+The Nonce should be returned in a Nonce-Echo header line.
+"In order for servers to bind a group of headers to an HTML anchor, it is possible to combine a number of headers on a single S-HTTP Cryptopts header line."
+The names of the anchors to which these headers apply is indicated with a 'scope' parameter.
+"If a message contains both S-HTTP negotiation headers and headers grouped on SHTTP-Cryptopts line(s), the other headers shall be taken to apply to all anchors not bound on the SHTTP-Cryptopts line(s)."
+Note that this is an all-or-nothing proposition.
+"That is, if a SHTTP-Cryptopts header binds options to a reference, then none of these global options apply, even if some of the options headers do not appear in the bound options."
+All S-HTTP compliant agents must generate the Security-Scheme header in the headers of all HTTP messages they generate.
+This header permits other agents to detect that they are communicating with an S-HTTP compliant agent and generate the appropriate cryptographic options headers.
+We describe here the special processing appropriate for client retries in the face of servers returning an error status.
+A server may respond to a client request with an error code that indicates that the request has not completely failed but rather that the client may possibly achieve satisfaction through another request.
+"In the case of S-HTTP, it is conceivable (and indeed likely) that the server expects the client to retry his request using another set of cryptographic options."
+"E.g., the document which contains the anchor that the client is dereferencing is old and did not require digital signature for the request in question, but the server now has a policy requiring signature for dereferencing this URL."
+"These options should be carried in the header of the encapsulated HTTP message, precisely as client options are carried."
+The general idea is that the client will perform the retry in the manner indicated by the combination of the original request and the precise nature of the error and the cryptographic enhancements depending on the options carried in the server response.
+The guiding principle in client response to these errors should be to provide the user with the same sort of informed choice with regard to dereference of these anchors as with normal anchor dereference.
+"For instance, in the case above, it would be inappropriate for the client to sign the request without requesting permission for the action."
+"This server status reply is provided so that the server may inform the client that although the current request is rejected, a retried request with different cryptographic enhancements is worth attempting."
+This header shall also be used in the case where an HTTP request has been made but an S-HTTP request should have been made.
+"Obviously, this serves no useful purpose other than signalling an error if the original request should have been encrypted, but in other situations (e.g. access control) may be useful."
+"In the case of a request that was made as an SHTTP request, it indicates that for some reason the cryptographic enhancements applied to the request were unsatisfactory and that the request should be repeated with the options found in the response header."
+Note that this can be used as a way to force a new public key negotiation if the session key in use has expired or to supply a unique nonce for the purposes of ensuring request freshness.
+"If the 420 code is returned in response to an HTTP request, it indicates that the request should be retried using S-HTTP and the cryptographic options indicated in the response header."
+"These headers are again internal to HTTP, but may contain S-HTTP negotiation options of significance to S-HTTP."
+The retry response was returned encrypted under an inband key freshly generated for the original request.
+2. The retry response was signed by the intended recipient of the original request.
+"This is not an exhaustive list, however the browser author would be well advised to consider carefully before implementing automatic reencryption in other cases."
+Note that an appropriate behavior in cases where automatic reencryption is not appropriate is to query the user for permission.
+Servers which receive requests in the clear which should be secured should return 'Security
+"Use of this designator as part of an anchor URL implies that the target server is S-HTTP capable, and that a dereference of this URL should undergo S- HTTP processing."
+"Note that S-HTTP oblivious agents should not be willing to dereference a URL with an unknown protocol specifier, and hence sensitive data will not be accidentally sent in the clear by users of non-secure clients."
+Failure to authenticate or decrypt an S-HTTP message should be presented differently from a failure to retrieve the document.
+Compliant clients may at their option display unverifiable documents but must clearly indicate that they were unverifiable in a way clearly distinct from the manner in which they display documents which possessed no digital signatures or documents with verifiable signatures.
+"While S-HTTP has always supported preenhanced documents, in previous versions it was never made clear how to actually implement them."
+This section describes two methods for doing so: preenhancing the HTTP request/response and preenhancing the underlying data.
+Consider the case of a server which repeatedly serves the same content to multiple clients.
+"Clearly, customers would like to be able to verify that these are actual prices."
+"However, since the prices are typically the same to all comers, confidentiality is not an issue."
+The server might not even have the signing key!
+This illustrates the security benefit of presigning: Untrusted servers can serve authenticated data without risk even if the server is compromised.
+"This message itself cannot be sent, but needs to be recursively encapsulated, as described in the next section."
+"To unfold this, the receiver would decode the outer S-HTTP message, reenter the (S-)HTTP parsing loop to process the new message, see that that too was S-HTTP, decode that, and recover the inner content."
+Note that this approach can also be used to provide freshness of server activity (though not of the document itself) while still providing nonrepudiation of the document data if a NONCE is included in the request.
+"Although preenhancement works best with signature, it can also be used with encryption under certain conditions."
+"[Note that this is logically equivalent to a multi- recipient message as defined in both MOSS and CMS and so care must be taken to use proper PKCS-1 padding if RSA is being used since otherwise, one may be open to a low encryption exponent attack [HAST96]."
+"While simply having the proxy blindly forward responses is straightforward, it would be preferable if S-HTTP aware proxies were still able to cache responses in at least some circumstances."
+"When an S-HTTP aware proxy receives a request (HTTP or S-HTTP) that (by whatever access control rules it uses) it requires to be S-HTTP authenticated (and if it isn't already so), it should return the 422 response code (5.7.4)."
+"We present below a summary of the main syntactic features of S- HTTP/1.4, excluding message encapsulation proper."
+We provide here a contrived example of a series of S-HTTP requests and replies.
+Note that the actual encrypted or signed message bodies would normally be binary garbage.
+"In an attempt to preserve readability while still using (mostly) genuine messages, the bodies of the requests have been base64 encoded."
+"To regenerate actual S-HTTP messages, it is necessary to remove the base64 encoding from the message body."
+"Some bytes, with no enhancement."
+Keying materials can be transported via the degenerate case of no signature blocks and no data.
+"Encoding considerations: only ""7bit"", ""8bit"", or ""binary"" are permitted."
+"This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+The limited permissions granted above are perpetual and will not be revoked by the Internet Society or its successors or assigns.
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

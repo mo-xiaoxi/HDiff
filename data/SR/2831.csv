@@ -1,0 +1,118 @@
+sentences
+"The authentication type associated with the Digest SASL mechanism is ""DIGEST-MD5""."
+"The only difference in the ""md5-sess"" algorithm is that some directives not needed in a SASL mechanism have had their values defaulted."
+"Also, compared to CRAM-MD5, DIGEST-MD5 prevents chosen plaintext attacks, and permits the use of third party authentication servers, mutual authentication, and optimized reauthentication if a client has recently authenticated to a server."
+The value of a quoted string constant as an octet string does not include any terminating null character.
+"The key words ""MUST"", ""MUST NOT"", ""REQUIRED"", ""SHALL"", ""SHALL NOT"", ""SHOULD"", ""SHOULD NOT"", ""RECOMMENDED"", ""MAY"", and ""OPTIONAL"" in this document are to be interpreted as described in RFC 2119 [RFC 2119]."
+"If the client has not recently authenticated to the server, then it must perform ""initial authentication"", as defined in this section."
+"If it has recently authenticated, then a more efficient form is available, defined in the next section."
+"This directive is optional; if not present, the client SHOULD solicit it from the user or be able to compute a default; a plausible default might be the realm supplied by the user when they logged in to the client system."
+"Note that since the string is passed as a quoted string, the double-quote character is not allowed unless escaped (see section 7.2)."
+The security of the implementation depends on a good choice.
+The nonce is opaque to the client.
+"This directive is required and MUST appear exactly once; if not present, or if multiple instances are present, the client should abort the authentication exchange."
+"The value ""auth"" indicates authentication; the value ""auth-int"" indicates authentication with integrity protection; the value ""auth-conf"" indicates authentication with integrity protection and encryption."
+"This directive is optional; if not present it defaults to ""auth""."
+"The client MUST ignore unrecognized options; if the client recognizes no option, it should abort the authentication exchange."
+stale
+"The ""stale"" directive is not used in initial authentication."
+"If this directive is missing, the default value is 65536."
+"The directive is needed for backwards compatibility with HTTP Digest, which only supports ISO 8859-1."
+"This directive is required for backwards compatibility with HTTP Digest., which supports other algorithms. ."
+"This directive is required and MUST appear exactly once; if not present, or if multiple instances are present, the client should abort the authentication exchange."
+"The client MUST ignore unrecognized options; if the client recognizes no option, it should abort the authentication exchange."
+"This directive is required and MUST be present exactly once; otherwise, authentication fails."
+"If the directive is missing, ""realm-value"" will set to the empty string when computing A1 (see below for details)."
+"This directive is required and MUST be present exactly once; otherwise, authentication fails."
+"The cnonce-value is an opaque quoted string value provided by the client and used by both client and server to avoid chosen plaintext attacks, and to provide mutual authentication."
+The security of the implementation depends on a good choice.
+"This directive is required and MUST be present exactly once; otherwise, authentication fails."
+"If not present, it defaults to ""auth""."
+"Note that this is a single token, not a quoted list of alternatives."
+"serv-type Indicates the type of service, such as ""www"" for web service, ""ftp"" for FTP service, ""smtp"" for mail delivery service, etc."
+"For example, the incoming mail service for ""example.com"" may be replicated through the use of MX records stored in the DNS, one of which points at an SMTP server called ""mail3.example.com""; it's ""serv-name"" would be ""example.com"", it's ""host"" would be ""mail3.example.com""."
+"If the service is not replicated, or the serv-name is identical to the host, then the serv-name component MUST be omitted."
+"For example, the FTP service on ""ftp.example.com"" would have a ""digest-uri"" value of ""ftp/ftp.example.com""; the SMTP server from the example above would have a ""digest-uri"" value of ""smtp/mail3.example.com/example.com""."
+This will detect accidental connection to the incorrect server.
+The serv-type component should match the service being offered.
+"Servers SHOULD NOT normally support the IP address form, because server authentication by IP address is not very useful; they should only do so if the DNS is unavailable or unreliable."
+"This directive is required and MUST be present exactly once; otherwise, authentication fails."
+A number indicating the size of the largest buffer the client is able to receive.
+"If this directive is missing, the default value is 65536."
+"This directive may appear at most once; if multiple instances are present, the server should abort the authentication exchange."
+The client should send this directive only if the server has indicated it supports UTF-8.
+"The directive is needed for backwards compatibility with HTTP Digest, which only supports ISO 8859-1."
+"LHEX 32 hex digits, where the alphabetic characters MUST be lower case, because MD5 is not case insensitive."
+"This directive MUST appear exactly once if ""auth-conf"" is negotiated; if required and not present, authentication fails."
+"If the client specifies it, and the server does not support it, then the response-value will be incorrect, and authentication will fail."
+"Although qop-value and components of digest-uri-value may be case-insensitive, the case which the client supplies in step two is preserved for the purpose of computing and verifying the response-value."
+"The ""username-value"", ""realm-value"" and ""passwd"" are encoded according to the value of the ""charset"" directive."
+"UTF-8"" is present, and all the characters of either ""username-value"" or ""passwd"" are in the ISO 8859-1 character set, then it must be converted to ISO 8859-1 before being hashed."
+"These apparently strange values of A2 are for compatibility with HTTP; they were arrived at by setting ""Method"" to ""AUTHENTICATE"" and the hash of the entity body to zero in the HTTP digest calculation of A2."
+"These directives are not needed when Digest is used as a SASL mechanism (i.e., MUST NOT be sent, and MUST be ignored if received)."
+"If the server does not support subsequent authentication, then it sends a ""digest-challenge"", and authentication proceeds as in initial authentication."
+"If the server has no saved nonce and nonce-count from a previous authentication, then it sends a ""digest-challenge"", and authentication proceeds as in initial authentication."
+"If the response is invalid, then the server sends a ""digest-challenge"", and authentication proceeds as in initial authentication (and should be configurable to log an authentication failure in some sort of security audit log, since the failure may be a symptom of an attack)."
+The nonce-count MUST NOT be incremented in this case: to do so would allow a denial of service attack by sending an out-of-order nonce-count.
+"If the response is valid, the server MAY choose to deem that authentication has succeeded."
+"However, if it has been too long since the previous authentication, or for any other reason, the server MAY send a new ""digest-challenge"" with a new value for nonce."
+"The challenge MAY contain a ""stale"" directive with value ""true"", which says that the client may respond to the challenge using the password it used in the previous response; otherwise, the client must solicit the password anew from the user."
+"(The directive name refers to the previous nonce being stale, not to the last use of the password.)"
+"Except for the handling of ""stale"", after sending the ""digest-challenge"" authentication proceeds as in the case of initial authentication."
+"If the server offered ""qop=auth-int"" and the client responded ""qop=auth-int"", then subsequent messages, up to but not including the next subsequent authentication, between the client and the server MUST be integrity protected."
+"If message integrity is negotiated, a MAC block for each message is appended to the message."
+where Ki is Kic for messages sent by the client and Kis for those sent by the server.
+"The sequence number is initialized to zero, and incremented by one for each message sent."
+"Upon receipt, MAC(Ki, SeqNum, msg) is computed and compared with the received value; the message is discarded if they differ."
+"If the server sent a ""cipher-opts"" directive and the client responded with a ""cipher"" directive, then subsequent messages between the client and the server MUST be confidentiality protected."
+"If the blocksize of the chosen cipher is not 1 byte, the padding prefix is one or more octets each containing the number of padding bytes, such that total length of the encrypted part of the message is a multiple of the blocksize."
+The padding and first 10 bytes of the MAC block are encrypted along with the message.
+"The sequence number is initialized to zero, and incremented by one for each message sent."
+"Upon receipt, the message is decrypted, HMAC(Ki, {SeqNum, msg}) is computed and compared with the received value; the message is discarded if they differ."
+"Digest Authentication does not provide a strong authentication mechanism, when compared to public key based mechanisms, for example."
+"However, since it prevents chosen plaintext attacks, it is stronger than (e.g.) CRAM-MD5, which has been proposed for use with LDAP [10], POP and IMAP (see RFC 2195 [9])."
+"It is intended to replace the much weaker and even more dangerous use of plaintext passwords; however, since it is still a password based mechanism it avoids some of the potential deployabilty issues with public-key, OTP or similar mechanisms."
+Digest Authentication offers no confidentiality protection beyond protecting the actual password.
+The greatest threat to the type of transactions for which these protocols are used is network snooping.
+"This not only permits him to access anything in the database, but, often worse, will permit access to anything else the user protects with the same password."
+"Replay attacks are defeated if the client or the server chooses a fresh nonce for each authentication, as this specification requires."
+Such a list is usually much smaller than the total number of possible passwords.
+The cost of computing the response for each password on the list is paid once for each challenge.
+The server can mitigate this attack by not allowing users to select passwords that are in a dictionary.
+Such a list is usually much smaller than the total number of possible passwords.
+The cost of computing the response for each password on the list is paid just once.
+"Offline dictionary attacks are defeated if the client chooses a fresh nonce for each authentication, as this specification requires."
+"Digest authentication is vulnerable to ""man in the middle"" (MITM) attacks."
+"Clearly, a MITM would present all the problems of eavesdropping."
+A possible man-in-the-middle attack would be to substitute a weaker qop scheme for the one(s) sent by the server; the server will not be able to detect this attack.
+"For this reason, the client should always use the strongest scheme that it understands from the choices offered, and should never choose a scheme that does not meet its minimum requirements."
+A chosen plaintext attack is where a MITM or a malicious server can arbitrarily choose the challenge that the client will use to compute the response.
+"However, Digest does not permit the attack to choose the challenge as long as the client chooses a fresh nonce for each authentication, as this specification requires."
+There is no known way that this can be exploited.
+"The security implications of this are that if this password file is compromised, then an attacker gains immediate access to documents on the server using this realm."
+This is the reason that the realm is part of the digested data stored in the password file.
+"It means that if one Digest authentication password file is compromised, it does not automatically compromise others with the same username and password (though it does expose them to brute force attack)."
+"Use of multiple realms may mean both that compromise of a the security database for a single realm does not compromise all security, and that there are more things to protect in order to keep the whole system secure."
+"By modern cryptographic standards Digest Authentication is weak, compared to (say) public key based mechanisms."
+But for a large range of purposes it is valuable as a replacement for plaintext passwords.
+"In this example, ""C:"" and ""S:"" represent a line sent by the client or server respectively including a CRLF at the end."
+"Linebreaks and indentation within a ""C:"" or ""S:"" are editorial and not part of the protocol."
+"Note that the base64 encoding of the challenges and responses is part of the IMAP4 AUTHENTICATE command, not part of the Digest specification itself."
+Note that ACAP does not base64 encode and uses fewer round trips that IMAP4.
+"Since it is cut-and-paste from the HTTP specifications, not all productions may be used in this specification."
+"It is also not quite legal ABNF; again, the errors were copied from the HTTP specifications."
+"Unless stated otherwise, the text is case-insensitive."
+"Elements separated by a bar (""|"") are alternatives, e.g., ""yes | no"" will accept yes or no.
+rule1 rule2)"
+"This makes the usual form of lists very easy; a rule such as ( *LWS element *( *LWS "","" *LWS element )) can be shown as 1#element Wherever this construct is used, null elements are allowed, but do not contribute to the count of elements present."
+"Default values are 0 and infinity so that ""#element"" allows any number, including zero; ""1#element"" requires at least one; and ""1#2element"" allows one or two."
+The TEXT rule is only used for descriptive field contents and values that are not intended to be interpreted by the message parser.
+A CRLF is allowed in the definition of TEXT only as part of a header field continuation.
+It is expected that the folding LWS will be replaced with a single SP before interpretation of the TEXT value.
+A string of text is parsed as a single word if it is quoted using double-quote marks.
+"Note that LWS is NOT implicit between the double-quote marks (<"">) surrounding a qdstr-val and the qdstr-val; any LWS will be considered part of the qdstr-val."
+The value of this construct is CHAR.
+Note that an effect of this rule is that backslash must be quoted.
+"This document and translations of it may be copied and furnished to others, and derivative works that comment on or otherwise explain it or assist in its implementation may be prepared, copied, published and distributed, in whole or in part, without restriction of any kind, provided that the above copyright notice and this paragraph are included on all such copies and derivative works."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

@@ -1,0 +1,30 @@
+sentences
+"The <minor> number is incremented when the changes made to the protocol add features which do not change the general message parsing algorithm, but which may add to the message semantics and imply additional capabilities of the sender."
+The <major> number is incremented when the format of a message within the protocol is changed.
+"Also, some people who wrote HTTP implementations before RFC1945 [1] was issued were not aware of the intentions behind the introduction of version numbers in HTTP/1.0."
+"It is not a modification of the intended meaning of the existing HTTP/1.0 and HTTP/1.1 documents, but it does describe the intention of the authors of those documents."
+No vendor or other provider of an HTTP implementation should claim any compliance with any IETF HTTP specification unless the implementation conditionally complies with the rules in this document.
+"In particular, implementations of HTTP SHOULD NOT reject messages or generate errors unnecessarily."
+"It is, and has always been, the explicit intent of the HTTP specification that the interpretation of an HTTP message header does not change between minor versions of the same major version."
+"It is, and has always been, the explicit intent of the HTTP specification that an implementation receiving a message header that it does not understand MUST ignore that header."
+"(The word ""ignore"" has a special meaning for proxies; see section 2.1 below.)"
+The minor version sent in a message MUST NOT indicate the interpretation of other header fields.
+"This reflects the principle that the minor version labels the capability of the sender, not the interpretation of the message."
+"In a future version of HTTP, we may introduce a mechanism that explicitly requires a receiving implementation to reject a message if it does not understand certain headers."
+"However, no implementation claiming compliance with a lower HTTP version (in particular, HTTP/1.1) will have to implement this mechanism."
+One consequence of these rules is that an HTTP/1.1 message sent to an HTTP/1.0 recipient (or a recipient whose version is unknown) MUST be constructed so that it remains a valid HTTP/1.0 message when all headers not defined in the HTTP/1.0 specification [1] are removed.
+"A proxy MUST forward an unknown header, unless it is protected by a Connection header."
+"A proxy implementing an HTTP version >= 1.1 MUST NOT forward unknown headers that are protected by a Connection header, as described in section 14.10 of the HTTP/1.1 specification [2]."
+"We remind the reader that that HTTP version numbers are hop-by-hop components of HTTP messages, and are not end-to-end."
+"That is, an HTTP proxy never ""forwards"" an HTTP version number in either a request or response."
+"An implementation of HTTP/x.b sending a message to a recipient whose version is known to be HTTP/x.a, a < b, MAY send a header that is not defined in the specification for HTTP/x.a."
+"An implementation of HTTP/x.b sending a message to a recipient whose version is known to be HTTP/x.a, a < b, MUST NOT depend on the recipient understanding a header not defined in the specification for HTTP/x.a."
+"For example, HTTP/1.0 clients cannot be expected to understand chunked encodings, and so an HTTP/1.1 server must never send ""Transfer-Encoding: chunked"" in response to an HTTP/1.0 request."
+"The most strenuous debate over the use of HTTP version numbers has centered on the problem of implementations that do not follow the robustness principle, and which fail to produce useful results when they receive a message with an HTTP minor version higher than the minor version they implement."
+"An HTTP client SHOULD send a request version equal to the highest version for which the client is at least conditionally compliant, and whose major version is no higher than the highest version supported by the server, if this is known."
+An HTTP client MUST NOT send a version for which it is not at least conditionally compliant.
+"An HTTP client MAY send a lower request version, if it is known that the server incorrectly implements the HTTP specification, but only after the client has determined that the server is actually buggy."
+"An HTTP server SHOULD send a response version equal to the highest version for which the server is at least conditionally compliant, and whose major version is less than or equal to the one received in the request."
+An HTTP server MUST NOT send a version for which it is not at least conditionally compliant.
+A server MAY send a 505 (HTTP Version Not Supported) response if cannot send a response using the major version used in the client's request.
+"An HTTP server MAY send a lower response version, if it is known or suspected that the client incorrectly implements the HTTP specification, but this should not be the default, and this SHOULD NOT be done if the request version is HTTP/1.1 or greater."

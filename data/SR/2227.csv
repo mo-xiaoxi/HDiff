@@ -1,0 +1,210 @@
+sentences
+"This desire leads to some of the ""cache-busting"" done by existing servers."
+"(""Cache-busting"" is the use by servers of techniques intended to prevent caching of responses; it is unknown exactly how common this is.)"
+"This kind of cache-busting is done not for the purpose of maintaining transparency or security properties, but simply to collect demographic information."
+"The key point is that the results aren't exact, but are still useful."
+Some of this evidence is inferred from the study of proxy traces; some is based on explicit statements of the intention of the operators of Web servers.
+Optional: no server or proxy is required to implement it.
+Proxy-centered: there is no involvement on the part of end-client implementations.
+Solely a performance optimization: it provides no information or functionality that is not already available in HTTP/1.1.
+"The intent is to improve performance overall, and reduce latency for almost all interactions; latency might be increased for a small fraction of HTTP interactions."
+"Best-efforts: it does not guarantee the accuracy of the reported information, although it does provide accurate results in the absence of persistent network failures or host crashes."
+Neutral with respect to privacy: it reveals to servers no information about clients that is not already available through the existing features of HTTP/1.1.
+Solving the entire problem of efficiently obtaining extensive information about requests made via proxies.
+"- Improving the protection of user privacy (although our proposal may reduce the transfer of user-specific information to servers, it does not prevent it)."
+"Avoiding all forms of ""cache-busting"", or even all cache-busting done for gathering counts."
+"If it is not deployed widely in both proxies and servers, it will provide little benefit."
+"Even if widely deployed, it might not be widely used, and so might not significantly improve performance."
+"This section is included for people not wishing to read the entire document; it is not a specification for the proposed design, and over-simplifies many aspects of the design."
+"The design adds a new ""Meter"" header to HTTP; the header is always protected by the ""Connection"" header, and so is always hop-by-hop."
+"This mechanism allows the construction of a ""metering subtree"", which is a connected subtree of proxies, rooted at an origin server."
+"Only those proxies that explicitly volunteer to join in the metering subtree for a resource participate in hit-metering, but those proxies that do volunteer are required to make their best effort to provide accurate counts."
+"When a hit-metered response is forwarded outside of the metering subtree, the forwarding proxy adds ""Cache-control: s- maxage=0"", so that other proxies (outside the metering subtree) are forced to forward all requests to a server in the metering subtree."
+"NOTE: the HTTP/1.1 specification does not currently define a ""s- maxage"" Cache-control directive."
+"The Meter header carries zero or more directives, similar to the way that the Cache-control header carries directives."
+"If a proxy does volunteer, the server may use certain directives to require that a response be hit-metered."
+"These rules ensure that the results are entirely consistent in all cases, except when systems or networks fail."
+"This document uses terms defined and explained in the HTTP/1.1 specification [4], including ""origin server,"" ""resource,"" ""hop-by- hop,"" ""unconditional GET,"" and ""conditional GET."""
+"The key words ""MUST"", ""MUST NOT"", ""REQUIRED"", ""SHOULD"", SHOULD NOT"", ""RECOMMENDED"", ""MAY"", and ""OPTIONAL"" in this document are to be interpreted as described in RFC 2119 [1]."
+"These new non-mandatory features require minimal new protocol support, no change in protocol version, relatively little overhead in message headers."
+The design adds no additional network round-trips in any critical path that directly affects user-perceived latency (see section 4.3 for an analysis).
+"The primary goal of hit-metering and usage-limiting is to obviate the need for an origin server to send ""Cache-control: s-maxage=0"" with responses for resources whose value is not likely to change immediately."
+"In other words, in cases where the only reason for contacting the origin server on every request that might otherwise be satisfied by a proxy cache entry is to allow the server to collect demographic information or to control the number of times a cache entry is used, the extension proposed here will avoid a significant amount of unnecessary network traffic and latency."
+The Meter header is used to transmit a number of directives and reports.
+"The concepts of a ""use"" of a cache entry, which is when a proxy returns its entity-body in response to a conditional or non-conditional request, and the ""reuse"" of a cache entry, which is when a proxy returns a 304 (Not Modified) response to a conditional request which is satisfied by that cache entry."
+"The concept of a hit-metered resource, for which proxy caches make a best-effort attempt to report accurate counts of uses and/or reuses to the origin server."
+"The goal is a best-efforts approximation of the true number of uses and/or reuses, not a guaranteed exact count."
+"The new Meter directives also allow a server to bound the inaccuracy of a particular hit-count, by bounding the number of uses between reports."
+Implementation of such a categorized hit counting is likely to be a very small modification to most implementations of Vary; some implementations may not require any modification at all.
+"Mapping this onto the publishing model, a proxy cache would increment the use-count for a cache entry once for each unconditional GET done for the entry, and once for each conditional GET that results in sending a copy of the entry to update a client's invalid cached copy."
+"Conditional GETs that result in 304 (Not Modified) are not included in the use-count, because they do not result in a new user seeing the page, but instead signify a repeat view by a user that had seen it before."
+"HEADs are not counted at all, because their responses do not contain an entity-body."
+"Single user caches should not use Meter, because their hits will be automatically counted as a result of the unconditional GET with which they first fetch the page, from either the origin-server or from a proxy cache."
+Their subsequent conditional GETs do not result in a new user seeing the page.
+"The mechanism specified here counts GETs; other methods either do not result in a page for the user to read, aren't cached, or are ""written-through"" and so can be directly counted by the origin server."
+"(If, in the future, a ""cachable POST"" came into existence, whereby the entity-body in the POST request was used to select a cached response, then such POSTs would have to be treated just like GETs.)"
+"In the case of multiple caches along a path, a proxy cache does the obvious summation when it receives a use-count or reuse-count in a request from another cache."
+"In order to allow the introduction of hit-metering and usage-limiting without requiring a protocol revision, and to ensure a reasonably close approximation of accurate counts, the negotiation of metering and usage-limiting is done hop-by-hop, not end-to-end."
+"Proxies at the leaves of this subtree will insert a ""Cache-control: s-maxage=0"" directive, which forces all other proxies (below this subtree) to check with a leaf of the metering subtree on every request."
+"However, it does not prevent them from storing and using the response, if the revalidation succeeds."
+No proxy is required to implement hit-metering or usage-limiting.
+"This is a conservative design, which may sometimes fail to take advantage of hit-metering support in proxies outside the metering subtree."
+"However, it is likely that without the reliability offered by a conservative design, managers of origin servers with requirements for accurate approximations will not take advantage of any hit-metering proposal."
+"The hit-metering/usage-limiting mechanism is designed to avoid any extra network round-trips in the critical path of any client request, and (as much as possible) to avoid excessively lengthening HTTP messages."
+The Meter header is used to transmit both negotiation information and numeric information.
+A formal specification for the Meter header appears in section 5; the following discussion uses an informal approach to improve clarity.
+"The ""metering subtree"" approach is implemented in a simple, straightforward way by defining the new ""Meter"" header as one that MUST always be protected by a Connection header in every request or response."
+"MUST NOT be sent in response to a request from a client whose version number is less than HTTP/1.1.
+MUST NOT be accepted from a client whose version number is less than HTTP/1.1."
+The reason for the latter two restrictions is to protect against proxies that might not properly implement the Connection header.
+"Although RFC2068 does not specifically require this behavior, it appears to be implied."
+"Otherwise, one could not depend on the stated property (section 14.10) that the protected options ""MUST NOT be communicated by proxies over further connections."""
+This should probably be clarified in a subsequent draft of the HTTP/1.1 specification.
+"This specification does not, in any way, propose a modification of the specification of the Connection header."
+"Similarly, when a proxy in the subtree receives a usage report, it ensures that the hits represented by this report are summed properly and reported to the origin server."
+"When a proxy forwards a hit-metered or usage-limited response to a client (proxy or end-client) not in the metering subtree, it MUST omit the Meter header, and it MUST add ""Cache-control: s-maxage=0"" to the response."
+The Meter header is used to carry zero or more directives.
+"An origin server that wants to collect hit counts for a resource, by simply forcing all requests to bypass any proxy caches, would respond to requests on the resource with ""Cache-control: s-maxage=0""."
+"(An origin server wishing to prevent HTTP/1.0 proxies from improperly caching the response could also send both ""Expires: <now>"", to prevent such caching, and ""Cache-control: max-age="
+"The purpose of the Meter header is to obviate the need for ""Cache- control: s-maxage=0"" within a metering subtree."
+wont-report     indicates that the proxy will obey usage-limits but will not send usage reports.
+wont-limit      indicates that the proxy will not obey usage-limits but will send usage reports.
+A proxy willing to neither obey usage-limits nor send usage reports MUST NOT transmit a Meter header in the request.
+This makes the default case more efficient.
+An origin server that is not interested in metering or usage-limiting the requested resource simply ignores the Meter header.
+dont-report     specifies that the proxy SHOULD NOT send usage reports to the server.
+"NNN     sets a metering timeout of NNN minutes, from the time that this response was originated, for the reporting of a hit-count."
+"If the proxy has a non-zero hit count for this response when the timeout expires, it MUST send a report to the server at or before that time."
+"By definition, an empty Meter header in a response, or any Meter header that does not contain ""dont-report"", means ""Meter: do-report""; this makes a common case more efficient."
+Note: an origin server using the metering timeout mechanism to bound the collection period over which hit-counts are obtained should adjust the timeout values in the responses it sends so that all responses generated within that period reach their metering timeouts at or before the end of that period.
+"If the origin server simply sends a constant metering timeout T with each response for a resource, the reports that it receives will reflect activity over a period whose duration is between T and N*T (in the worst case), where N is the maximum depth of the metering subtree."
+"max-uses=NNN    sets an upper limit of NNN ""uses"" of the response, not counting its immediate forwarding to the requesting end-client, for all proxies in the following subtree taken together."
+"Note that the limit on ""uses"" set by the max-uses directive does not include the use of the response to satisfy the end-client request that caused the proxy's request to the server."
+"Note: a proxy that has not sent the Meter header in a request for the given resource, and which has therefore not volunteered to honor Meter directives in a response, is not required to honor them."
+"If, in this situation, the server does send a Meter header in a response, this is a protocol error."
+"For example, if proxy A receives a GET request from proxy B for URL X with ""Connection: Meter"", but proxy A's cached response for URL does not include any Meter directives, then proxy A may ignore the metering offer from proxy B.
+However, if proxy A has previously told the origin server ""Meter: wont-limit"" (implying will-report), and the cached response contains ""Meter: do-report"", and proxy B's request includes ""Meter:  wont-report"", then proxy B's offer is inconsistent with proxy A's duty to the origin server."
+"Therefore, in this case proxy A must add ""Cache-control: s-maxage=0"" when it returns the cached response to proxy B, and must not include a Meter header in this response."
+"Note that when a proxy forwards a client's request and receives a response, the response that the proxy sends immediately to the requesting client is not counted as a ""use""."
+"I.e., the reported count is the number of times the cache entry was used, and not the number of times that the response was used."
+"A proxy SHOULD NOT transmit ""Meter: count=0/0"", since this conveys no useful information."
+"Proxys forwarding usage reports up the metering subtree MUST NOT change the contents of the conditional header, since otherwise this would result in incorrect counting."
+A usage report MUST NOT be transmitted as part of a forwarded request that includes multiple entity tags in an If-None-Match or If-Match header.
+It is not possible to negotiate the reporting of one but not the other.
+When it must generate a conditional GET to satisfy a client request because the max-uses limit has been exceeded.
+Upon expiration of a metering timeout associated with a cache entry that has a non-zero hit-count.
+"the proxy is not able to store more than one response per resource, and a request forwarded on behalf of a client has resulted in the receipt of a new response (one with a different entity-tag or last-modified time)."
+"Note that a cache might continue to store hit-count information even after having deleted the body of the response, so it is not necessary to report the hit-count when deleting the body; it is only necessary to report it if the proxy is about to ""forget"" a non-zero value."
+- The proxy is not required to retry the HEAD request if it fails (this is a best-efforts design).
+"To improve accuracy, however, the proxy SHOULD retry failed HEAD requests, subject to resource constraints."
+The proxy is not required to serialize any other operation on the completion of this request.
+This may involve a non-naive algorithm for scheduling the deletion of hit-count entries.
+such a response does not exceed a max-uses limit.
+it is not required to forward the request because of an expired metering timeout.
+"Note that this freedom to choose the max-uses value applies to the origin server, as well."
+There is no requirement that an origin server send the same max-uses value to all caches.
+"For example, it might make sense to send ""max-uses=2"" the first time one hears from a cache, and then double the value (up to some maximum limit) each time one gets a ""use-count"" from that cache."
+"The idea is that the faster a cache is using up its max-use quota, the more likely it will be to report a use-count value before removing the cache entry."
+"Also, high and frequent use-counts imply a corresponding high efficiency benefit from allowing caching."
+"3. delays imposed on ""critical paths"" for HTTP operations (section 4.3)."
+"For many (but not all) service operators, the single most important aspect of the request stream is the number of distinct users who have retrieved a particular entity within a given period (e.g., during a given day)."
+The intent of the design is that the precision of this approximation is consistent with the goals of simplicity and optional implementation.
+"Almost all Web users use client software that maintains local caches, and the state of the art of local-caching technology is quite effective."
+(Section 4.2 discusses the case where end-client caches are small or non-existent.)
+"If a proxy cache maintains and reports an accurate use-count of such retrievals, then its reported use-count will closely approximate the number of distinct users who have retrieved the entity."
+"Or, if the cache-management policy implemented in typical client caches is biased against retaining certain kinds of frequently re-referenced entities (such as very large images), the use-counts reported will tend to overestimate the user-counts for such entities."
+"Although this result might not apply universally, it implies that almost all reuses will hit in the end-client cache, and will not be seen as unconditional GETs by a proxy cache."
+"The existing (HTTP/1.0) ""cache-busting"" mechanisms for counting distinct users will certainly overestimate the number of users behind a proxy, since it provides no reliable way to distinguish between a user's initial request and subsequent repeat requests that might have been conditional GETs, had not cache-busting been employed."
+"The ""Cache-control: s-maxage=0"" feature of HTTP/1.1 does allow the separation of use-counts and reuse-counts, provided that no HTTP/1.0 proxy caches intervene."
+"Note that if there is doubt about the validity of the results of hit-metering a given set of resources, the server can employ cache- busting techniques for short periods, to establish a baseline for validating the hit-metering results."
+"If the Network Computers (NC) model becomes popular, however, then this assumption may be faulty: most proposed NCs have no disk storage, and relatively little RAM."
+Such client systems may do little or no caching of HTTP responses.
+"First note that the hit-metering design in this document, even with such clients, provides an approximation no worse than available with unmodified HTTP/1.1: the counts that a proxy would return to an origin server would represent exactly the number of requests that the proxy would forward to the server, if the server simply specifies ""Cache-control:  s-maxage=0""."
+"This is not perfect: for example, it fails to distinguish between NCs and certain other kinds of hosts."
+"The proxy might also use the heuristic that only those clients that never send a conditional GET should be treated this way, although we are not at all certain that NCs will never send conditional GETs."
+"Since the solution to this problem appears to require heuristics based on the actual behavior of NCs (or perhaps a new HTTP protocol feature that allows unambiguous detection of cacheless clients), it appears to be premature to specify a solution."
+"In systems (such as the Web) where latency is at issue, there is usually a tree of steps which depend on one another, in such a way that the final result cannot be accomplished until all of its predecessors have been."
+"Since the tree structure admits some parallelism, it is not necessary to add up the timings for each step to discover the latency for the entire process."
+"But any single path through this dependency tree cannot be parallelized, and the longest such path is the one whose length (in units of seconds) determines the overall latency."
+"This is the ""critical path"", because no matter how much shorter one makes any other path, that cannot change the overall latency for the final result."
+"If one views the final result, for a Web request, as rendering a page at a browser, or otherwise acting on the result of a request, clearly some network round trips (e.g., exchanging TCP SYN packets if the connection doesn't already exist) are on the critical path."
+"This hit-metering design does add some round-trips for reporting non-zero counts when a cache entry is removed, but, by design, these are off any critical path:  they may be done in parallel with any other operation, and require only ""best efforts"", so a proxy does not have to serialize other operations with their success or failure."
+"Clearly, anything that changes network utilization (either increasing or decreasing it) can indirectly affect user-perceived latency."
+"Our expectation is that hit-metering, on average, will reduce loading and so even its indirect effects should not add network round-trips in any critical path."
+"But there might be a few specific instances where the added non-critical-path operations (specifically, usage reports upon cache-entry removal) delay an operation on a critical path."
+This is an unavoidable problem in datagram networks.
+Implementation of the Meter header is optional for both proxies and origin servers.
+The Meter header MUST always be protected by a Connection header.
+A proxy that does not implement the Meter header MUST NOT pass it through to another system (see section 5.5 for how a non-caching proxy may comply with this specification).
+"If a Meter header is received in a message whose version is less than HTTP/1.1, it MUST be ignored (because it has clearly flowed through a proxy that does not implement Meter)."
+"A proxy that has received a response with a version less than HTTP/1.1, and therefore from a server (or another proxy) that does not implement the Meter header, SHOULD NOT send Meter request directives to that server, because these would simply waste bandwidth."
+This recommendation does not apply if the proxy is currently hit-metering or usage-limiting any responses from that server.
+A meter-response-directive may only appear in an HTTP response directive.
+wont-report     indicates that the proxy will obey usage-limits but will not send usage reports.
+wont-limit      indicates that the proxy will not obey usage-limits but will send usage reports.
+"A proxy willing neither to obey usage-limits nor to send usage reports MUST NOT transmit a Meter header in the request.
+count ""="" 1*DIGIT ""/"" 1*DIGIT"
+"max-uses ""="" 1*DIGIT sets an upper limit on the number of ""uses"" of the response, not counting its immediate forwarding to the requesting end-client, for all proxies in the following subtree taken together."
+"max-reuses ""="" 1*DIGIT sets an upper limit on the number of ""reuses"" of the response for all proxies in the following subtree taken together."
+dont-report     specifies that the proxy SHOULD NOT send usage reports to the server.
+"timeout ""="" 1*DIGIT sets a metering timeout of the specified number of minutes (not seconds) after the origination of this response (as indicated by its ""Date"" header)."
+"If the proxy has a non-zero hit count for this response when the timeout expires, it MUST send a report to the server at or before that time."
+Timeouts should be implemented with an accuracy of plus or minus one minute.
+wont-ask        specifies that the proxy SHOULD NOT send any Meter headers to the server.
+The proxy should forget this advice after a period of no more than 24 hours.
+"To allow for the most efficient possible encoding of Meter headers, we define abbreviated forms of all Meter directives."
+"Note: please remember that hit-counts and usage-counts are associated with individual responses, not with resources."
+"A cache entry that, over its lifetime, holds more than one response is also not a ""response"", in this particular sense."
+"Note: when a proxy forwards a client's request and receives a response, the response that the proxy sends immediately to the requesting client is not counted as a ""use""."
+"I.e., the reported count is the number of times the cache entry was used, and not the number of times that the response was used."
+"We define a ""reuse"" of R as as occurring when the proxy responds to a request selecting R with a 304 (Not Modified) status, unless that request is a Range request that does not specify byte #0 of the entity."
+"When a subsequent client request selecting R (i.e., including V) includes a ""count"""
+"If this request was caused by the proxy's receipt of a request from a client, upon receipt of the server's response, the proxy sets CU and CR to the number of uses and reuses, respectively, that may have occurred while the request was in progress."
+"(These numbers are likely, but not certain, to be zero.)"
+"If the proxy's request was a final HEAD-based report, it need no longer maintain the CU and CR values, but it may also set them to the number of intervening uses and reuses and retain them."
+"Similarly, TR is zeroed only upon receipt of a ""max- reuses"""
+"If (in either case) the proxy has already forwarded a previous request to the server and is waiting for the response, it should delay further handling of the new request until the response arrives (or times out); it SHOULD NOT have two revalidation requests pending at once that select the same response, unless these are Range requests selecting different subranges."
+"There is a special case of this rule for the ""max-uses"" directive: if the proxy receives a response with ""max-uses=0"" and does not forward it to a requesting client, the proxy should set a flag PF associated with R."
+"If R is true, then when a request arrives while if TU >= MU, if the PF flag is set, then the request need not be forwarded to the server (provided that this is not required by other caching rules)."
+"However, the PF flag MUST be cleared on any use of the response."
+"Note: the ""PF"" flag is so named because this feature is useful only for caches that could issue a ""prefetch"" request before an actual client request for the response."
+A proxy not implementing prefetching need not implement the PF flag.
+"Any other algorithm that exhibits the same external behavior (i.e., generates exactly the same requests from the proxy to the server) as the one in this section is explicitly allowed."
+"The proxy issues a non-conditional request for the resource using V, while TU and/or TR are non-zero, and the server's response includes a new ""max-uses"" and/or ""max-reuses"" directive (thus zeroing TU and/or TR, but not CU and CR)."
+"The proxy issues a conditional request reporting the hit-counts (and thus zeroing CU and CR, but not TU or TR), but the server's response does not include a new ""max-uses"" and/or ""max-reuses"" directive."
+"Generate a HEAD-based usage report when the non-conditional request is sent (or when the ""max-uses=0"" is received), causing CU and CR to be zeroed (analogous in some ways to a ""memory barrier"" instruction)."
+"In the second case, the server implicitly has removed the usage-limit(s) on the response (by setting MU and/or MR to infinity), and so the fact that, say, TU is different from CU is not significant."
+"It may also be possible to eliminate the PF flag by sending extra HEAD-based usage-report requests, but we recommend against this; it is better to allocate an extra bit per entry than to transmit extra requests."
+"For uniformity of the results seen by origin servers, proxies need to observe a rule for counting these references, although it is not clear that one rule generates accurate results in every case."
+"Therefore, this rule appears to meet the goal of a ""best-efforts"" approximation."
+"A non-caching proxy (HTTP/1.1 or higher) that participates in the metering subtree SHOULD forward Meter headers on both requests and responses, with the appropriate Connection headers."
+"If the proxy forwards Meter headers in responses, such a response MUST NOT be returned to any request except the one that elicited it."
+"Once a non-caching proxy starts forwarding Meter headers, it should not arbitrarily stop forwarding them (or else reports may be lost)."
+"A proxy that caches some responses and not others, for whatever reason, may choose to implement the Meter header as a caching proxy for the responses that it caches, and as a non-caching proxy for the responses that it does not cache, as long as its external behavior with respect to any particularly response is fully consistent with this specification."
+"If such caches use a protocol other than HTTP to communicate between themselves, such as the Internet Cache Protocol (ICP) [12], and if they implement the Meter header, then they MUST act to ensure that their cooperation does not violate the intention of this specification."
+"Similarly, if the first cache agreed to usage-limit the response, the total number of uses by the group of caches MUST be limited to the agreed-upon number."
+This example shows how the protocol is intended to be used most of the time: for hit-metering without usage-limiting.
+Entity bodies are omitted.
+"Since the proxy does not know if its client is an end-system, or a proxy that doesn't do metering, it adds the ""proxy-mustcheck"" directive."
+"thus simultaneously fulfilling its duties to validate the response and to report the one ""use"" that wasn't forwarded."
+reporting that one more use of the response was satisfied from the cache.
+"Note: although most major HTTP/1.0 proxy implementations observe the Expires header, it is possible that some are in use that do not."
+Use of the Expires header to prevent caching by HTTP/1.0 proxies might not be entirely reliable.
+"For example, if a page varied based on the value of the User-Agent header in the requests, then hit counts would be kept for each different flavor of browser."
+"If a proxy does not support the Vary mechanism, then [4] says that it MUST NOT cache any response that carries a Vary header, and hence need not implement any aspect of this hit-counting or usage-limiting design for varying resources."
+It must not use the Meter header in a request to offer to hit-meter or usage-limit responses.
+"If it does offer to hit-meter or usage-limit responses, and then receives a response that includes both a Vary header and a Meter header with a directive that it cannot satisfy, then the proxy must not cache the response."
+"In other words, a proxy is allowed to partially implement the Vary mechanism with respect to hit-metering, as long as this has no externally visible effect on its ability to comply with the Meter specification."
+"Proxies which do not cache 302s will cause one hit on the redirection page per use, but the real page will get cached."
+Proxies which do cache 302s and report hits on the cached 302s will behave optimally.
+This approach has the advantage that it works whether or not the end-client has disabled the use of Referer.
+"This proposal certainly does not preclude the proposal or deployment of other such mechanisms, and many of them may be complementary to and compatible with the mechanism proposed here."
+"Phillip Hallam-Baker has proposed using a log-exchange protocol [5], by which a server could request a proxy's logs by making an HTTP request to the proxy."
+"This proposal asserts that it is ""believed to operate correctly in configurations involving multiple proxies"", but it is not clear that this is true if an outer proxy is used as a (one-way) firewall."
+"The proposal also leaves a number of open issues, such as how an origin server can be sure that all of the proxies in the request subtree actually support log-exchange."
+It is also not clear how this proposal couples a proxy's support of log- exchange to a server's permission to cache a response.
+"To help avoid this possibility, a proxy may choose to only relay usage counts received from its outbound proxies to its inbound servers when the proxies have authenticated themselves using Proxy-Authorization and/or they are on a list of approved proxies."
+"It is not possible to enforce usage limits if a proxy is willing to cheat (i.e., it offers to limit usage but then ignores a server's Meter directive)."
+"Regarding privacy:  it appears that the design in this document does not reveal any more information about individual users than would already be revealed by implementation of the existing HTTP/1.1 support for ""Cache-control: max-age=0, proxy-revalidate"" or ""Cache- control: s-maxage=0""."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

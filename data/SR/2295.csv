@@ -1,0 +1,221 @@
+sentences
+Transparent content negotiation is an extensible negotiation mechanism for automatically and efficiently retrieving the best variant when a GET or HEAD request is made.
+This enables the smooth deployment of new web data formats and markup tags.
+"However, use of this extension does not require use of HTTP/1.1: transparent content negotiation can also be done if some or all of the parties are HTTP/1.0 [2] systems."
+"The words ""MUST"", ""MUST NOT"", ""SHOULD"", ""SHOULD NOT"", and ""MAY"" in this document are to be interpreted as described in RFC 2119 [4]."
+An application program that accepts connections in order to service requests by sending back responses.
+fresh A response is fresh if its age has not yet exceeded its freshness lifetime.
+"When servicing a request on its URI, it allows selection of the best representation using the transparent content negotiation mechanism."
+"A resource from which a variant of a negotiable resource can be retrieved with a normal HTTP/1.x GET request, i.e. a GET request which does not use transparent content negotiation."
+remote variant selection algorithm A standardized algorithm by which a server can sometimes choose a best variant on behalf of a negotiating user agent.
+"The algorithm typically computes whether the Accept- headers in the request contain sufficient information to allow a choice, and if so, which variant is the best variant."
+"A list response returns the variant list of the negotiable resource, but no variant data."
+"It can be generated when the server does not want to, or is not allowed to, return a particular best variant for the request."
+"List responses are defined in section 10.1.
+choice response A choice response returns a representation of the best variant for the request, and may also return the variant list of the negotiable resource."
+"It can be generated when the server has sufficient information to be able to choose the best variant on behalf the user agent, but may only be generated if this best variant is a neighboring variant."
+There are very little requirements on the contents of an adhoc response.
+"If a request on a transparently negotiated resource is made by a client which supports transparent content negotiation, an origin server is said to perform a server-side override if the server ignores the directives in the Negotiate request header, and instead uses a custom algorithm to choose an appropriate response."
+A server-side override can sometimes be used to work around known client bugs.
+"These provisions include the Vary response header, entity tags, and the If-None-Match request header."
+Best variant
+"When the resource is accessed, the user agent sends (along with its request) various Accept- headers which express the user agent capabilities and the user preferences."
+The biggest problem with this scheme is that it does not scale well.
+"For all but the most minimal user agents, Accept- headers expressing all capabilities and preferences would be very large, and sending them in every request would be hugely inefficient, in particular because only a small fraction of the resources on the web have multiple variants."
+"The transparent content negotiation scheme eliminates the need to send huge Accept- headers, and nevertheless allows for a selection process that always yields either the best variant, or an error message indicating that user agent is not capable of displaying any of the available variants."
+The second response is a normal HTTP response: it does not contain special content negotiation related information.
+Only the user agent needs to know that the second request actually retrieves a variant.
+"For the other parties in the communication, the second transaction is indistinguishable from a normal HTTP transaction."
+"Therefore, sending such information in large Accept- headers is unnecessary."
+Accept- headers do have a limited use in transparent content negotiation however; the sending of small Accept- headers can often speed up the negotiation process.
+The Vary header is included to ensure correct caching by plain HTTP/1.1 caches (see section 10.6).
+The HTML entity included in the response allows the user to select the best variant by hand if desired.
+This choosing based on small Accept- headers is done with a `remote variant selection algorithm'.
+"It then computes whether the Accept- headers contain sufficient information to choose on behalf of the user agent, and if so, which variant is the best variant."
+"Note that this cutting of corners not only saves bandwidth, it also eliminates delays due to packet round trip times, and reduces the load on the origin server."
+"To handle requests from user agents which do not support transparent content negotiation, this specification allows the origin server to revert to a HTTP/1.0 style negotiation scheme."
+"Such a menu allows the user to randomly browse other variants, and makes it possible to manually correct any sub-optimal choice made by the automatic negotiation process."
+"The user must be able to pick a variant by hand to correct a bad automatic choice, and this is more difficult with a long variant list."
+"In order to promote user agent side fine tuning, which is more scalable than fine tuning over the network, user agents which implement a scripting language for content rendering are encouraged to make the availability of this language visible for transparent content negotiation, and to allow rendering scripts to access the capabilities and preferences data used for content negotiation, as far as privacy considerations permit this."
+"Transparent content negotiation specializes in scalable, interoperable negotiation of content representations at the HTTP level."
+"Ultimately, it will be up to the resource author to decide which negotiation mechanism, or combination of negotiation mechanisms, is most appropriate for the task at hand."
+"The variant resource may vary (on the Cookie request header, for example), but MUST NOT engage in transparent content negotiation itself."
+"The source-quality attribute gives the quality of the variant, as a representation of the negotiable resource, when this variant is rendered with a perfect rendering engine on the best possible output medium."
+"If the source-quality is less than 1, it often expresses a quality degradation caused by a lossy conversion to a particular data format."
+"Note however, that degradation is a function of the source; an original piece of ASCII-art may degrade in quality if it is captured in JPEG form."
+"The source-quality could also represent a level of quality caused by skill of language translation, or ability of the used media type to capture the intended artistic expression."
+"This is due to the fact that quality factors are generally combined by multiplying them, not by adding them."
+"When assigning source-quality values, servers should not account for the size of the variant and its impact on transmission and rendering delays; the size of the variant should be stated in the length attribute and any size-dependent calculations should be done by the variant selection algorithm."
+"Any constant rendering delay for a particular media type (for example due to the startup time of a helper application) should be accounted for by the user agent, when assigning a quality factor to that media type."
+"The length attribute, if present, MUST thus reflect the length of the variant alone, and not the total size of the variant and any objects inlined or embedded by the variant."
+"Though all of these attributes are optional, it is often desirable to include as many attributes as possible, as this will increase the quality of the negotiation process."
+Note: A server is not required to maintain a one-to-one correspondence between the attributes in the variant description and the Content-* headers in the variant response.
+"For example, if the variant description contains a language attribute, the response does not necessarily have to contain a Content-Language header."
+"If a Content-Language header is present, it does not have to contain an exact copy of the information in the language attribute."
+It can be included if the URI and normal attributes of a variant are considered too opaque to allow interpretation by the user.
+"The extension-attribute allows future specifications to incrementally define dimensions of negotiation which cannot be created by using the feature negotiation framework, and eases content negotiation experiments."
+User agents SHOULD ignore all extension attributes they do not recognize.
+Proxies MUST NOT run a remote variant selection algorithm if an unknown extension attribute is present in the variant list.
+"The use of feature tags need not be limited to transparent content negotiation, and not every feature tag needs to be usable in the HTTP transparent content negotiation framework."
+This specification does not define any feature tags.
+"At the protocol level, this specification does not distinguish between different uses of feature tags: a tag will be processed in the same way, no matter whether it identifies a property, capability, or preference."
+"A token value XYZ is equal to a quoted-string value ""XYZ""."
+"Each record in a feature set has a, possibly empty, set of tag values."
+"For feature tags which cannot have values associated with it, this set is always empty."
+"As feature registration is expected to be an ongoing process, it is generally not possible for a user agent to know the meaning of all feature tags it can possibly encounter in a variant description."
+"ftag=[N-M] true if the feature is present with at least one numeric value, while the highest value with which it is present in the range N-M, false otherwise."
+"If N is missing, the lower bound is 0."
+is used in a variant description to specify how the presence or absence of particular feature tags in the user agent affects the overall quality of the variant.
+"The default value for the false-degradation is 0, or 1 if a true-improvement value is given."
+"A user agent SHOULD, and a remote variant selection algorithm MUST compute the quality degradation factor associated with the features attribute by multiplying all quality degradation factors of the elements of the feature-list."
+"A feature list element yields its true-improvement factor if the corresponding feature predicate is true, or if at least one element of the corresponding fpred-bag is true."
+The element yields its false-degradation factor otherwise.
+A remote variant selection algorithm is a standardized algorithm by which a server can choose a best variant on behalf of a negotiating user agent.
+"A remote algorithm typically computes whether the Accept- headers in the request contain sufficient information to allow a choice, and if so, which variant is the best variant."
+"This specification does not define any remote algorithms, but does define a mechanism to negotiate on the use of such algorithms."
+There are no compatibility requirements between algorithms with different major version numbers.
+"This specification adds one new HTTP status code, and introduces six new HTTP headers."
+"The 506 status code indicates that the server has an internal configuration error: the chosen variant resource is configured to engage in transparent content negotiation itself, and is therefore not a proper end point in the negotiation process."
+"Note: the name `Accept-Features' for this header was chosen because of symmetry considerations with other Accept- headers, even though the Accept-Features header will generally not contain an exhaustive list of features which are somehow `accepted'."
+Responses from resources which do not support transparent content negotiation MAY also use Alternates headers.
+"If the variant selection algorithm of the user agent finds that all described variants are unacceptable, then it SHOULD choose the fallback variant, if present, as the best variant."
+"If the user agent computes the overall quality values of the described variants, and finds that several variants share the highest value, then the first variant with this value in the list SHOULD be chosen as the best variant."
+"The directive proxy-rvsa="""" will disable variant selection by proxies entirely."
+Clients SHOULD ignore all extension-list- directives they do not understand.
+The Negotiate request header can contain directives for any content negotiation process initiated by the request.
+"The user agent allows origin servers to run a custom algorithm which guesses the best variant for the request, and to return this variant in a choice response, if the resulting choice response is smaller than or not much larger than a list response."
+The definition of `not much larger' is left to origin server heuristics.
+"If the algorithm has sufficient information to choose a best, neighboring variant, the origin server or proxy MAY return a choice response with this variant."
+The origin server may even run algorithms which have not been standardized.
+"If the algorithm has sufficient information to choose a best, neighboring variant, the origin server or proxy MAY return a choice response with this variant."
+Servers SHOULD ignore all negotiate-directives they do not understand.
+"If the Negotiate header allows a choice between multiple remote variant selection algorithms which are all supported by the server, the server SHOULD use some internal precedence heuristics to select the best algorithm."
+The TCN response header is used by a server to signal that the resource is transparently negotiated.
+"If the resource is not transparently negotiated, a TCN header MUST NOT be included in any response."
+"If the directive is ""re-choose"", the server MUST include an Alternates header with the variant bound to the negotiable resource in the response, and user agent SHOULD use its internal variant selection algorithm to choose, retrieve, and display the best variant from this list."
+"If the directive is ""keep"" the user agent SHOULD NOT renegotiate on the response, but display it directly, or act on it directly if it is a redirection response."
+Clients SHOULD ignore all tcn-extensions they do not understand.
+"To allow for correct and efficient caching and revalidation of negotiated responses, this specification extends the caching model of HTTP/1.1 [1] in various ways."
+"If no freshness lifetimes are assigned by the origin server, M is the maximum of the freshness lifetimes which were heuristically assigned by all caches which can re-use the variant list."
+A variant list validator is an opaque value which acts as the cache validator of a variant list bound to a negotiable resource.
+"If two responses contain the same variant list validator, a cache can treat the Alternates headers in these responses as equivalent (though the headers themselves need not be identical)."
+"if one normal tag ""X"" is a prefix of another normal tag ""XY"", then ""Y"" must never be a semicolon followed by a variant list validator."
+"After having constructed a list, choice, or adhoc response, a server MAY process any If-No-Match or If-Range headers in the request message and shorten the response to a 304 (Not Modified) or 206 (Partial Content) response, following the rules in the HTTP/1.1 specification [1]."
+"A list response returns the variant list of the negotiable resource, but no variant data."
+"It can be generated when the server does not want to, or is not allowed to, return a particular best variant for the request."
+"If the user agent supports transparent content negotiation, the list response will cause it to select a best variant and retrieve it."
+"A list response MUST contain (besides the normal headers required by HTTP) a TCN header which specifies the ""list"" response-type, the Alternates header bound to the negotiable resource, a Vary header and (unless it was a HEAD request) an entity body which allows the user to manually select the best variant."
+"Some existing versions of HTTP/1.0 clients are known to silently ignore 300 responses, instead of handling them according to the HTTP/1.0 specification [2]."
+"Servers should therefore be careful in sending 300 responses to non-negotiating HTTP/1.0 user agents, and in making these responses cacheable."
+"Depending on the status code, a list response is cacheable unless indicated otherwise."
+"According to the HTTP/1.1 specification [1], a user agent which does not support transparent content negotiation will, when receiving a list response with the 300 status code, display the entity body included in the response."
+"A choice response returns a representation of the best variant for the request, and may also return the variant list of the negotiable resource."
+"It can be generated when the server has sufficient information to be able to choose the best variant on behalf the user agent, but may only be generated if this best variant is a neighboring variant."
+"For request from user agents which do not support transparent content negotiation, a server may always generate a choice response, provided that the variant returned is a neighboring variant."
+The variant returned in a choice response need not necessarily be listed in the variant list bound to the negotiable resource.
+"Depending on the status code, a choice response is cacheable unless indicated otherwise."
+Section 10.4 specifies how these two items can be obtained by a proxy cache.
+"Generate a valid HTTP response message, but not one with the 304 (Not Modified) code, for the request message constructed in step 1."
+"If the request is passed on, the proxy MAY add, modify, or delete If-None-Match and If-Range headers to optimize the transaction with the upstream server."
+"Note: the proxy should be careful not to add entity tags of non-neighboring variants to If-* (conditional) headers of the request, as there are no global uniqueness requirements for these tags."
+Only in origin servers: check for an origin server configuration error.
+"If the HTTP response message generated in step 2 contains a TCN header, then the best variant resource is not a proper end point in the transparent negotiation process, and a 506 (Variant Also Negotiates) error response message SHOULD be generated instead of going to step 4."
+Delete any Content-Location header which was already present.
+"Note: According to the HTTP/1.1 specification [1], if the Content-Location header contains a relative URI, this URI is relative to the URI in the Content-Base header, if present, and relative to the request-URI if no Content- Base header is present."
+"It is usually a good strategy to always add the current Alternates header, unless it is very large compared to the rest of the response."
+"To ensure compatibility with HTTP/1.0 caching proxies which do not recognize the Vary header, an Expires header with a date in the past MAY be added."
+"If an ETag header is present in the response message from step 2, then extend the entity tag in that header with the current variant list validator, as specified in section 9.2.
+Note: Step g. is required even if the variant list itself is not added in step d.
+max( variant_age , alternates_age ) where variant_age is the age of the variant response obtained in step 2, calculated according to the rules in the HTTP/1.1 specification [1], and alternates_age is the age of the Alternates header added in step d, calculated according to the rules in section 10.4."
+Note that a server can shorten the response produced by the above algorithm to a 304 (Not Modified) response if an If-None-Match header in the original request allows it.
+"If this is the case, an implementation of the above algorithm can avoid the unnecessary internal construction of full response message in step 2, it need only construct the parts which end up in the final 304 response."
+A proxy cache which implements this optimization can sometimes generate a legal 304 response even if it has not cached the variant data itself.
+"Depending on the status code, an adhoc response is cacheable unless indicated otherwise."
+"If a proxy cache has available a negotiated response which is cacheable, fresh, and has ETag and Alternates headers, then it MAY extract the Alternates header and associated variant list validator from the response, and reuse them (without unnecessary delay) to negotiate on behalf of the user agent (section 13) or to construct a choice response (section 10.2)."
+"The normal response can be extracted by taking a copy of the choice response and then deleting any Content-Location, Alternates, and Vary headers, renaming any Variant-Vary headers to Vary headers, and shortening the structured entity tag in any ETag header to a normal entity tag."
+"For security reasons (see section 14.2), an extracted normal response MUST NEVER be cached if belongs to a non-neighboring variant resource."
+"If the choice response claims to contain data for a non- neighboring variant resource, the proxy SHOULD reject the choice response as a probable spoofing attempt."
+This Vary header is a signal to HTTP/1.1 caches that something special is going on.
+This header leaves the way in which the response is selected by the server completely unspecified.
+"A more elaborate Vary header MAY be used to allow for certain optimizations in HTTP/1.1 caches which do not have specific optimizations for transparent content negotiation, but which do cache multiple variant responses for one resource."
+Such a more elaborate Vary header lists all request headers which can be used by the server when selecting a response for a request on the resource.
+The Vary header constructed in this way specifies the response variation which can be caused by the use of a variant selection algorithm in proxies.
+"A proxy cache cannot construct an elaborate vary header using the method above, because this method requires exact knowledge of any custom algorithms present in the origin server."
+"A clean Vary header can however only be extracted if the variant does not vary itself, i.e. if a Variant-Vary header is absent."
+which overrides the freshness lifetime of zero seconds specified by the included Expires header.
+This specification only claims downwards compatibility with the HTTP/1.0 proxy caches which implement the HTTP/1.0 specification [2].
+Some legacy proxy caches which return the HTTP/1.0 protocol version number do not honor the HTTP/1.0 Expires header as specified in [2].
+Methods for achieving compatibility with such proxy caches are beyond the scope of this specification.
+Negotiation on the content encoding of a response is orthogonal to transparent content negotiation.
+The rules for when a content encoding may be applied are the same as in HTTP/1.1: servers MAY content-encode responses that are the result of transparent content negotiation whenever an Accept-Encoding header in the request allows it.
+"When negotiating on the content encoding of a cacheable response, servers MUST add the accept-encoding header name to the Vary header of the response, or add `Vary: *'."
+Servers SHOULD always be able to provide unencoded versions of every transparently negotiated response.
+"Like HTTP/1.1, this specification allows proxies to encode or decode relayed or cached responses on the fly, unless explicitly forbidden by a Cache-Control directive."
+The encoded or decoded response still contains the same variant as far as transparent content negotiation is concerned.
+Note that HTTP/1.1 requires proxies to add a Warning header if the encoding of a response is changed.
+"If a list response is received when a resource is accessed, the user agent MUST be able to automatically choose, retrieve, and display the best variant, or display an error message if none of the variants are acceptable."
+"If this is not the case, the user agent SHOULD reject the choice response as a probable spoofing attempt and display an error message, for example by internally replacing the choice response with a 502 (bad gateway) response."
+"If the user agent is displaying a variant which is not an embedded or inlined object and which is the result of transparent content negotiation, the following requirements apply."
+"1. The user agent SHOULD allow the user to review a list of all variants bound to the negotiable resource, and to manually retrieve another variant if desired."
+"Second, the entity included in a list response of the negotiable resource could be displayed."
+It SHOULD also allow the user to examine the variant list included in the Alternates header.
+"Such a notification and review mechanism is needed because of privacy considerations, see section 14.1."
+"If the user agent shows the URI of the displayed information to the user, it SHOULD be the negotiable resource URI, not the variant URI that is shown."
+"It is encouraged, but not required, that some of the above functionality is also made available for inlined or embedded objects, and when a variant which was selected manually is being displayed."
+"To implement transparent negotiation on a resource, the origin server MUST be able to send a list response when getting a GET request on the resource."
+"When getting a request on a transparently negotiable resource, the origin server MUST NEVER return a response with a 2xx status code or any 3xx status code, except 304, which is not a list, choice, or adhoc response."
+"If the algorithm has sufficient information to choose a best variant, and if the best variant is a neighboring variant, the origin server MAY return a choice response with this variant."
+"When getting a request on a transparently negotiable resource from a user agent which does not support transparent content negotiation, the origin server MAY use a custom algorithm to select between sending a list, choice, or adhoc response."
+"Negotiability is a binary property: a resource is either transparently negotiated, or it is not."
+"Origin servers SHOULD NOT vary the negotiability of a resource, or the variant list bound to that resource, based on the request headers which are received."
+"It is the responsibility of the author of the negotiable resource to ensure that all resources in the variant list serve the intended content, and that the variant resources do not engage in transparent content negotiation themselves."
+It is not possible (under this specification) to do transparent content negotiation on the direct result of a POST request.
+"However, a POST request can return an unnegotiated 303 (See Other) response which causes the user agent to do a GET request on a second resource."
+This second resource could then use transparent content negotiation to return an appropriate final response.
+Note that this status code is not understood by some HTTP/1.0 clients.
+"Thus, every HTTP/1.0 or HTTP/1.1 proxy provides support for transparent content negotiation."
+"However, if it is to be claimed that a HTTP/1.x proxy offers transparent content negotiation services, at least one of the specific optimizations below MUST be implemented."
+"First, when getting a request on a transparently negotiable resource from a user agent which supports transparent content negotiation, the proxy MAY return any cached, fresh list response from that resource, even if the selecting request headers, as specified by the Vary header, do not match."
+"If the algorithm has sufficient information to choose a best variant, and if the best variant is a neighboring variant, the proxy MAY return a choice response with this variant."
+"Accept- headers, in particular Accept-Language headers, may reveal information which the user would rather keep private unless it will directly improve the quality of service."
+"For example, a user may not want to send language preferences to sites which do not offer multi- lingual content."
+"The transparent content negotiation mechanism allows user agents to omit sending of the Accept-Language header by default, without adversely affecting the outcome of the negotiation process if transparently negotiated multi-lingual content is accessed."
+"However, even if Accept- headers are never sent, the automatic selection and retrieval of a variant by a user agent will reveal a preference for this variant to the server."
+"A malicious service author could provide a page with `fake' negotiability on (ethnicity- correlated) languages, with all variants actually being the same English document, as a means of obtaining privacy-sensitive information."
+Some additional privacy considerations connected to Accept- headers are discussed in [1].
+"To provide security in this case, the HTTP server will have to filter the Content-Location headers in the choice responses generated by the negotiable resource implementation."
+Malicious servers could use transparent content negotiation as a means of obtaining information about security holes which may be present in user agents.
+This is a risk in particular for negotiation on the availability of scripting languages and libraries.
+Many members of the HTTP working group have contributed to the negotiation model in this specification.
+"a table which lists `forbidden' combinations of media types and charsets, i.e. combinations which cannot be displayed because of some internal user agent limitation."
+"The output of the algorithm is either the best variant, or the conclusion that none of the variants are acceptable."
+It is assumed that the user agent can run on multiple platforms: the rounding function makes the algorithm independent of the exact characteristics of the underlying floating point hardware.
+The media type quality factor is 1 if there is no type attribute in the variant description.
+"Otherwise, it is the quality value assigned to this type by the configuration database."
+"If the database does not assign a value, then the factor is 0. qc"
+The charset quality factor is 1 if there is no charset attribute in the variant description.
+"Otherwise, it is the quality value assigned to this charset by the configuration database."
+"If the database does not assign a value, then the factor is 0.
+ql"
+The language quality factor is 1 if there is no language attribute in the variant description.
+"Otherwise, it is the highest quality value the configuration database assigns to any of the languages listed in the language attribute."
+"If the database does not assign a value to any of the languages listed, then the factor is 0.
+qf"
+The features quality factor is 1 if there is no features attribute in the variant description.
+"Otherwise, it is the quality degradation factor computed for the features attribute using the feature set of the current request."
+"The quality adjustment factor is 0 if the variant description lists a media type - charset combination which is `forbidden' by the table, and 1 otherwise."
+"If all overall quality values are 0, then the best variant is the fallback variant, if there is one in the list, else the result is the conclusion that none of the variants are acceptable."
+"If at least one overall quality value is greater than 0, then the best variant is the variant which has the description with the highest overall quality value, or, if there are multiple variant descriptions which share the highest overall quality value, the variant of the first variant description in the list which has this highest overall quality value."
+"It could be the case that the user prefers the language ""el"" over ""en"", while the user agent can render ""ISO-8859-1"" better than ""ISO- 8859-7""."
+"The result is that in the language dimension, the first variant is best, while the second variant is best in the charset dimension."
+This makes the first variant the best variant.
+"where the ""{features !textonly}"" part expresses that home."
+The last element of the list specifies a safe default for user agents which do not implement screen width negotiation.
+"Such user agents will reject the first four variants as unusable, as they seem to rely on a feature which they do not understand."
+"When designing a new feature tag, it is important to take into account that existing user agents, which do not recognize the new tag will treat the feature as absent."
+"In general, a new feature tag needs to be designed in such a way that absence of the tag is the default case which reflects current practice."
+"If this design principle is ignored, the resulting feature tag will generally be unusable."
+The color tag is therefore unusable in situations where optimal results for existing user agents are desired.
+Sophisticated HTTP servers could make a transparent negotiation module available to content authors.
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."

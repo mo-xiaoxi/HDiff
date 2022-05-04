@@ -1,0 +1,14 @@
+HTTP-message = start-line base-header basic-id [ entity-size-header ] CRLF  [ message-body ]
+start-line = request-line
+request-line = method SP request-target SP HTTP-version CRLF
+HTTP-name = %x48.54.54.50 ; HTTP
+HTTP-version = HTTP-name '/' HTTP-version-value
+OWS = *( SP / HTAB )
+entity-size-header = 'Content-Length: {{CT_value}}' CRLF
+method = 'GET'/'POST'/'HEAD'
+request-target = '/?testid={{testid}}'
+HTTP-version-value = '1.1'
+message-body = 'test=1'
+base-header =  Host 'Connection:close' CRLF
+Host = 'Host: {host}' CRLF
+basic-id = 'X-Basic-ID: {{basicid}}' CRLF

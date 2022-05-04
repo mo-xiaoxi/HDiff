@@ -1,0 +1,470 @@
+sentences
+"This prevents the ""lost update problem,"" in which modifications are lost as first one author then another writes changes without merging the other author's changes."
+"These sections introduce the abstractions manipulated by the WebDAV-specific HTTP methods described in section 8, ""HTTP Methods for Distributed Authoring""."
+"In HTTP/1.1, method parameter information was exclusively encoded in HTTP headers."
+"The use of XML to encode method parameters was motivated by the ability to add extra XML elements to existing structures, providing extensibility; and by XML's ability to encode information in ISO 10646 character sets, providing internationalization support."
+"In addition to encoding method parameters, XML is used in WebDAV to encode the responses from methods, providing the extensibility and internationalization advantages of XML for method output, as well as input."
+"While the status codes provided by HTTP/1.1 are sufficient to describe most error conditions encountered by WebDAV methods, there are some errors that do not fall neatly into the existing categories."
+"The key words ""MUST"", ""MUST NOT"", ""REQUIRED"", ""SHALL"", ""SHALL NOT"", ""SHOULD"", SHOULD NOT"", ""RECOMMENDED"",  ""MAY"", and ""OPTIONAL"" in this document are to be interpreted as described in RFC 2119 [RFC2119]."
+Live Property - A property whose semantics and syntax are enforced by the server.
+Dead Property - A property whose semantics and syntax are not enforced by the server.
+The server only records the value of a dead property; the client is responsible for maintaining the consistency of the syntax and semantics of a dead property.
+A NULL resource MUST NOT appear as a member of its parent collection.
+"There are two categories of properties: ""live"" and ""dead""."
+A live property has its syntax and semantics enforced by the server.
+A dead property has its syntax and semantics enforced by the client; the server merely records the value of the property verbatim.
+"Properties already exist, in a limited sense, in HTTP message headers."
+"However, in distributed authoring environments a relatively large number of properties are needed to describe the state of a resource, and setting/returning them all through HTTP headers is inefficient."
+The value of a property when expressed in XML MUST be well formed.
+"XML has been chosen because it is a flexible, self-describing, structured data format that supports rich schema definitions, and because of its support for multiple character sets."
+Older clients will not break when they encounter extensions because they will still have the data specified in the original schema and will ignore elements they do not understand.
+"XML's support for multiple human languages, using the ""xml:lang"" attribute, handles cases where the same character set is employed by multiple human languages."
+A property name is a universally unique identifier that is associated with a schema that provides information about the syntax and semantics of the property.
+"Because a property's name is universally unique, clients can depend upon consistent behavior for a particular property across multiple resources, on the same and across different servers, so long as that property is ""live"" on the resources in question, and the implementation of the live property is faithful to its definition."
+"The property namespace is flat; that is, no hierarchy of properties is explicitly recognized."
+"Thus, if a property A and a property A/B exist on a resource, there is no recognition of any relationship between the two properties."
+It is expected that a separate specification will eventually be produced which will address issues relating to hierarchical properties.
+"Finally, it is not possible to define the same property twice on a single resource, as this would cause a collision in the resource's property namespace."
+"The HTTP URL namespace is a hierarchical namespace where the hierarchy is delimited with the ""/"" character."
+Neither HTTP/1.1 nor WebDAV require that the entire HTTP URL namespace be consistent.
+"However, certain WebDAV methods are prohibited from producing results that cause namespace inconsistencies."
+"For example, a resource could be identified by multiple HTTP URLs."
+"So, if the resource with URL http://foo.com/bar/blah is WebDAV compliant and if the resource with URL http://foo.com/bar/ is WebDAV compliant then the resource with URL http://foo.com/bar/ must be a collection and must contain URL http://foo.com/bar/blah as an internal member."
+Collection resources MAY list the URLs of non-WebDAV compliant children in the HTTP URL namespace hierarchy as internal members but are not required to do so.
+"For example, if the resource with URL http://foo.com/bar/blah is not WebDAV compliant and the URL http://foo.com/bar/ identifies a collection then URL http://foo.com/bar/blah may or may not be an internal member of the collection with URL http://foo.com/bar/."
+If a WebDAV compliant resource has no WebDAV compliant children in the HTTP URL namespace hierarchy then the WebDAV compliant resource is not required to be a collection.
+"There is a standing convention that when a collection is referred to by its name without a trailing slash, the trailing slash is automatically appended."
+"In this case it SHOULD return a content-location header in the response pointing to the URI ending with the ""/""."
+"For example, if a client invokes a method on http://foo.bar/blah (no trailing slash), the resource http://foo.bar/blah/ (trailing slash) may respond as if the operation were invoked on it, and should return a content-location header with http://foo.bar/blah/ in it."
+A resource MAY be a collection but not be WebDAV compliant.
+"That is, the resource may comply with all the rules set out in this specification regarding how a collection is to behave without necessarily supporting all methods that a WebDAV compliant resource is required to support."
+"In such a case the resource may return the DAV:resourcetype property with the value DAV:collection but MUST NOT return a DAV header containing the value ""1"" on an OPTIONS response."
+"In HTTP/1.1, the PUT method is defined to store the request body at the location specified by the Request-URI."
+"While a description format for a collection can readily be constructed for use with PUT, the implications of sending such a description to the server are undesirable."
+"For example, if a description of a collection that omitted some existing resources were PUT to a server, this might be interpreted as a command to remove those members."
+"This would extend PUT to perform DELETE functionality, which is undesirable since it changes the semantics of PUT, and makes it difficult to control DELETE functionality with an access control scheme based on methods."
+"While the POST method is sufficiently open-ended that a ""create a collection"" POST command could be constructed, this is undesirable because it would be difficult to separate access control for collection creation from other uses of POST."
+This is also the case for HTML source files that are not processed by the server prior to transmission.
+"For example, a server- side-include directive within an HTML file might instruct a server to replace the directive with another value, such as the current date."
+Typically there is no way to access the HTML resource containing the unprocessed directive.
+Sometimes the entity returned by GET is the output of a data- producing process that is described by one or more source resources (that may not even have a location in the URI namespace).
+"An example of this is a CGI script that describes a ""finger"" gateway process that maps part of the namespace of a server into finger requests, such as http://www.foo.bar.org/finger_gateway/user@host."
+"In the absence of distributed authoring capabilities, it is acceptable to have no mapping of source resource(s) to the URI namespace."
+"This source location should not be one of the locations at which the generated output is retrievable, since in general it is impossible for the server to differentiate requests for source resources from requests for process output resources."
+Note that the value of a source link is not guaranteed to point to the correct source.
+Also note that not all servers will allow the client to set the source link value.
+For example a server which generates source links on the fly for its CGI files will most likely not allow a client to set the source link value.
+"Using a lock, an authoring client can provide a reasonable guarantee that another principal will not modify a resource while it is being edited."
+"In this way, a client can prevent the ""lost update"" problem."
+"However, there are times when the goal of a lock is not to exclude others from exercising an access right but rather to provide a mechanism for principals to indicate that they intend to exercise their access rights."
+"Starting with every possible principal on the Internet, in most situations the vast majority of these principals will not have write access to a given resource."
+"Others may decide they trust their collaborators will not overwrite their work (the potential set of collaborators being the set of principals who have write permission) and use a shared lock, which informs their collaborators that a principal may be working on the resource."
+The WebDAV extensions to HTTP do not need to provide all of the communications paths necessary for principals to coordinate their activities.
+Shared locks are included because experience from web distributed authoring systems has indicated that exclusive locks are often too rigid.
+"This editing process has the problem that locks are not always properly released, for example when a program crashes, or when a lock owner leaves without unlocking a resource."
+"While both timeouts and administrative action can be used to remove an offending lock, neither mechanism may be available when needed; the timeout may be long or the administrator may not be available."
+A WebDAV compliant server is not required to support locking in any form.
+If the server does support locking it may choose to support any combination of exclusive and shared locks for any access types.
+"For example, some repositories only support shared write locks while others only provide support for exclusive write locks while yet others use no locking at all."
+"As each system is sufficiently different to merit exclusion of certain locking features, this specification leaves locking as the sole axis of negotiation within WebDAV."
+Lock token URIs MUST be unique across all resources for all time.
+This uniqueness constraint allows lock tokens to be submitted across resources and servers without fear of confusion.
+Having a lock token provides no special access rights.
+Anyone can find out anyone else's lock token by performing lock discovery.
+"Locks MUST be enforced based upon whatever authentication mechanism is used by the server, not based on the secrecy of the token values."
+"All resources MUST recognize the opaquelocktoken scheme and, at minimum, recognize that the lock token does not refer to an outstanding lock on the resource."
+If the second method is selected then the program generating the extensions MUST guarantee that the same extension will never be used twice with the associated UUID.
+"This section provides an alternate mechanism for generating the ""node"" field of a UUID which does not employ an IEEE 802 address."
+WebDAV servers MAY use this algorithm for creating the node field when generating UUIDs.
+"This bit is the unicast/multicast bit, which will never be set in IEEE 802 addresses obtained from network cards; hence, there can never be a conflict between UUIDs generated by machines with and without network cards."
+"The only requirement is that the result be suitably random _ in the sense that the outputs from a set uniformly distributed inputs are themselves uniformly distributed, and that a single bit change in the input can be expected to cause half of the output bits to change."
+Any DAV compliant resource that supports the LOCK method MUST support the supportedlock property.
+"If another principal locks a resource that a principal wishes to access, it is useful for the second principal to be able to find out who the first principal is."
+"This property lists all outstanding locks, describes their type, and where available, provides their lock token."
+Any DAV compliant resource that supports the LOCK method MUST support the lockdiscovery property.
+Two clients A and B are interested in editing the resource ' index.html'.
+"Client A is an HTTP client rather than a WebDAV client, and so does not know how to perform locking."
+"Client A doesn't lock the document, but does a GET and begins editing."
+"Client A performs a PUT, overwriting and losing all of B's changes."
+There are several reasons why the WebDAV protocol itself cannot prevent this situation.
+"First, it cannot force all clients to use locking because it must be compatible with HTTP clients that do not comprehend locking."
+"Second, it cannot require servers to support locking because of the variety of repository implementations, some of which rely on reservations and merging rather than on locking."
+WebDAV servers that support locking can reduce the likelihood that clients will accidentally overwrite each other's changes by requiring clients to lock resources before modifying them.
+Such servers would effectively prevent HTTP 1.0 and HTTP 1.1 clients from modifying resources.
+WebDAV clients can be good citizens by using a lock / retrieve / write /unlock sequence of operations (at least by default) whenever they interact with a WebDAV server that supports locking.
+"HTTP 1.1 clients can be good citizens, avoiding overwriting other clients' changes, by using entity tags in If-Match headers with any requests that would modify resources."
+Information managers may attempt to prevent overwrites by implementing client-side procedures requiring locking before modifying WebDAV resources.
+"The write lock is a specific instance of a lock type, and is the only lock type described in this specification."
+"While those without a write lock may not alter a property on a resource it is still possible for the values of live properties to change, even while locked, due to the requirements of their schemas."
+Only dead properties and live properties defined to respect locks are guaranteed not to change while write locked.
+Additionally the lock-null resource MUST have defined on it all mandatory DAV properties.
+"Most of these properties, such as all the get* properties, will have no value as a lock-null resource does not support the GET method."
+"As a consequence, when a principal issues a PUT or POST request to create a new resource under a URI which needs to be an internal member of a write locked collection to maintain HTTP namespace consistency, or issues a DELETE to remove a resource which has a URI which is an existing internal member URI of a write locked collection, this request MUST fail if the principal does not have a write lock on the collection."
+"If a user agent is not required to have knowledge about a lock when requesting an operation on a locked resource, the following scenario might occur."
+"Program B, also run by User A, has no knowledge of the lock taken out by Program A, yet performs a PUT to the locked resource."
+"In this scenario, the PUT succeeds because locks are associated with a principal, not a program, and thus program B, because it is acting with principal A's credential, is allowed to perform the PUT."
+"However, had program B known about the lock, it would not have overwritten the resource, preferring instead to present a dialog box describing the conflict to the user."
+"Due to this scenario, a mechanism is needed to prevent different programs from accidentally ignoring locks taken out by other programs with the same authorization."
+In order to prevent these collisions a lock token MUST be submitted by an authorized principal in the If header for all locked resources that a method may interact with or the method MUST fail.
+"In this example, even though both the source and destination are locked, only one lock token must be submitted, for the lock on the destination."
+"This is because the source resource is not modified by a COPY, and hence unaffected by the write lock."
+"In this example, user agent authentication has previously occurred via a mechanism outside the scope of the HTTP protocol, in the underlying transport layer."
+A COPY method invocation MUST NOT duplicate any write locks active on the source.
+A successful MOVE request on a write locked resource MUST NOT move the write lock with the resource.
+A client MUST NOT submit the same write lock request twice.
+Note that a client is always aware it is resubmitting the same lock request because it must include the lock token in the If header in order to make the request for a resource that is already locked.
+"This form of LOCK MUST only be used to ""refresh"" a lock."
+A server may return a Timeout header with a lock refresh that is different than the Timeout header returned when the lock was originally requested.
+Additionally clients may submit Timeout headers of arbitrary value with their lock refresh requests.
+"Servers, as always, may ignore Timeout headers submitted by the client."
+If an error is received in response to a refresh LOCK request the client SHOULD assume that the lock was not refreshed.
+If a server receives ill-formed XML in a request it MUST reject the entire request with a 400 (Bad Request).
+If a client receives ill-formed XML in a response then it MUST NOT assume anything about the outcome of the executed method and SHOULD treat the server as malfunctioning.
+All DAV compliant resources MUST support the PROPFIND method and the propfind XML element (section 12.14) along with all XML elements defined for use with that element.
+"By default, the PROPFIND method without a Depth header MUST act as if a ""Depth: infinity"" header was included."
+An empty PROPFIND request body MUST be treated as a request for the names and values of all properties.
+If there is an error retrieving a property then a proper error result MUST be included in the response.
+"A request to retrieve the value of a property which does not exist is an error and MUST be noted, if the response uses a multistatus XML element, with a response XML element which contains a 404 (Not Found) status value."
+Each response XML element MUST contain an href XML element that gives the URI of the resource on which the properties in the prop XML element are defined.
+Results for a PROPFIND on a collection resource with internal member URIs are returned as a flat list whose order of entries is not significant.
+"In the case of allprop and propname, if a principal does not have the right to know whether a particular property exists then the property should be silently excluded from the response."
+The results of this method SHOULD NOT be cached.
+"In this case only two properties were returned, since the principal issuing the request did not have sufficient access rights to see the third and fourth properties."
+"Since GET is not supported on this resource, the get* properties (e.g., getcontentlength) are not defined on this resource."
+"The DAV-specific properties assert that ""front.html"" was created on December 1, 1997, at 6:27:21PM, in a time zone 8 hours west of GMT (creationdate), has a name of ""Example HTML resource"" (displayname), a content length of 4525 bytes (getcontentlength), a MIME type of ""text/html"" (getcontenttype), an entity tag of ""zzyzx"" (getetag), was last modified on Monday, January 12, 1998, at 09:25:56 GMT (getlastmodified), has an empty resource type, meaning that it is not a collection (resourcetype), and supports both exclusive write and shared write locks (supportedlock)."
+"Since no Depth header is present, it assumes its default value of ""infinity"", meaning the name of the properties on the collection and all its progeny should be returned."
+"Since the ""xmlns"" attribute does not contain an explicit ""shorthand name"" (prefix) letter, the namespace applies by default to all enclosed elements."
+DAV compliant resources SHOULD support the setting of arbitrary dead properties.
+Thus if any error occurs during processing all executed instructions MUST be undone and a proper error result returned.
+"Note, however, that unless explicitly prohibited any 2/3/4/5xx series response code may be used in a 207 (Multi-Status) response."
+"As there can be a mixture of sets and removes in a body, a 201 (Created) seems inappropriate."
+"The client, for reasons the server chooses not to specify, cannot alter one of the properties."
+The client has provided a value whose semantics are not appropriate for the property.
+The specified resource is locked and the client either is not a lock owner or the lock type requires a lock token to be submitted and the client did not submit it.
+The server did not have sufficient space to record the property.
+"xml version=""1.0"" encoding=""utf-8"" ?> <D:multistatus xmlns:D=""DAV:"" xmlns:Z=""http://www.w3.com/standards/z39.50""> <D:response> <D:href>"
+http://www.foo.com/bar.html</D:href> <D:propstat> <D:prop><Z:Authors/></D:prop> <D:status>
+HTTP/1.1 424 Failed Dependency</D:status> </D:propstat> <D:propstat> <D:prop><Z:Copyright-Owner/></D:prop> <D:status>
+HTTP/1.1 409 Conflict</D:status> </D:propstat> <D:responsedescription>
+"Since the Copyright-Owner property could not be removed, no property modifications occur."
+The 424 (Failed Dependency) status code for the Authors property indicates this action would have succeeded if it were not for the conflict with removing the Copyright-Owner property.
+If the resource identified by the Request-URI is non-null then the MKCOL MUST fail.
+"During MKCOL processing, a server MUST make the Request-URI a member of its parent collection, unless the Request-URI is ""/""."
+"If no such ancestor exists, the method MUST fail."
+"When the MKCOL operation creates a new collection resource, all ancestors MUST already exist, or the method MUST fail with a 409 (Conflict) status code."
+"For example, if a request to create collection /a/b/c/d/ is made, and neither /a/b/ nor /a/b/c/ exists, the request must fail."
+"When MKCOL is invoked without a request body, the newly created collection SHOULD have no members."
+If the server receives a MKCOL request entity type it does not support or understand it MUST respond with a 415 (Unsupported Media Type) status code.
+"The exact behavior of MKCOL for various request media types is undefined in this document, and will be specified in separate documents."
+Responses from a MKCOL request MUST NOT be cached as MKCOL has non- idempotent semantics.
+"This indicates at least one of two conditions: 1) the server does not allow the creation of collections at the given location in its namespace, or 2) the parent collection of the Request-URI exists but cannot accept members."
+The server does not support the request type of the body.
+The resource does not have sufficient space to record the state of the resource after the execution of this method.
+"GET when applied to a collection may return the contents of an ""index.html"" resource, a human-readable view of the contents of the collection, or something else altogether."
+Hence it is possible that the result of a GET on a collection will bear no correlation to the membership of the collection.
+"Similarly, since the definition of HEAD is a GET without a response message body, the semantics of HEAD are unmodified when applied to collection resources."
+"Since by definition the actual function performed by POST is determined by the server and often depends on the particular resource, the behavior of POST when applied to collections cannot be meaningfully modified because it is largely undefined."
+"If the DELETE method is issued to a non-collection resource whose URIs are an internal member of one or more collections, then during DELETE processing a server MUST remove any URI for the resource identified by the Request-URI from collections which contain it as a member."
+"The DELETE method on a collection MUST act as if a ""Depth: infinity"" header was used on it."
+A client MUST NOT submit a Depth header with a DELETE on a collection with any value but infinity.
+DELETE instructs that the collection specified in the Request-URI and all resources identified by its internal member URIs are to be deleted.
+"If any resource identified by a member URI cannot be deleted then all of the member's ancestors MUST NOT be deleted, so as to maintain namespace consistency."
+Any headers included with DELETE MUST be applied in processing every resource to be deleted.
+When the DELETE method has completed processing it MUST result in a consistent namespace.
+If an error occurs with a resource other than the resource identified in the Request-URI then the response MUST be a 207 (Multi-Status).
+424 (Failed Dependency) errors SHOULD NOT be in the 207 (Multi- Status).
+They can be safely left out because the client will know that the ancestors of a resource could not be deleted when the client receives an error for the ancestor's progeny.
+Additionally 204 (No Content) errors SHOULD NOT be returned in the 207 (Multi-Status).
+The reason for this prohibition is that 204 (No Content) is the default success code.
+"In this example the attempt to delete http://www.foo.bar/container/resource3 failed because it is locked, and no lock token was submitted with the request."
+"Consequently, the attempt to delete http://www.foo.bar/container/ also failed."
+Thus the client knows that the attempt to delete http://www.foo.bar/container/ must have also failed since the parent can not be deleted unless its child has also been deleted.
+"Even though a Depth header has not been included, a depth of infinity is assumed because the method is on a collection."
+Properties defined on the resource may be recomputed during PUT processing but are not otherwise affected.
+A PUT that would result in the creation of a resource without an appropriately scoped parent collection MUST fail with a 409 (Conflict).
+"As defined in the HTTP/1.1 specification [RFC2068], the ""PUT method requests that the enclosed entity be stored under the supplied Request-URI."""
+"Since submission of an entity representing a collection would implicitly encode creation and deletion of resources, this specification intentionally does not define a transmission format for creating a collection using PUT."
+"If all ancestors do not exist, the method MUST fail with a 409 (Conflict) status code."
+"For example, if resource /a/b/c/d.html is to be created and /a/b/c/ does not exist, then the request must fail."
+"However, support for the COPY method does not guarantee the ability to copy a resource."
+"As a result, it may not be possible to copy a resource to a location that appears to be on the same server."
+When the source resource is not a collection the result of the COPY method is the creation of a new resource at the destination whose state and behavior match that of the source resource as closely as possible.
+"Since the environment at the destination may be different than at the source due to factors outside the scope of control of the server, such as the absence of resources required for correct operation, it may not be possible to completely duplicate the behavior of the resource at the destination."
+Subsequent alterations to the destination resource will not modify the source resource.
+Subsequent alterations to the source resource will not modify the destination resource.
+Live properties SHOULD be duplicated as identically behaving live properties at the destination resource.
+"The propertybehavior XML element can specify that properties are copied on best effort, that all live properties must be successfully copied or the method must fail, or that a specified list of live properties must be successfully copied or the method must fail."
+"The COPY method on a collection without a Depth header MUST act as if a Depth header with value ""infinity"" was included."
+"DAV compliant servers MUST support the ""0"" and ""infinity"""
+"A COPY of ""Depth: 0"" only instructs that the collection and its properties but not resources identified by its internal member URIs, are to be copied."
+When applied to members of the collection identified by the Request-URI the value of Destination is to be modified to reflect the current location in the hierarchy.
+When the COPY method has completed processing it MUST have created a consistent namespace at the destination (see section 5.1 for the definition of namespace consistency).
+"However, if an error occurs while copying an internal collection, the server MUST NOT copy any resources identified by members of this collection (i.e., the server must skip this subtree), as this would create an inconsistent namespace."
+"After detecting an error, the COPY operation SHOULD try to finish as much of the original copy operation as possible (i.e., the server should still attempt to copy other subtrees and their members, that are not descendents of an error-causing collection)."
+"Similarly, after encountering an error copying a non- collection resource as part of an infinite depth copy, the server SHOULD try to finish as much of the original copy operation as possible."
+The 424 (Failed Dependency) status code SHOULD NOT be returned in the 207 (Multi-Status) response from a COPY method.
+These responses can be safely omitted because the client will know that the progeny of a resource could not be copied when the client receives an error for the parent.
+Additionally 201 (Created)/204 (No Content) status codes SHOULD NOT be returned as values in 207 (Multi-Status) responses from COPY methods.
+"If a resource exists at the destination and the Overwrite header is ""T"" then prior to performing the copy the server MUST perform a DELETE with ""Depth: infinity"" on the destination resource."
+"If the Overwrite header is set to ""F"" then the operation will fail."
+No Content) -
+The source resource was successfully copied to a pre-existing destination resource.
+409 (Conflict) _ A resource cannot be created at the destination until one or more intermediate collections have been created.
+Precondition Failed) -
+"The server was unable to maintain the liveness of the properties listed in the propertybehavior XML element or the Overwrite header is ""F"" and the state of the destination resource is non-null."
+The destination resource was locked.
+Bad Gateway) -
+This may occur when the destination is on another server and the destination server refuses to accept the resource.
+The destination resource does not have sufficient space to record the state of the resource after the execution of this method.
+This example shows resource http://www.ics.uci.edu/~fielding/index.html being copied to the location http://www.ics.uci.edu/users/f/fielding/index.html.
+The 204 (No Content) status code indicates the existing resource at the destination was overwritten.
+"The following example shows the same copy operation being performed, but with the Overwrite header set to ""F."""
+A response of 412 (Precondition Failed) is returned because the destination resource has a non-null state.
+"The Depth header is unnecessary as the default behavior of COPY on a collection is to act as if a ""Depth: infinity"" header had been submitted."
+"However the collection R2 failed, most likely due to a problem with maintaining the liveness of properties (this is specified by the propertybehavior XML element)."
+"Because there was an error copying R2, none of R2's members were copied."
+"The MOVE operation on a non-collection resource is the logical equivalent of a copy (COPY), followed by consistency maintenance processing, followed by a delete of the source, where all three actions are performed atomically."
+"However, support for the MOVE method does not guarantee the ability to move a resource to a particular destination."
+"Therefore, it may not be possible to move a resource within a namespace that appears to belong to the same server."
+"If a resource exists at the destination, the destination resource will be DELETEd as a side-effect of the MOVE operation, subject to the restrictions of the Overwrite header."
+"The MOVE method on a collection MUST act as if a ""Depth: infinity"" header was used on it."
+"A client MUST NOT submit a Depth header on a MOVE on a collection with any value but ""infinity""."
+Any headers included with MOVE MUST be applied in processing every resource to be moved with the exception of the Destination header.
+"However, if an error occurs while moving an internal collection, the server MUST NOT move any resources identified by members of the failed collection (i.e., the server must skip the error-causing subtree), as this would create an inconsistent namespace."
+"In this case, after detecting the error, the move operation SHOULD try to finish as much of the original move as possible (i.e., the server should still attempt to move other subtrees and the resources identified by their members, that are not descendents of an error-causing collection)."
+"So, for example, if an infinite depth move is performed on collection /a/, which contains collections /a/b/ and /a/c/, and an error occurs moving /a/b/, an attempt should still be made to try moving /a/c/."
+"Similarly, after encountering an error moving a non-collection resource as part of an infinite depth move, the server SHOULD try to finish as much of the original move operation as possible."
+If an error occurs with a resource other than the resource identified in the Request-URI then the response MUST be a 207 (Multi-Status).
+The 424 (Failed Dependency) status code SHOULD NOT be returned in the 207 (Multi-Status) response from a MOVE method.
+These errors can be safely omitted because the client will know that the progeny of a resource could not be moved when the client receives an error for the parent.
+Additionally 201 (Created)/204 (No Content) responses SHOULD NOT be returned as values in 207 (Multi-Status) responses from a MOVE.
+These responses can be safely omitted because they are the default success codes.
+"If a resource exists at the destination and the Overwrite header is ""T"" then prior to performing the move the server MUST perform a DELETE with ""Depth: infinity"" on the destination resource."
+"If the Overwrite header is set to ""F"" then the operation will fail."
+No Content) -
+409 (Conflict) _ A resource cannot be created at the destination until one or more intermediate collections have been created.
+Precondition Failed) -
+"The server was unable to maintain the liveness of the properties listed in the propertybehavior XML element or the Overwrite header is ""F"" and the state of the destination resource is non-null."
+The source or the destination resource was locked.
+Bad Gateway) -
+This may occur when the destination is on another server and the destination server refuses to accept the resource.
+This example shows resource http://www.ics.uci.edu/~fielding/index.html being moved to the location http://www.ics.uci.edu/users/f/fielding/index.html.
+The contents of the destination resource would have been overwritten if the destination resource had been non-null.
+"In this case, since there was nothing at the destination resource, the response code is 201 (Created)."
+"A lock token will need to be submitted for every resource, both source and destination, anywhere in the scope of the method, that is locked."
+In this case the proper lock token was not submitted for the destination http://www.foo.bar/othercontainer/C2/.
+This means that the resource /container/C2/ could not be moved.
+"Because there was an error copying /container/C2/, none of /container/C2's members were copied."
+"User agent authentication has previously occurred via a mechanism outside the scope of the HTTP protocol, in an underlying transport layer."
+These sections on the LOCK method describe only those semantics that are specific to the LOCK method and are independent of the access type of the lock being requested.
+"Any resource which supports the LOCK method MUST, at minimum, support the XML request and response formats defined herein."
+"Lock method requests SHOULD have a XML request body which contains an owner XML element for this lock request, unless this is a refresh request."
+"Clients MUST assume that locks may arbitrarily disappear at any time, regardless of the value given in the Timeout header."
+"The Timeout header only indicates the behavior of the server if ""extraordinary"" circumstances do not occur."
+"For example, an administrator may remove a lock at any time or the system may crash in such a way that it loses the record of the lock's existence."
+Note that the Lock-Token header would not be returned in the response for a successful refresh LOCK request because a new lock was not created.
+Therefore a LOCK request on a resource MUST NOT succeed if can not be honored by all the URIs through which the resource is addressable.
+Values other than 0 or infinity MUST NOT be used with the Depth header on a LOCK method.
+"Hence, partial success is not an option."
+Either the entire hierarchy is locked or no resources are locked.
+"If no Depth header is submitted on a LOCK request then the request MUST act as if a ""Depth:infinity"" had been submitted."
+"However, independent of lock type, a successful DELETE of a resource MUST cause all of its locks to be removed."
+The intersection of a row and column gives the result of a lock request.
+"For example, if a shared lock is held on a resource, and an exclusive lock is requested, the table entry is ""false"", indicating the lock must not be granted."
+Precondition Failed) -
+The included lock token was not enforceable on this resource or the server could not satisfy the request in the lockinfo XML element.
+"The resource is locked, so the method has been rejected."
+"The server has an activity-based timeout policy in place on this resource, which causes the lock to automatically be removed after 1 week (604800 seconds)."
+"Note that the nonce, response, and opaque fields have not been calculated in the Authorization request header."
+Notice that the client asked for an infinite time out but the server choose to ignore the request.
+"In this example, the nonce, response, and opaque fields have not been calculated in the Authorization request header."
+"Because this resource could not be locked, none of the resources were locked."
+In this example the lockdiscovery property is empty which means that there are no outstanding locks on the resource.
+"In this example, the nonce, response, and opaque fields have not been calculated in the Authorization request header."
+If all resources which have been locked under the submitted lock token can not be unlocked then the UNLOCK request MUST fail.
+Any DAV compliant resource which supports the LOCK method MUST support the UNLOCK method.
+"In this example, the lock identified by the lock token ""opaquelocktoken:a515cfa4-5da4-22e1-f5b5-00a0451e6bf7"" is successfully removed from the resource http://webdav.sb.aol.com/workspace/webdav/info.doc."
+"If this lock included more than just one resource, the lock is removed from all resources included in the lock."
+The 204 (No Content) status code is used instead of 200 (OK) because there is no response entity body.
+"In this example, the nonce, response, and opaque fields have not been calculated in the Authorization request header."
+All DAV compliant resources MUST return the DAV header on all OPTIONS responses.
+The value is a list of all compliance classes that the resource supports.
+This is because a resource can not be level 2 compliant unless it is also level 1 compliant.
+"In general, however, support for one compliance class does not entail support for any other."
+A method may override these defaults by defining different behavior in its definition.
+"Methods which support the Depth header may choose not to support all of the header's values and may define, on a case by case basis, the behavior of the method if a Depth header is not present."
+"For example, the MOVE method only supports ""Depth: infinity"" and if a Depth header is not present will act as if a ""Depth: infinity"" header had been applied."
+Clients MUST NOT rely upon methods executing on members of their hierarchies in any particular order or on the execution being atomic unless the particular method explicitly provides such guarantees.
+"Upon execution, a method with a Depth header will perform as much of its assigned task as possible and then return a response specifying what it was able to accomplish and what it failed to do."
+"So, for example, an attempt to COPY a hierarchy may result in some of the members being copied and some not."
+"For example, an If-Match header will have its value applied against every resource in the method's scope and will cause the method to fail if the header fails to match."
+"If a resource, source or destination, within the scope of the method with a Depth header is locked in such a way as to prevent the successful execution of the method, then the lock token for that resource MUST be submitted with the request in the If request header."
+If a resource does not have internal children then the Depth header MUST be ignored.
+"Please note, however, that it is always an error to submit a value for the Depth header that is not allowed by the method's definition."
+"Thus submitting a ""Depth: 1"" on a COPY, even if the resource does not have internal members, will result in a 400 (Bad Request)."
+"The method should fail not because the resource doesn't have internal members, but because of the illegal value in the header."
+The If header is intended to have similar functionality to the If- Match header defined in section 14.25 of [RFC2068].
+If the state of the resource to which the header is applied does not match any of the specified state lists then the request MUST fail with a 412 (Precondition Failed).
+The No-tag-list production describes a series of state tokens and ETags.
+If multiple No-tag-list productions are used then one only needs to match the state of the resource for the method to be allowed to continue.
+"If a method, due to the presence of a Depth or Destination header, is applied to multiple resources then the No-tag-list production MUST be applied to each resource the method is applied to."
+"The previous header would require that any resources within the scope of the method must either be locked with the specified lock token and in the state identified by the ""I am an ETag"" ETag or in the state identified by the second ETag ""I am another ETag""."
+If none of the resource productions match the current resource then the header MUST be ignored.
+The same URI MUST NOT appear more than once in a resource production in an If header.
+"When the method is first applied to http://www.foo.bar/resource1, resource1 must be in the state specified by ""(<locktoken:a-write-lock-token> [W/""A weak ETag""]) ([""strong ETag""])"", that is, it either must be locked with a lock token of ""locktoken:a-write-lock-token"" and have a weak entity tag W/""A weak ETag"" or it must have a strong entity tag ""strong ETag""."
+That is the only success condition since the resource http://www.bar.bar/random never has the method applied to it (the only other resource listed in the If header) and http://www.foo.bar/resource2 is not listed in the If header.
+"Every state token or ETag is either current, and hence describes the state of a resource, or is not current, and does not describe the state of a resource."
+The boolean operation of matching a state token or ETag to the current state of a resource thus resolves to a true or false value.
+The not production is used to reverse that value.
+"When submitted with a request, this If header requires that all operand resources must not be locked with locktoken:write1 and must be locked with locktoken:write2."
+"Non-DAV compliant proxies will not honor the If header, since they will not understand the If header, and HTTP requires non-understood headers to be ignored."
+"When communicating with HTTP/1.1 proxies, the ""Cache-Control: no-cache"" request header MUST be used so as to prevent the proxy from improperly trying to service the request from its cache."
+"When dealing with HTTP/1.0 proxies the ""Pragma: no-cache"" request header MUST be used for the same reason."
+The Lock-Token request header is used with the UNLOCK method to identify the lock to be removed.
+The Overwrite header specifies whether the server should overwrite the state of a non-null destination resource during a COPY or MOVE.
+"A value of ""F"" states that the server must not perform the COPY or MOVE operation if the state of the destination resource is non-null."
+"If the overwrite header is not included in a COPY or MOVE request then the resource MUST treat the request as if it has an overwrite header of value ""T""."
+"While the Overwrite header appears to duplicate the functionality of the If-Match: * header of HTTP/1.1, If-Match applies only to the Request-URI, and not to the Destination of a COPY or MOVE."
+"If a COPY or MOVE is not performed due to the value of the Overwrite header, the method MUST fail with a 412 (Precondition Failed) status code."
+The URIs listed in the header are source resources which have been affected by the outstanding method.
+"So, for example, if a MOVE method on a collection is outstanding and a 102 (Processing) response with a Status-URI response header is returned, the included URIs will indicate resources that have had move attempted on them and what the result was."
+"However, the server is not required to honor or even consider these requests."
+Clients MUST NOT submit a Timeout request header with any method other than a LOCK method.
+"Timeout response values MUST use a Second value, Infinite, or a TimeType the client has indicated familiarity with."
+The server may assume a client is familiar with any TimeType submitted in a Timeout header.
+"The timeout value for TimeType ""Second"" MUST NOT be greater than 2^32-1."
+"The timeout counter SHOULD be restarted any time an owner of the lock sends a method to any member of the lock, including unsupported methods, or methods which are unsuccessful."
+However the lock MUST be refreshed if a refresh LOCK method is successfully received.
+If the timeout expires then the lock may be lost.
+"Specifically, if the server wishes to harvest the lock upon time-out, the server SHOULD act as if an UNLOCK method was executed by the server on the resource using the lock token of the timed-out lock, performed with its override authority."
+"Servers are advised to pay close attention to the values submitted by clients, as they will be indicative of the type of activity the client intends to perform."
+"As a result, the applet is likely to ask for a relatively small timeout value so that if the applet dies, the lock can be quickly harvested."
+"However, a document management system is likely to ask for an extremely long timeout because its user may be planning on going off-line."
+A client MUST NOT assume that just because the time-out has expired the lock has been lost.
+"The 102 (Processing) status code is an interim response used to inform the client that the server has accepted the complete request, but has not yet completed it."
+"As guidance, if a method is taking longer than 20 seconds (a reasonable, but arbitrary value) to process the server SHOULD return a 102 (Processing) response."
+The server MUST send a final response after the request has been completed.
+In such cases the client may time-out the connection while waiting for a response.
+To prevent this the server may return a 102 (Processing) status code to indicate to the client that the server is still processing the method.
+"The 422 (Unprocessable Entity) status code means the server understands the content type of the request entity (hence a 415(Unsupported Media Type) status code is inappropriate), and the syntax of the request entity is correct (thus a 400 (Bad Request) status code is inappropriate) but was unable to process the contained instructions."
+"For example, this error condition may occur if an XML request body contains well-formed (i.e., syntactically correct), but semantically erroneous XML instructions."
+The 424 (Failed Dependency) status code means that the method could not be performed on the resource because the requested action depended on another action and that action failed.
+"For example, if a command in a PROPPATCH method fails then, at minimum, the rest of the commands will also fail with 424 (Failed Dependency)."
+The 507 (Insufficient Storage) status code means the method could not be performed on the resource because the server is unable to store the representation needed to successfully complete the request.
+"If the request which received this status code was the result of a user action, the request MUST NOT be repeated until it is requested by a separate user action."
+100 series status codes SHOULD NOT be recorded in a response XML element.
+"Link is a multi-valued element, so multiple links may be used together to indicate multiple links with the same type."
+The values in the href XML elements inside the src and dst XML elements of the link XML element MUST NOT be rejected if they point to resources which do not exist.
+If this value is available an application may use it instead of presenting the individual response descriptions contained within the responses.
+Description: A particular href MUST NOT appear more than once as the child of a response XML element under a multistatus XML element.
+"Essentially, this prevents having to search in order to group together all the responses by href."
+"There are, however, no requirements regarding ordering based on href values."
+The propstat XML element MUST contain one prop XML element and one status XML element.
+Description: This XML element provides information suitable to be presented to a user.
+The prop XML element is a generic container for properties defined on resources.
+If this XML element is not included in the request body then the server is expected to act as defined by the default property handling behavior of the associated method.
+The omit XML element instructs the server that it should use best effort to copy properties but a failure to copy a property MUST NOT cause the method to fail.
+The default behavior for a COPY or MOVE is to copy/move all properties or fail the method.
+"In certain circumstances, such as when a server copies a resource over another protocol such as FTP, it may not be possible to copy/move the properties associated with the resource."
+"Thus any attempt to copy/move over FTP would always have to fail because properties could not be moved over, even as dead properties."
+All DAV compliant resources MUST support the omit XML element on COPY/MOVE methods.
+This XML element is multi-valued.
+Name:       remove Namespace:  DAV: Purpose:    Lists the DAV properties to be removed from a resource.
+Description: Remove instructs that the properties specified in prop should be removed.
+Specifying the removal of a property that does not exist is not an error.
+"All the XML elements in a prop XML element inside of a remove XML element MUST be empty, as only the names of properties to be removed are required."
+"If prop is used inside propfind it MUST only contain property names, not values."
+The server is free to withhold any or all of this information if the requesting principal does not have sufficient access rights to see the requested data.
+The default value is empty.
+"When more than one link destination exists, this specification asserts no policy on ordering."
+"A client which only implements the elements in the DAV spec will not understand the foocorp elements and will ignore them, thus seeing the expected source and destination links."
+An enhanced client may know about the foocorp elements and be able to present the user with additional information about the links.
+"This example demonstrates the power of XML markup, allowing element values to be enhanced without breaking older clients."
+Note that the actual contents are themselves controlled by access controls so a server is not required to provide information the client is not authorized to see.
+All DAV compliant resources MUST ignore any unknown XML element and all its children encountered while processing a DAV method that uses XML as its command language.
+"This restriction also applies to the processing, by clients, of DAV property values where unknown XML elements SHOULD be ignored unless the property's schema declares otherwise."
+This restriction does not apply to setting dead DAV properties on the server where the server MUST record unknown XML elements.
+"Additionally, this restriction does not apply to the use of XML where XML happens to be the content type of the entity body, for example, when used as the body of a PUT."
+"A client can discover the compliance classes of a resource by executing OPTIONS on the resource, and examining the ""DAV"" header which is returned."
+Compliance classes are not necessarily sequential.
+"A resource that is class 2 compliant must also be class 1 compliant; but if additional compliance classes are defined later, a resource that is class 1, 2, and 4 compliant might not be class 3 compliant."
+"Class 1 compliant resources MUST return, at minimum, the value ""1"" in the DAV header on all responses to the OPTIONS method."
+"A class 2 compliant resource MUST meet all class 1 requirements and support the LOCK method, the supportedlock property, the lockdiscovery property, the Time-Out response header and the Lock- Token request header."
+"A class ""2"" compliant resource SHOULD also support the Time-Out request header and the owner XML element."
+"In this specification, human-readable fields can be found either in the value of a property, or in an error message returned in a response entity body."
+"XML examples in this specification demonstrate use of the charset parameter of the Content-Type header, as defined in [RFC2376], as well as the XML ""encoding"" attribute, which together provide charset identification information for MIME and XML processors."
+"Implementors of WebDAV applications are strongly encouraged to read ""XML Media Types"" [RFC2376] for instruction on which MIME media type to use for XML transport, and on use of the charset parameter of the Content-Type header."
+"Since these protocol elements are not visible to users, and are in fact simply long token identifiers, they do not need to support encoding in multiple character sets."
+"Similarly, though the names of XML elements used in this specification are English names encoded in UTF-8, these names are not visible to the user, and hence do not need to support multiple character set encodings."
+"Although some applications (e.g., a generic property viewer) will display property URIs directly to their users, it is expected that the typical application will use a fixed set of properties, and will provide a mapping from the property name URI to a human-readable field when displaying the property name to a user."
+It is only in the case where the set of properties is not known ahead of time that an application need display a property name URI to a user.
+We recommend that applications provide human-readable property names wherever feasible.
+"While the possibility exists that a poorly crafted user agent would display this message to a user, internationalized applications will ignore this message, and display an appropriate message in the user's language and character set."
+"Since interoperation of clients and servers does not require locale information, this specification does not specify any mechanism for transmission of this information."
+"In addition, the security risks inherent in remote authoring require stronger authentication technology, introduce several new privacy concerns, and may increase the hazards from poor server design."
+"Due to their emphasis on authoring, WebDAV servers need to use authentication technology to protect not just access to a network resource, but the integrity of the resource as well."
+A password sent in the clear over an insecure channel is an inadequate means for protecting the accessibility and integrity of a resource as the password may be intercepted.
+"Since Basic authentication for HTTP/1.1 performs essentially clear text transmission of a password, Basic authentication MUST NOT be used to authenticate a WebDAV client to a server unless the connection is secure."
+"Furthermore, a WebDAV server MUST NOT send Basic authentication credentials in a WWW-Authenticate header unless the connection is secure."
+"Since Digest authentication verifies that both parties to a communication know a shared secret, a password, without having to send that secret in the clear, Digest authentication avoids the security problems inherent in Basic authentication while providing a level of authentication which is useful in a wide range of scenarios."
+Denial of service attacks are of special concern to WebDAV servers.
+WebDAV plus HTTP enables denial of service attacks on every part of a system's resources.
+The underlying storage can be attacked by PUTting extremely large files.
+WebDAV servers need to be aware of the possibility of a denial of service attack at all levels.
+"Users of WebDAV servers are encouraged to use access control techniques to prevent unwanted access to resources, rather than depending on the relative obscurity of their resource names."
+"However, in many cases this contact information can be very private, and should not be widely disseminated."
+"Since property values are typically used to hold information such as the author of a document, there is the possibility that privacy concerns could arise stemming from widespread access to a resource's property data."
+"To reduce the risk of inadvertent release of private information via properties, servers are encouraged to develop access control mechanisms that separate read access to the resource body and read access to the resource's properties."
+This allows a user to control the dissemination of their property data without overly restricting access to the resource's contents.
+"For HTTP/1.1, a server could reasonably prevent access to source resources due to the predominance of read- only access."
+"WebDAV, with its emphasis on authoring, encourages read and write access to source resources, and provides the source link facility to identify the source."
+"Users and administrators of WebDAV servers should be very cautious when allowing remote authoring of scripts, limiting read and write access to the source resources to authorized principals."
+"For non-validating XML, such as the XML used in this specification, including an external XML entity is not required by [REC-XML]."
+External XML entities have no inherent trustworthiness and are subject to all the attacks that are endemic to any HTTP GET request.
+"Furthermore, it is possible for an external XML entity to modify the DTD, and hence affect the final form of an XML document, in the worst case significantly modifying its semantics, or exposing the XML processor to the security risks discussed in [RFC2376]."
+"Therefore, implementers must be aware that external XML entities should be treated as untrustworthy."
+There is also the scalability risk that would accompany a widely deployed application which made use of external XML entities.
+"In this situation, it is possible that there would be significant numbers of requests for one external XML entity, potentially overloading any server which fields requests for the resource containing the external XML entity."
+"Assignment of a URI does not require a request to a central naming authority, and hence allow WebDAV property names and XML elements to be quickly defined by any WebDAV user or application."
+"URIs also provide a unique address space, ensuring that the distributed users of WebDAV will not have collisions among the property names and XML elements they create."
+"The property names and XML elements in this specification are all derived from the base URI DAV: by adding a suffix to this URI, for example, DAV:creationdate for the ""creationdate"" property."
+"This specification also defines a URI scheme for the encoding of lock tokens, the opaquelocktoken URI scheme described in section 6.4."
+The IETF takes no position regarding the validity or scope of any intellectual property or other rights that might be claimed to pertain to the implementation or use other technology described in this document or the extent to which any license under such rights might or might not be available; neither does it represent that it has made any effort to identify any such rights.
+A specification such as this thrives on piercing critical review and withers from apathetic neglect.
+"The authors gratefully acknowledge the contributions of the following people, whose insights were so valuable at every stage of our work."
+"The contributions of Judith Slein in clarifying the requirements, and in patiently reviewing draft after draft, both improved this specification and expanded our minds on document management."
+We would also like to thank John Turner for developing the XML DTD.
+"This profile is quoted from an Internet-Draft by Chris Newman, and is mentioned here to properly attribute his work."
+Numeric offsets are calculated as local time minus UTC (Coordinated Universal Time).
+"If the time in UTC is known, but the offset to local time is unknown, this can be represented with an offset of ""-00:00""."
+"This differs from an offset of ""Z"" which implies that UTC is the preferred reference point for the specified time."
+XML supports two mechanisms for indicating that an XML element does not have any content.
+"It is a violation of the XML specification to use the <A></A> form if the associated DTD declares the element to be EMPTY (e.g., <!"
+ELEMENT A EMPTY>).
+"If such a statement is included, then the empty element format, <A/> must be used."
+"If the element is not declared to be EMPTY, then either form <A></A> or <A/> may be used for empty elements."
+XML is a flexible data format that makes it easy to submit data that appears legal but in fact is not.
+"The philosophy of ""Be flexible in what you accept and strict in what you send"" still applies, but it must not be applied inappropriately."
+"XML is extremely flexible in dealing with issues of white space, element ordering, inserting new elements, etc."
+"This flexibility does not require extension, especially not in the area of the meaning of elements."
+There is no kindness in accepting illegal combinations of XML elements.
+At best it will cause an unwanted result and at worst it can cause real damage.
+The following request body for a PROPFIND method is illegal.
+"The definition of the propfind element only allows for the allprop or the propname element, not both."
+Thus the above is an error and must be responded to with a 400 (Bad Request).
+"Imagine, however, that a server wanted to be ""kind"" and decided to pick the allprop element as the true element and respond to it."
+"Additionally, if a server were lenient and decided to reply to this request, the results would vary randomly from server to server, with some servers executing the allprop directive, and others executing the propname directive."
+This reduces interoperability rather than increasing it.
+The previous example was illegal because it contained two elements that were explicitly banned from appearing together in the propfind element.
+"Below is the request body of a PROPFIND and, like the previous example, must be rejected with a 400 (Bad Request) by a server that does not understand the expired-props element."
+To understand why a 400 (Bad Request) is returned let us look at the request body as the server unfamiliar with expired-props sees it.
+"As the server does not understand the expired-props element, according to the WebDAV-specific XML processing rules specified in section 14, it must ignore it."
+"Thus the server sees an empty propfind, which by the definition of the propfind element is illegal."
+The previous example contains the fictitious element leave-out.
+"If the previous example were submitted to a server unfamiliar with leave-out, the only result would be that the leave-out element would be ignored and a propname would be executed."
+WebDAV compliant XML processors MUST interpret a qualified name as a URI constructed by appending the LocalPart to the namespace name URI.
+"In this example, the qualified element name ""del:glider"" is interpreted as the URL ""http://www.del.jensen.org/glider""."
+"Each instance of the namespace name ""bar"" is replaced with ""http://www.del.jensen.org/"" and then appended to the local name for each element tag."
+"However, this document itself may not be modified in any way, such as by removing the copyright notice or references to the Internet Society or other Internet organizations, except as needed for the purpose of developing Internet standards in which case the procedures for copyrights defined in the Internet Standards process must be followed, or as required to translate it into languages other than English."
+The limited permissions granted above are perpetual and will not be revoked by the Internet Society or its successors or assigns.
+"This document and the information contained herein is provided on an ""AS IS"" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE."
