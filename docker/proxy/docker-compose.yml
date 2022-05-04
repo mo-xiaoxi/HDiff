@@ -1,0 +1,103 @@
+version: '3'
+services:
+  apache:
+      image: httpd:2.4.47-alpine
+      restart: always
+      depends_on:
+        - apache-echo-server
+      ports:
+          - "8002:80"
+      volumes:
+          - "./apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+          - "./apache/conf/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf"
+          - "./apache/logs:/usr/local/apache2/logs"
+  apache-echo-server:
+    build: './echo'
+    restart: always
+
+  nginx:
+    image: nginx:1.21.0-alpine
+    restart: always
+    depends_on:
+      - nginx-echo-server
+    ports:
+      - "8003:80"
+    volumes:
+      - "./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./nginx/logs:/var/log/nginx"
+  nginx-echo-server:
+    build: './echo'
+    restart: always
+
+  apache_traffic_server:
+    build: ./apache_traffic_server
+    restart: always
+    depends_on:
+      - apache_traffic_server-echo-server
+    ports:
+      - "8004:8080"
+    volumes:
+      - "./apache_traffic_server/conf/records.config:/opt/ts/etc/trafficserver/records.config"
+      - "./apache_traffic_server/conf/remap.config:/opt/ts/etc/trafficserver/remap.config"
+      - "./apache_traffic_server/conf/logging.yaml:/opt/ts/etc/trafficserver/logging.yaml"
+  apache_traffic_server-echo-server:
+    build: './echo'
+    restart: always
+
+  squid:
+    image: ubuntu/squid:4.13-21.10_edge
+    restart: always
+    volumes:
+      - ./squid/conf/squid.conf:/etc/squid/squid.conf
+    ports:
+      - "8005:3128"
+    depends_on:
+      - squid-echo-server
+  squid-echo-server:
+    build: './echo'
+    restart: always
+
+  haproxy:
+    image: haproxy:2.4.0
+    restart: always
+    depends_on:
+      - rsyslog
+      - haproxy-echo-server
+    volumes:
+      - "./haproxy/conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+    ports:
+      - "8006:8080"
+  rsyslog:
+    image: jumanjiman/rsyslog
+    restart: always
+    volumes:
+      - "./haproxy/conf/rsyslog.conf:/etc/rsyslog.d/haproxy.conf"
+    ports:
+      - "514:514"
+  haproxy-echo-server:
+    build: './echo'
+    restart: always
+
+  varnish:
+    image: varnish:6.5.1
+    restart: always
+    volumes:
+      # - workdir:/var/lib/varnish
+      - ./varnish/default.vcl:/etc/varnish/default.vcl
+      - ./varnish/logs:/var/log/varnish
+    ports:
+      - "8007:80"
+    depends_on:
+      - varnish-echo-server
+  varnish-echo-server:
+    build: './echo'
+    restart: always
+
+  # 需要运行 docker exec proxy_varnish_1 varnishncsa -D -a -w /var/log/varnish/varnishncsa.log -F '"%{Host}i" %s \"%r\"'
+
+volumes:
+  workdir:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

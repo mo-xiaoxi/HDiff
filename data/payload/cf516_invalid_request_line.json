@@ -1,0 +1,23 @@
+{
+    "sentence": "TE-CL",
+    "role": [
+        "proxy"
+    ],
+    "message": {
+        "new_grammar": "\n                    HTTP-message = start-line base-header basic-id entity-size-header CRLF  [ message-body ]\n                    entity-size-header =  Content-Length  \n                    Content-Length = 'Content-Length:' '{{CT_value}}' CRLF\n                ",
+        "name": "request-line",
+        "relation": []
+    },
+    "assertion": {
+        "status_code": "400|301",
+        "comment": "invalid_request_line"
+    },
+    "reqs": [
+        "POST /?testid=testid2896547389240756idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 69c05f2b12ca141ce70b691f27831ecd\r\nContent-Length:6\r\n\r\ntest=1",
+        "HEAD /?testid=testid7315892641320795idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: f4ee685de911b2a47ca5de0d844017a9\r\nContent-Length:6\r\n\r\ntest=1",
+        "POST /?testid=testid9056827306352891idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: b588628ca586ddafc8a88118ea6aefd7\r\nContent-Length:0\r\n\r\n",
+        "GET /?testid=testid0649318707412956idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 64bf3eb8f8236c92becc04afb7e9fc4d\r\nContent-Length:6\r\n\r\ntest=1",
+        "GET /?testid=testid9852031731074592idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 9232421ef8940b6239a4e114427be4f6\r\nContent-Length:0\r\n\r\n",
+        "HEAD /?testid=testid4923065187314526idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 13eb14fdf0c37738bc25f4d82d20621e\r\nContent-Length:0\r\n\r\n"
+    ]
+}

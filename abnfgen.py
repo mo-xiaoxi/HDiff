@@ -1,12 +1,14 @@
 import os
 import sys
-from abnf.parser import Rule
-from abnf.builder import ABNFGrammarNodeBuilder
-from lib.logger import logger
-from lib.util import banner, get_abnf_rule, save_data
+import traceback
+from config import logger
+from src.parser import Rule
+from src.builder import ABNFGrammarNodeBuilder
+from src.util import banner, get_abnf_rule, save_json
 from optparse import OptionParser
 from config import BASE_DIR
-import traceback
+
+
 
 """
 ABNF gengerator
@@ -57,7 +59,7 @@ def run():
     logger.info(results)
     data = {target: results}
     outpath = "{}/{}.json".format(options.dir, target)
-    save_data(data, outpath)
+    save_json(data, outpath)
     logger.info("All Task Done! :)")
 
 

@@ -1,0 +1,48 @@
+version: "3"
+services:
+  varnish:
+    image: varnish:6.5.1
+    restart: always
+    volumes:
+      # - workdir:/var/lib/varnish
+      - ./default.vcl:/etc/varnish/default.vcl
+      - ./logs:/var/log/varnish
+    ports:
+      - "9013:80"
+    depends_on:
+      - varnish-echo-server
+  # 需要运行 docker exec varnish_varnish_1 varnishncsa -D -a -w /var/log/varnish/varnishncsa.log -F '"%{Host}i" %s \"%r\"'
+
+  varnish-echo-server:
+    build: '../echo'
+    restart: always
+
+
+  # varnishncsa:
+  #   image: varnish:6.5.1
+  #   restart: always
+  #   depends_on:
+  #     varnish:
+  #       condition:
+  #         service_started
+  #   volumes:
+  #     - workdir:/var/lib/varnish
+  #     - ./logs:/var/log/varnish
+  #     - ./start.sh:/start.sh
+  #   command: 
+  #   - /start.sh
+  #   # command:
+  #   #   - varnishncsa
+  #   #   - -a
+  #   #   - -w
+  #   #   - /var/log/varnish/varnishncsa.log
+  #   #   - -F
+  #   #   - '\"%r\" %{Host}i'
+  #   #   # - '\"%r\" %U %{Host}i'
+
+# volumes:
+#   workdir:
+#     driver: local
+#     driver_opts:
+#       type: tmpfs
+#       device: tmpfs

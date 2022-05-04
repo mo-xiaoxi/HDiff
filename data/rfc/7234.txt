@@ -1,199 +1,184 @@
-<!DOCTYPE html> 
 
-<!-- template: /a/www/ietf-datatracker/web/ietf/templates/doc/htmlized_base.html -->
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-  
-    rfc7234
-  
-</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
 
-  @media only screen 
-    and (min-width: 992px)
-    and (max-width: 1199px) {
-      body { font-size: 14pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (min-width: 768px)
-    and (max-width: 991px) {
-            body { font-size: 14pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (min-width: 480px)
-    and (max-width: 767px) {
-            body { font-size: 11pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (max-width: 479px) {
-            body { font-size: 8pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (min-device-width : 375px) 
-    and (max-device-width : 667px) {
-            body { font-size: 9.5pt; }
-            div.content { width: 96ex; margin: 0; }
-        }
-  @media only screen 
-    and (min-device-width: 1200px) {
-            body { font-size: 10pt; margin: 0 4em; }
-            div.content { width: 96ex; margin: 0; }
-        }
-        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-      font-weight: bold;
-            /* line-height: 0pt; */
-            display: inline;
-            white-space: pre;
-            font-family: monospace;
-            font-size: 1em;
-      font-weight: bold;
-        }
-        pre {
-            font-size: 1em;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-  .pre {
-      white-space: pre;
-      font-family: monospace;
-  }
-  .header{
-      font-weight: bold;
-  }
-        .newpage {
-            page-break-before: always;
-        }
-        .invisible {
-            text-decoration: none;
-            color: white;
-        }
-        @media print {
-            body {
-                margin-top: 5em;
+
+
+
+
+    
+        
+        
+        
+            
+    
+        RFC 7234 - Hypertext Transfer Protocol (HTTP/1.1): Caching
+    
+
+        
+        
+        
+            @media only screen
+            and (min-width: 992px)
+            and (max-width: 1199px) {
+                body { font-size: 14pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (min-width: 768px)
+            and (max-width: 991px) {
+                body { font-size: 14pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (min-width: 480px)
+            and (max-width: 767px) {
+                body { font-size: 11pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (max-width: 479px) {
+                body { font-size: 8pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (min-width : 375px)
+            and (max-width : 667px) {
+                body { font-size: 9.5pt; }
+                div.content { width: 96ex; margin: 0; }
+            }
+            @media only screen
+            and (min-width: 1200px) {
+                body { font-size: 10pt; margin: 0 4em; }
+                div.content { width: 96ex; margin: 0; }
+            }
+            h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+                font-weight: bold;
+                /* line-height: 0pt; */
+                display: inline;
+                white-space: pre;
                 font-family: monospace;
-                font-size: 10.5pt;
-            }
-            h1, h2, h3, h4, h5, h6 {
                 font-size: 1em;
+                font-weight: bold;
             }
-        
-            a:link, a:visited {
-                color: inherit;
+            pre {
+                font-size: 1em;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            .pre {
+                white-space: pre;
+                font-family: monospace;
+            }
+            .header{
+                font-weight: bold;
+            }
+            .newpage {
+                page-break-before: always;
+            }
+            .invisible {
                 text-decoration: none;
+                color: white;
             }
-            .noprint {
-                display: none;
+            @media print {
+                body {
+                    margin-top: 5em;
+                    font-family: monospace;
+                    font-size: 10.5pt;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-size: 1em;
+                }
+
+                a:link, a:visited {
+                    color: inherit;
+                    text-decoration: none;
+                }
+                .noprint {
+                    display: none;
+                }
             }
-        }
-  @media screen {
-      .grey, .grey a:link, .grey a:visited {
-    color: #777;
-      }
-            .meta-info {
-                background-color: #EEE;
+            @media screen {
+                .grey, .grey a:link, .grey a:visited {
+                    color: #777;
+                }
+                .meta-info {
+                    background-color: #EEE;
+                    width: 96ex;
+                }
+                .top {
+                    border-top: 7px solid #EEE;
+                }
+                .pad {
+                    padding-top: 7px;
+                    line-height: 24px;
+                    padding-bottom: 4px;
+                }
+                .bgwhite  { background-color: white; }
+                .bgred    { background-color: #F44; }
+                .bggrey   { background-color: #666; }
+                .bgbrown  { background-color: #840; }
+                .bgorange { background-color: #FA0; }
+                .bgyellow { background-color: #EE0; }
+                .bgmagenta{ background-color: #F4F; }
+                .bgblue   { background-color: #66F; }
+                .bgcyan   { background-color: #4DD; }
+                .bggreen  { background-color: #4F4; }
+
+                .legend   { font-size: 90%; }
+                .cplate   { font-size: 70%; border: solid grey 1px; }
             }
-            .top {
-                border-top: 7px solid #EEE;
-            }
-            .pad {
-                padding-top: 7px;
-                line-height: 24px;
-                padding-bottom: 4px;
-            }
-            .bgwhite  { background-color: white; }
-            .bgred    { background-color: #F44; }
-            .bggrey   { background-color: #666; }
-            .bgbrown  { background-color: #840; }            
-            .bgorange { background-color: #FA0; }
-            .bgyellow { background-color: #EE0; }
-            .bgmagenta{ background-color: #F4F; }
-            .bgblue   { background-color: #66F; }
-            .bgcyan   { background-color: #4DD; }
-            .bggreen  { background-color: #4F4; }
 
-            .legend   { font-size: 90%; }
-            .cplate   { font-size: 70%; border: solid grey 1px; }
-  }
-    
-     
+            
+    .bgwhite  { background-color: white; }
+    .bgred    { background-color: #F44; }
+    .bggrey   { background-color: #666; }
+    .bgbrown  { background-color: #840; }
+    .bgorange { background-color: #FA0; }
+    .bgyellow { background-color: #EE0; }
+    .bgmagenta{ background-color: #F4F; }
+    .bgblue   { background-color: #66F; }
+    .bgcyan   { background-color: #4DD; }
+    .bggreen  { background-color: #4F4; }
+    .draftcontent { margin-top:1em;}
 
-.bgwhite  { background-color: white; }
-.bgred    { background-color: #F44; }
-.bggrey   { background-color: #666; }
-.bgbrown  { background-color: #840; }            
-.bgorange { background-color: #FA0; }
-.bgyellow { background-color: #EE0; }
-.bgmagenta{ background-color: #F4F; }
-.bgblue   { background-color: #66F; }
-.bgcyan   { background-color: #4DD; }
-.bggreen  { background-color: #4F4; }
-
-.draftcontent { margin-top:0px !important;}
-
-
-    </style>
-
-    
-  <link rel="alternate" type="application/atom+xml" title="Document changes" href="/feed/document-changes/draft-ietf-httpbis-p6-cache/">
-  <meta name="description" content="Hypertext Transfer Protocol (HTTP/1.1): Caching (RFC )">
-
-
-    
-    <link rel="shortcut icon" href="https://www.ietf.org/lib/dt/7.40.0/ietf/images/ietf-icon-blue3.png">
-    
-    <link rel="apple-touch-icon" href="https://www.ietf.org/lib/dt/7.40.0/ietf/images/apple-touch-icon.png">
-  </head>
-
-  <body style="padding-top: 0;">
-
-	  <div class="content" id="content">
         
-  <!-- template: /a/www/ietf-datatracker/web/ietf/templates/doc/document_html.html -->
- 
-  <div class="rfcmarkup">
-    <div class="noprint" style="height: 6px;">
-      <div onmouseover="this.style.cursor='pointer';"
-         onclick="showLegend();"
-         onmouseout="hideLegend()"
-         style="height: 6px; min-height: 6px; width: 96ex; position: absolute; margin-top:0; "
-         class="meta-info bgblue"
-         title="Click for colour legend." >&nbsp;</div>
-      <div id="legend"
-           class="meta-info noprint pre legend"
-           style="position:absolute; top: 4px; left: 4ex; visibility:hidden; background-color: white; padding: 4px 9px 5px 7px; border: solid #345 1px; "
-           onmouseover="showLegend();"
-           onmouseout="hideLegend();">
-      </div>
-    </div>
-
+        
     
-      <div class="noprint">
-	 <pre class="pre meta-info">[<a href="https://datatracker.ietf.org" title="Document search and retrieval page">Search</a>] [<a href="https://www.rfc-editor.org/rfc/rfc7234.txt" title="Plaintext version of this document">txt</a>|<a href="https://www.rfc-editor.org/rfc/rfc7234.html" title="HTML version of this document, from XML2RFC">html</a>|<a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc7234.txt.pdf" title="PDF version of this document">pdf</a>|<a href="https://www.rfc-editor.org/rfc/inline-errata/rfc7234.html">with errata</a>|<a href="/doc/rfc7234/bibtex" title="BibTex entry for this document">bibtex</a>] [<a href="/doc/rfc7234/" title="Datatracker information for this document">Tracker</a>] [<a href="/group/httpbis/" title="The working group handling this document">WG</a>] [<a href="mailto:draft-ietf-httpbis-p6-cache@ietf.org?subject=draft-ietf-httpbis-p6-cache" title="Send email to the document authors">Email</a>] [<a href="https://www.ietf.org/rfcdiff?difftype=--hwdiff&url2=draft-ietf-httpbis-p6-cache-26.txt" title="Inline diff (wdiff)">Diff1</a>] [<a href="https://www.ietf.org/rfcdiff?url2=draft-ietf-httpbis-p6-cache-26.txt" title="Side-by-side diff">Diff2</a>] [<a href="https://www.ietf.org/tools/idnits?url=https://www.ietf.org/archive/id/draft-ietf-httpbis-p6-cache-26.txt" title="Run an idnits check of this document">Nits</a>]
-
-From: <a href="/doc/html/draft-ietf-httpbis-p6-cache-26">draft-ietf-httpbis-p6-cache-26</a>                   Proposed Standard
-                                                            <a class="text-warning" href="https://www.rfc-editor.org/errata_search.php?rfc=7234&amp;rec_status=0">Errata exist</a></pre>
-      </div>
     
 
-    <div class="draftcontent">
-    <pre>Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+        
+            
+        
+        
+    
+    
+        
+            
+
+    
+    
+        
+            
+            
+            
+            
+        
+        
+            
+                [Search] [txt|html|pdf|with errata|bibtex] [Tracker] [WG] [Email] [Diff1] [Diff2] [Nits]
+From: draft-ietf-httpbis-p6-cache-26                   Proposed Standard
+                                                            Errata exist
+            
+        
+        Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
 Request for Comments: 7234                                         Adobe
-Obsoletes: <a href="/doc/html/rfc2616">2616</a>                                       M. Nottingham, Ed.
+Obsoletes: 2616                                       M. Nottingham, Ed.
 Category: Standards Track                                         Akamai
 ISSN: 2070-1721                                          J. Reschke, Ed.
                                                               greenbytes
                                                                June 2014
 
 
-            <span class="h1">Hypertext Transfer Protocol (HTTP/1.1): Caching</span>
+            Hypertext Transfer Protocol (HTTP/1.1): Caching
 
 Abstract
 
@@ -211,11 +196,11 @@ Status of This Memo
    (IETF).  It represents the consensus of the IETF community.  It has
    received public review and has been approved for publication by the
    Internet Engineering Steering Group (IESG).  Further information on
-   Internet Standards is available in <a href="/doc/html/rfc5741#section-2">Section&nbsp;2 of RFC 5741</a>.
+   Internet Standards is available in Section 2 of RFC 5741.
 
    Information about the current status of this document, any errata,
    and how to provide feedback on it may be obtained at
-   <a href="http://www.rfc-editor.org/info/rfc7234">http://www.rfc-editor.org/info/rfc7234</a>.
+   http://www.rfc-editor.org/info/rfc7234.
 
 
 
@@ -235,9 +220,9 @@ Status of This Memo
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 1]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-2" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 1]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
 Copyright Notice
@@ -245,9 +230,9 @@ Copyright Notice
    Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to <a href="/doc/html/bcp78">BCP 78</a> and the IETF Trust&#x27;s Legal
+   This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of
+   (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -269,76 +254,72 @@ Copyright Notice
 
 Table of Contents
 
-   <a href="#section-1">1</a>. Introduction ....................................................<a href="#page-4">4</a>
-      <a href="#section-1.1">1.1</a>. Conformance and Error Handling .............................<a href="#page-4">4</a>
-      <a href="#section-1.2">1.2</a>. Syntax Notation ............................................<a href="#page-4">4</a>
-           <a href="#section-1.2.1">1.2.1</a>. Delta Seconds .......................................<a href="#page-5">5</a>
-   <a href="#section-2">2</a>. Overview of Cache Operation .....................................<a href="#page-5">5</a>
-   <a href="#section-3">3</a>. Storing Responses in Caches .....................................<a href="#page-6">6</a>
-      <a href="#section-3.1">3.1</a>. Storing Incomplete Responses ...............................<a href="#page-7">7</a>
-      <a href="#section-3.2">3.2</a>. Storing Responses to Authenticated Requests ................<a href="#page-7">7</a>
-      <a href="#section-3.3">3.3</a>. Combining Partial Content ..................................<a href="#page-8">8</a>
-   <a href="#section-4">4</a>. Constructing Responses from Caches ..............................<a href="#page-8">8</a>
-      <a href="#section-4.1">4.1</a>. Calculating Secondary Keys with Vary .......................<a href="#page-9">9</a>
-      <a href="#section-4.2">4.2</a>. Freshness .................................................<a href="#page-11">11</a>
-           <a href="#section-4.2.1">4.2.1</a>. Calculating Freshness Lifetime .....................<a href="#page-12">12</a>
-           <a href="#section-4.2.2">4.2.2</a>. Calculating Heuristic Freshness ....................<a href="#page-13">13</a>
-           <a href="#section-4.2.3">4.2.3</a>. Calculating Age ....................................<a href="#page-13">13</a>
-           <a href="#section-4.2.4">4.2.4</a>. Serving Stale Responses ............................<a href="#page-15">15</a>
-      <a href="#section-4.3">4.3</a>. Validation ................................................<a href="#page-16">16</a>
-           <a href="#section-4.3.1">4.3.1</a>. Sending a Validation Request .......................<a href="#page-16">16</a>
-           <a href="#section-4.3.2">4.3.2</a>. Handling a Received Validation Request .............<a href="#page-16">16</a>
+   1. Introduction ....................................................4
+      1.1. Conformance and Error Handling .............................4
+      1.2. Syntax Notation ............................................4
+           1.2.1. Delta Seconds .......................................5
+   2. Overview of Cache Operation .....................................5
+   3. Storing Responses in Caches .....................................6
+      3.1. Storing Incomplete Responses ...............................7
+      3.2. Storing Responses to Authenticated Requests ................7
+      3.3. Combining Partial Content ..................................8
+   4. Constructing Responses from Caches ..............................8
+      4.1. Calculating Secondary Keys with Vary .......................9
+      4.2. Freshness .................................................11
+           4.2.1. Calculating Freshness Lifetime .....................12
+           4.2.2. Calculating Heuristic Freshness ....................13
+           4.2.3. Calculating Age ....................................13
+           4.2.4. Serving Stale Responses ............................15
+      4.3. Validation ................................................16
+           4.3.1. Sending a Validation Request .......................16
+           4.3.2. Handling a Received Validation Request .............16
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 2]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-3" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 2]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-           <a href="#section-4.3.3">4.3.3</a>. Handling a Validation Response .....................<a href="#page-18">18</a>
-           <a href="#section-4.3.4">4.3.4</a>. Freshening Stored Responses upon Validation ........<a href="#page-18">18</a>
-           <a href="#section-4.3.5">4.3.5</a>. Freshening Responses via HEAD ......................<a href="#page-19">19</a>
-      <a href="#section-4.4">4.4</a>. Invalidation ..............................................<a href="#page-20">20</a>
-   <a href="#section-5">5</a>. Header Field Definitions .......................................<a href="#page-21">21</a>
-      <a href="#section-5.1">5.1</a>. Age .......................................................<a href="#page-21">21</a>
-      <a href="#section-5.2">5.2</a>. Cache-Control .............................................<a href="#page-21">21</a>
-           <a href="#section-5.2.1">5.2.1</a>. Request Cache-Control Directives ...................<a href="#page-22">22</a>
-           <a href="#section-5.2.2">5.2.2</a>. Response Cache-Control Directives ..................<a href="#page-24">24</a>
-           <a href="#section-5.2.3">5.2.3</a>. Cache Control Extensions ...........................<a href="#page-27">27</a>
-      <a href="#section-5.3">5.3</a>. Expires ...................................................<a href="#page-28">28</a>
-      <a href="#section-5.4">5.4</a>. Pragma ....................................................<a href="#page-29">29</a>
-      <a href="#section-5.5">5.5</a>. Warning ...................................................<a href="#page-29">29</a>
-           <a href="#section-5.5.1">5.5.1</a>. Warning: 110 - &quot;Response is Stale&quot; .................<a href="#page-31">31</a>
-           <a href="#section-5.5.2">5.5.2</a>. Warning: 111 - &quot;Revalidation Failed&quot; ...............<a href="#page-31">31</a>
-           <a href="#section-5.5.3">5.5.3</a>. Warning: 112 - &quot;Disconnected Operation&quot; ............<a href="#page-31">31</a>
-           <a href="#section-5.5.4">5.5.4</a>. Warning: 113 - &quot;Heuristic Expiration&quot; ..............<a href="#page-31">31</a>
-           <a href="#section-5.5.5">5.5.5</a>. Warning: 199 - &quot;Miscellaneous Warning&quot; .............<a href="#page-32">32</a>
-           <a href="#section-5.5.6">5.5.6</a>. Warning: 214 - &quot;Transformation Applied&quot; ............<a href="#page-32">32</a>
-           <a href="#section-5.5.7">5.5.7</a>. Warning: 299 - &quot;Miscellaneous Persistent Warning&quot; ..32
-   <a href="#section-6">6</a>. History Lists ..................................................<a href="#page-32">32</a>
-   <a href="#section-7">7</a>. IANA Considerations ............................................<a href="#page-32">32</a>
-      <a href="#section-7.1">7.1</a>. Cache Directive Registry ..................................<a href="#page-32">32</a>
-           <a href="#section-7.1.1">7.1.1</a>. Procedure ..........................................<a href="#page-32">32</a>
-           <a href="#section-7.1.2">7.1.2</a>. Considerations for New Cache Control Directives ....<a href="#page-33">33</a>
-           <a href="#section-7.1.3">7.1.3</a>. Registrations ......................................<a href="#page-33">33</a>
-      <a href="#section-7.2">7.2</a>. Warn Code Registry ........................................<a href="#page-34">34</a>
-           <a href="#section-7.2.1">7.2.1</a>. Procedure ..........................................<a href="#page-34">34</a>
-           <a href="#section-7.2.2">7.2.2</a>. Registrations ......................................<a href="#page-34">34</a>
-      <a href="#section-7.3">7.3</a>. Header Field Registration .................................<a href="#page-34">34</a>
-   <a href="#section-8">8</a>. Security Considerations ........................................<a href="#page-35">35</a>
-   <a href="#section-9">9</a>. Acknowledgments ................................................<a href="#page-36">36</a>
-   <a href="#section-10">10</a>. References ....................................................<a href="#page-36">36</a>
-      <a href="#section-10.1">10.1</a>. Normative References .....................................<a href="#page-36">36</a>
-      <a href="#section-10.2">10.2</a>. Informative References ...................................<a href="#page-37">37</a>
-   <a href="#appendix-A">Appendix A</a>. Changes from <a href="/doc/html/rfc2616">RFC 2616</a> .................................<a href="#page-38">38</a>
-   <a href="#appendix-B">Appendix B</a>. Imported ABNF .........................................<a href="#page-39">39</a>
-   <a href="#appendix-C">Appendix C</a>. Collected ABNF ........................................<a href="#page-39">39</a>
-   Index .............................................................<a href="#page-41">41</a>
-
-
-
-
+           4.3.3. Handling a Validation Response .....................18
+           4.3.4. Freshening Stored Responses upon Validation ........18
+           4.3.5. Freshening Responses via HEAD ......................19
+      4.4. Invalidation ..............................................20
+   5. Header Field Definitions .......................................21
+      5.1. Age .......................................................21
+      5.2. Cache-Control .............................................21
+           5.2.1. Request Cache-Control Directives ...................22
+           5.2.2. Response Cache-Control Directives ..................24
+           5.2.3. Cache Control Extensions ...........................27
+      5.3. Expires ...................................................28
+      5.4. Pragma ....................................................29
+      5.5. Warning ...................................................29
+           5.5.1. Warning: 110 - "Response is Stale" .................31
+           5.5.2. Warning: 111 - "Revalidation Failed" ...............31
+           5.5.3. Warning: 112 - "Disconnected Operation" ............31
+           5.5.4. Warning: 113 - "Heuristic Expiration" ..............31
+           5.5.5. Warning: 199 - "Miscellaneous Warning" .............32
+           5.5.6. Warning: 214 - "Transformation Applied" ............32
+           5.5.7. Warning: 299 - "Miscellaneous Persistent Warning" ..32
+   6. History Lists ..................................................32
+   7. IANA Considerations ............................................32
+      7.1. Cache Directive Registry ..................................32
+           7.1.1. Procedure ..........................................32
+           7.1.2. Considerations for New Cache Control Directives ....33
+           7.1.3. Registrations ......................................33
+      7.2. Warn Code Registry ........................................34
+           7.2.1. Procedure ..........................................34
+           7.2.2. Registrations ......................................34
+      7.3. Header Field Registration .................................34
+   8. Security Considerations ........................................35
+   9. Acknowledgments ................................................36
+   10. References ....................................................36
+      10.1. Normative References .....................................36
+      10.2. Informative References ...................................37
+   Appendix A. Changes from RFC 2616 .................................38
+   Appendix B. Imported ABNF .........................................39
+   Appendix C. Collected ABNF ........................................39
+   Index .............................................................41
 
 
 
@@ -347,12 +328,16 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 3]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-4" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
 
 
-<span class="h2"><a class="selflink" id="section-1" href="#section-1">1</a>.  Introduction</span>
+
+
+Fielding, et al.             Standards Track                    [Page 3]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
+
+
+1.  Introduction
 
    HTTP is typically used for distributed information systems, where
    performance can be improved by the use of response caches.  This
@@ -374,45 +359,45 @@ Table of Contents
 
    The goal of caching in HTTP/1.1 is to significantly improve
    performance by reusing a prior response message to satisfy a current
-   request.  A stored response is considered &quot;fresh&quot;, as defined in
-   <a href="#section-4.2">Section 4.2</a>, if the response can be reused without &quot;validation&quot;
+   request.  A stored response is considered "fresh", as defined in
+   Section 4.2, if the response can be reused without "validation"
    (checking with the origin server to see if the cached response
    remains valid for this request).  A fresh response can therefore
    reduce both latency and network overhead each time it is reused.
    When a cached response is not fresh, it might still be reusable if it
-   can be freshened by validation (<a href="#section-4.3">Section 4.3</a>) or if the origin is
-   unavailable (<a href="#section-4.2.4">Section 4.2.4</a>).
+   can be freshened by validation (Section 4.3) or if the origin is
+   unavailable (Section 4.2.4).
 
-<span class="h3"><a class="selflink" id="section-1.1" href="#section-1.1">1.1</a>.  Conformance and Error Handling</span>
+1.1.  Conformance and Error Handling
 
-   The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
-   &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this
-   document are to be interpreted as described in [<a href="/doc/html/rfc2119" title="&quot;Key words for use in RFCs to Indicate Requirement Levels&quot;">RFC2119</a>].
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
 
    Conformance criteria and considerations regarding error handling are
-   defined in <a href="/doc/html/rfc7230#section-2.5">Section&nbsp;2.5 of [RFC7230]</a>.
+   defined in Section 2.5 of [RFC7230].
 
-<span class="h3"><a class="selflink" id="section-1.2" href="#section-1.2">1.2</a>.  Syntax Notation</span>
+1.2.  Syntax Notation
 
    This specification uses the Augmented Backus-Naur Form (ABNF)
-   notation of [<a href="/doc/html/rfc5234" title="&quot;Augmented BNF for Syntax Specifications: ABNF&quot;">RFC5234</a>] with a list extension, defined in <a href="/doc/html/rfc7230#section-7">Section&nbsp;7 of
-   [RFC7230]</a>, that allows for compact definition of comma-separated
-   lists using a &#x27;#&#x27; operator (similar to how the &#x27;*&#x27; operator indicates
+   notation of [RFC5234] with a list extension, defined in Section 7 of
+   [RFC7230], that allows for compact definition of comma-separated
+   lists using a '#' operator (similar to how the '*' operator indicates
 
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 4]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-5" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 4]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-   repetition).  <a href="#appendix-B">Appendix B</a> describes rules imported from other
-   documents.  <a href="#appendix-C">Appendix C</a> shows the collected grammar with all list
+   repetition).  Appendix B describes rules imported from other
+   documents.  Appendix C shows the collected grammar with all list
    operators expanded to standard ABNF notation.
 
-<span class="h4"><a class="selflink" id="section-1.2.1" href="#section-1.2.1">1.2.1</a>.  Delta Seconds</span>
+1.2.1.  Delta Seconds
 
    The delta-seconds rule specifies a non-negative integer, representing
    time in seconds.
@@ -436,10 +421,10 @@ Table of Contents
       be detected and not treated as a negative value in later
       calculations.
 
-<span class="h2"><a class="selflink" id="section-2" href="#section-2">2</a>.  Overview of Cache Operation</span>
+2.  Overview of Cache Operation
 
    Proper cache operation preserves the semantics of HTTP transfers
-   ([<a href="/doc/html/rfc7231" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content&quot;">RFC7231</a>]) while eliminating the transfer of information already
+   ([RFC7231]) while eliminating the transfer of information already
    held in the cache.  Although caching is an entirely OPTIONAL feature
    of HTTP, it can be assumed that reusing a cached response is
    desirable and that such reuse is the default behavior when no
@@ -454,18 +439,18 @@ Table of Contents
    The most common form of cache entry is a successful result of a
    retrieval request: i.e., a 200 (OK) response to a GET request, which
    contains a representation of the resource identified by the request
-   target (<a href="/doc/html/rfc7231#section-4.3.1">Section&nbsp;4.3.1 of [RFC7231]</a>).  However, it is also possible to
+   target (Section 4.3.1 of [RFC7231]).  However, it is also possible to
    cache permanent redirects, negative results (e.g., 404 (Not Found)),
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 5]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-6" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 5]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    incomplete results (e.g., 206 (Partial Content)), and responses to
-   methods other than GET if the method&#x27;s definition allows such caching
+   methods other than GET if the method's definition allows such caching
    and defines something suitable for use as a cache key.
 
    The primary cache key consists of the request method and target URI.
@@ -475,10 +460,10 @@ Table of Contents
 
    If a request target is subject to content negotiation, its cache
    entry might consist of multiple stored responses, each differentiated
-   by a secondary key for the values of the original request&#x27;s selecting
-   header fields (<a href="#section-4.1">Section 4.1</a>).
+   by a secondary key for the values of the original request's selecting
+   header fields (Section 4.1).
 
-<span class="h2"><a class="selflink" id="section-3" href="#section-3">3</a>.  Storing Responses in Caches</span>
+3.  Storing Responses in Caches
 
    A cache MUST NOT store a response to any request, unless:
 
@@ -487,45 +472,45 @@ Table of Contents
 
    o  the response status code is understood by the cache, and
 
-   o  the &quot;no-store&quot; cache directive (see <a href="#section-5.2">Section 5.2</a>) does not appear
+   o  the "no-store" cache directive (see Section 5.2) does not appear
       in request or response header fields, and
 
-   o  the &quot;private&quot; response directive (see <a href="#section-5.2.2.6">Section 5.2.2.6</a>) does not
+   o  the "private" response directive (see Section 5.2.2.6) does not
       appear in the response, if the cache is shared, and
 
-   o  the Authorization header field (see <a href="/doc/html/rfc7235#section-4.2">Section&nbsp;4.2 of [RFC7235]</a>) does
+   o  the Authorization header field (see Section 4.2 of [RFC7235]) does
       not appear in the request, if the cache is shared, unless the
-      response explicitly allows it (see <a href="#section-3.2">Section 3.2</a>), and
+      response explicitly allows it (see Section 3.2), and
 
    o  the response either:
 
-      *  contains an Expires header field (see <a href="#section-5.3">Section 5.3</a>), or
+      *  contains an Expires header field (see Section 5.3), or
 
-      *  contains a max-age response directive (see <a href="#section-5.2.2.8">Section 5.2.2.8</a>), or
+      *  contains a max-age response directive (see Section 5.2.2.8), or
 
-      *  contains a s-maxage response directive (see <a href="#section-5.2.2.9">Section 5.2.2.9</a>)
+      *  contains a s-maxage response directive (see Section 5.2.2.9)
          and the cache is shared, or
 
-      *  contains a Cache Control Extension (see <a href="#section-5.2.3">Section 5.2.3</a>) that
+      *  contains a Cache Control Extension (see Section 5.2.3) that
          allows it to be cached, or
 
       *  has a status code that is defined as cacheable by default (see
-         <a href="#section-4.2.2">Section 4.2.2</a>), or
+         Section 4.2.2), or
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 6]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-7" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 6]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-      *  contains a public response directive (see <a href="#section-5.2.2.5">Section 5.2.2.5</a>).
+      *  contains a public response directive (see Section 5.2.2.5).
 
    Note that any of the requirements listed above can be overridden by a
-   cache-control extension; see <a href="#section-5.2.3">Section 5.2.3</a>.
+   cache-control extension; see Section 5.2.3.
 
-   In this context, a cache has &quot;understood&quot; a request method or a
+   In this context, a cache has "understood" a request method or a
    response status code if it recognizes it and implements all specified
    caching-related behavior.
 
@@ -534,10 +519,10 @@ Table of Contents
    as such responses are not usually useful to store.  However, caches
    are not prohibited from storing such responses.
 
-<span class="h3"><a class="selflink" id="section-3.1" href="#section-3.1">3.1</a>.  Storing Incomplete Responses</span>
+3.1.  Storing Incomplete Responses
 
    A response message is considered complete when all of the octets
-   indicated by the message framing ([<a href="/doc/html/rfc7230" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing&quot;">RFC7230</a>]) are received prior to
+   indicated by the message framing ([RFC7230]) are received prior to
    the connection being closed.  If the request method is GET, the
    response status code is 200 (OK), and the entire response header
    section has been received, a cache MAY store an incomplete response
@@ -549,56 +534,56 @@ Table of Contents
    the range units used in those fields.
 
    A cache MAY complete a stored incomplete response by making a
-   subsequent range request ([<a href="/doc/html/rfc7233" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Range Requests&quot;">RFC7233</a>]) and combining the successful
-   response with the stored entry, as defined in <a href="#section-3.3">Section 3.3</a>.  A cache
+   subsequent range request ([RFC7233]) and combining the successful
+   response with the stored entry, as defined in Section 3.3.  A cache
    MUST NOT use an incomplete response to answer requests unless the
    response has been made complete or the request is partial and
    specifies a range that is wholly within the incomplete response.  A
    cache MUST NOT send a partial response to a client without explicitly
    marking it as such using the 206 (Partial Content) status code.
 
-<span class="h3"><a class="selflink" id="section-3.2" href="#section-3.2">3.2</a>.  Storing Responses to Authenticated Requests</span>
+3.2.  Storing Responses to Authenticated Requests
 
    A shared cache MUST NOT use a cached response to a request with an
-   Authorization header field (<a href="/doc/html/rfc7235#section-4.2">Section&nbsp;4.2 of [RFC7235]</a>) to satisfy any
+   Authorization header field (Section 4.2 of [RFC7235]) to satisfy any
    subsequent request unless a cache directive that allows such
    responses to be stored is present in the response.
 
    In this specification, the following Cache-Control response
-   directives (<a href="#section-5.2.2">Section 5.2.2</a>) have such an effect: must-revalidate,
+   directives (Section 5.2.2) have such an effect: must-revalidate,
    public, and s-maxage.
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 7]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-8" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 7]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-   Note that cached responses that contain the &quot;must-revalidate&quot; and/or
-   &quot;s-maxage&quot; response directives are not allowed to be served stale
-   (<a href="#section-4.2.4">Section 4.2.4</a>) by shared caches.  In particular, a response with
-   either &quot;max-age=0, must-revalidate&quot; or &quot;s-maxage=0&quot; cannot be used to
+   Note that cached responses that contain the "must-revalidate" and/or
+   "s-maxage" response directives are not allowed to be served stale
+   (Section 4.2.4) by shared caches.  In particular, a response with
+   either "max-age=0, must-revalidate" or "s-maxage=0" cannot be used to
    satisfy a subsequent request without revalidating it on the origin
    server.
 
-<span class="h3"><a class="selflink" id="section-3.3" href="#section-3.3">3.3</a>.  Combining Partial Content</span>
+3.3.  Combining Partial Content
 
    A response might transfer only a partial representation if the
    connection closed prematurely or if the request used one or more
-   Range specifiers ([<a href="/doc/html/rfc7233" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Range Requests&quot;">RFC7233</a>]).  After several such transfers, a cache
+   Range specifiers ([RFC7233]).  After several such transfers, a cache
    might have received several ranges of the same representation.  A
    cache MAY combine these ranges into a single stored response, and
    reuse that response to satisfy later requests, if they all share the
    same strong validator and the cache complies with the client
-   requirements in <a href="/doc/html/rfc7233#section-4.3">Section&nbsp;4.3 of [RFC7233]</a>.
+   requirements in Section 4.3 of [RFC7233].
 
    When combining the new response with one or more stored responses, a
    cache MUST:
 
    o  delete any Warning header fields in the stored response with
-      warn-code 1xx (see <a href="#section-5.5">Section 5.5</a>);
+      warn-code 1xx (see Section 5.5);
 
    o  retain any Warning header fields in the stored response with
       warn-code 2xx; and,
@@ -607,19 +592,19 @@ Table of Contents
       Content-Range, to replace all instances of the corresponding
       header fields in the stored response.
 
-<span class="h2"><a class="selflink" id="section-4" href="#section-4">4</a>.  Constructing Responses from Caches</span>
+4.  Constructing Responses from Caches
 
    When presented with a request, a cache MUST NOT reuse a stored
    response, unless:
 
-   o  The presented effective request URI (<a href="/doc/html/rfc7230#section-5.5">Section&nbsp;5.5 of [RFC7230]</a>) and
+   o  The presented effective request URI (Section 5.5 of [RFC7230]) and
       that of the stored response match, and
 
    o  the request method associated with the stored response allows it
       to be used for the presented request, and
 
    o  selecting header fields nominated by the stored response (if any)
-      match those presented (see <a href="#section-4.1">Section 4.1</a>), and
+      match those presented (see Section 4.1), and
 
 
 
@@ -627,65 +612,65 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 8]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-9" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 8]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    o  the presented request does not contain the no-cache pragma
-      (<a href="#section-5.4">Section 5.4</a>), nor the no-cache cache directive (<a href="#section-5.2.1">Section 5.2.1</a>),
+      (Section 5.4), nor the no-cache cache directive (Section 5.2.1),
       unless the stored response is successfully validated
-      (<a href="#section-4.3">Section 4.3</a>), and
+      (Section 4.3), and
 
    o  the stored response does not contain the no-cache cache directive
-      (<a href="#section-5.2.2.2">Section 5.2.2.2</a>), unless it is successfully validated
-      (<a href="#section-4.3">Section 4.3</a>), and
+      (Section 5.2.2.2), unless it is successfully validated
+      (Section 4.3), and
 
    o  the stored response is either:
 
-      *  fresh (see <a href="#section-4.2">Section 4.2</a>), or
+      *  fresh (see Section 4.2), or
 
-      *  allowed to be served stale (see <a href="#section-4.2.4">Section 4.2.4</a>), or
+      *  allowed to be served stale (see Section 4.2.4), or
 
-      *  successfully validated (see <a href="#section-4.3">Section 4.3</a>).
+      *  successfully validated (see Section 4.3).
 
    Note that any of the requirements listed above can be overridden by a
-   cache-control extension; see <a href="#section-5.2.3">Section 5.2.3</a>.
+   cache-control extension; see Section 5.2.3.
 
    When a stored response is used to satisfy a request without
-   validation, a cache MUST generate an Age header field (<a href="#section-5.1">Section 5.1</a>),
+   validation, a cache MUST generate an Age header field (Section 5.1),
    replacing any present in the response with a value equal to the
-   stored response&#x27;s current_age; see <a href="#section-4.2.3">Section 4.2.3</a>.
+   stored response's current_age; see Section 4.2.3.
 
    A cache MUST write through requests with methods that are unsafe
-   (<a href="/doc/html/rfc7231#section-4.2.1">Section&nbsp;4.2.1 of [RFC7231]</a>) to the origin server; i.e., a cache is
+   (Section 4.2.1 of [RFC7231]) to the origin server; i.e., a cache is
    not allowed to generate a reply to such a request before having
    forwarded the request and having received a corresponding response.
 
    Also, note that unsafe requests might invalidate already-stored
-   responses; see <a href="#section-4.4">Section 4.4</a>.
+   responses; see Section 4.4.
 
    When more than one suitable response is stored, a cache MUST use the
    most recent response (as determined by the Date header field).  It
-   can also forward the request with &quot;Cache-Control: max-age=0&quot; or
-   &quot;Cache-Control: no-cache&quot; to disambiguate which response to use.
+   can also forward the request with "Cache-Control: max-age=0" or
+   "Cache-Control: no-cache" to disambiguate which response to use.
 
    A cache that does not have a clock available MUST NOT use stored
    responses without revalidating them upon every use.
 
-<span class="h3"><a class="selflink" id="section-4.1" href="#section-4.1">4.1</a>.  Calculating Secondary Keys with Vary</span>
+4.1.  Calculating Secondary Keys with Vary
 
    When a cache receives a request that can be satisfied by a stored
-   response that has a Vary header field (<a href="/doc/html/rfc7231#section-7.1.4">Section&nbsp;7.1.4 of [RFC7231]</a>),
+   response that has a Vary header field (Section 7.1.4 of [RFC7231]),
    it MUST NOT use that response unless all of the selecting header
 
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 9]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-10" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                    [Page 9]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    fields nominated by the Vary header field match in both the original
@@ -696,14 +681,14 @@ Table of Contents
    and only if those in the first request can be transformed to those in
    the second request by applying any of the following:
 
-   o  adding or removing whitespace, where allowed in the header field&#x27;s
+   o  adding or removing whitespace, where allowed in the header field's
       syntax
 
    o  combining multiple header fields with the same field name (see
-      <a href="/doc/html/rfc7230#section-3.2">Section&nbsp;3.2 of [RFC7230]</a>)
+      Section 3.2 of [RFC7230])
 
    o  normalizing both header field values in a way that is known to
-      have identical semantics, according to the header field&#x27;s
+      have identical semantics, according to the header field's
       specification (e.g., reordering field values when order is not
       significant; case-normalization, where values are defined to be
       case-insensitive)
@@ -712,7 +697,7 @@ Table of Contents
    absent from a request, it can only match another request if it is
    also absent there.
 
-   A Vary header field-value of &quot;*&quot; always fails to match.
+   A Vary header field-value of "*" always fails to match.
 
    The stored response with matching selecting header fields is known as
    the selected response.
@@ -723,11 +708,11 @@ Table of Contents
    doing so (e.g., qvalues on Accept and similar request header fields),
    that mechanism MAY be used to select preferred responses; of the
    remainder, the most recent response (as determined by the Date header
-   field) is used, as per <a href="#section-4">Section 4</a>.
+   field) is used, as per Section 4.
 
    If no selected response is available, the cache cannot satisfy the
    presented request.  Typically, it is forwarded to the origin server
-   in a (possibly conditional; see <a href="#section-4.3">Section 4.3</a>) request.
+   in a (possibly conditional; see Section 4.3) request.
 
 
 
@@ -739,34 +724,34 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 10]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-11" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 10]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h3"><a class="selflink" id="section-4.2" href="#section-4.2">4.2</a>.  Freshness</span>
+4.2.  Freshness
 
    A fresh response is one whose age has not yet exceeded its freshness
    lifetime.  Conversely, a stale response is one where it has.
 
-   A response&#x27;s freshness lifetime is the length of time between its
+   A response's freshness lifetime is the length of time between its
    generation by the origin server and its expiration time.  An explicit
    expiration time is the time at which the origin server intends that a
    stored response can no longer be used by a cache without further
    validation, whereas a heuristic expiration time is assigned by a
    cache when no explicit expiration time is available.
 
-   A response&#x27;s age is the time that has passed since it was generated
+   A response's age is the time that has passed since it was generated
    by, or successfully validated with, the origin server.
 
-   When a response is &quot;fresh&quot; in the cache, it can be used to satisfy
+   When a response is "fresh" in the cache, it can be used to satisfy
    subsequent requests without contacting the origin server, thereby
    improving efficiency.
 
    The primary mechanism for determining freshness is for an origin
    server to provide an explicit expiration time in the future, using
-   either the Expires header field (<a href="#section-5.3">Section 5.3</a>) or the max-age response
-   directive (<a href="#section-5.2.2.8">Section 5.2.2.8</a>).  Generally, origin servers will assign
+   either the Expires header field (Section 5.3) or the max-age response
+   directive (Section 5.2.2.8).  Generally, origin servers will assign
    future explicit expiration times to responses in the belief that the
    representation is not likely to change in a semantically significant
    way before the expiration time is reached.
@@ -775,29 +760,29 @@ Table of Contents
    request, it can assign an explicit expiration time in the past to
    indicate that the response is already stale.  Compliant caches will
    normally validate a stale cached response before reusing it for
-   subsequent requests (see <a href="#section-4.2.4">Section 4.2.4</a>).
+   subsequent requests (see Section 4.2.4).
 
    Since origin servers do not always provide explicit expiration times,
    caches are also allowed to use a heuristic to determine an expiration
-   time under certain circumstances (see <a href="#section-4.2.2">Section 4.2.2</a>).
+   time under certain circumstances (see Section 4.2.2).
 
    The calculation to determine if a response is fresh is:
 
-      response_is_fresh = (freshness_lifetime &gt; current_age)
+      response_is_fresh = (freshness_lifetime > current_age)
 
-   freshness_lifetime is defined in <a href="#section-4.2.1">Section 4.2.1</a>; current_age is
-   defined in <a href="#section-4.2.3">Section 4.2.3</a>.
+   freshness_lifetime is defined in Section 4.2.1; current_age is
+   defined in Section 4.2.3.
 
    Clients can send the max-age or min-fresh cache directives in a
    request to constrain or relax freshness calculations for the
-   corresponding response (<a href="#section-5.2.1">Section 5.2.1</a>).
+   corresponding response (Section 5.2.1).
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 11]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-12" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 11]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    When calculating freshness, to avoid common problems in date parsing:
@@ -806,7 +791,7 @@ Table of Contents
       cache recipient SHOULD match day, week, and time-zone names
       case-insensitively.
 
-   o  If a cache recipient&#x27;s internal implementation of time has less
+   o  If a cache recipient's internal implementation of time has less
       resolution than the value of an HTTP-date, the recipient MUST
       internally represent a parsed Expires date as the nearest time
       equal to or earlier than the received value.
@@ -819,27 +804,27 @@ Table of Contents
 
    Note that freshness applies only to cache operation; it cannot be
    used to force a user agent to refresh its display or reload a
-   resource.  See <a href="#section-6">Section 6</a> for an explanation of the difference between
+   resource.  See Section 6 for an explanation of the difference between
    caches and history mechanisms.
 
-<span class="h4"><a class="selflink" id="section-4.2.1" href="#section-4.2.1">4.2.1</a>.  Calculating Freshness Lifetime</span>
+4.2.1.  Calculating Freshness Lifetime
 
    A cache can calculate the freshness lifetime (denoted as
    freshness_lifetime) of a response by using the first match of the
    following:
 
    o  If the cache is shared and the s-maxage response directive
-      (<a href="#section-5.2.2.9">Section 5.2.2.9</a>) is present, use its value, or
+      (Section 5.2.2.9) is present, use its value, or
 
-   o  If the max-age response directive (<a href="#section-5.2.2.8">Section 5.2.2.8</a>) is present,
+   o  If the max-age response directive (Section 5.2.2.8) is present,
       use its value, or
 
-   o  If the Expires response header field (<a href="#section-5.3">Section 5.3</a>) is present, use
+   o  If the Expires response header field (Section 5.3) is present, use
       its value minus the value of the Date response header field, or
 
    o  Otherwise, no explicit expiration time is present in the response.
       A heuristic freshness lifetime might be applicable; see
-      <a href="#section-4.2.2">Section 4.2.2</a>.
+      Section 4.2.2.
 
    Note that this calculation is not vulnerable to clock skew, since all
    of the information comes from the origin server.
@@ -851,18 +836,18 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 12]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-13" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 12]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    When there is more than one value present for a given directive
    (e.g., two Expires header fields, multiple Cache-Control: max-age
-   directives), the directive&#x27;s value is considered invalid.  Caches are
+   directives), the directive's value is considered invalid.  Caches are
    encouraged to consider responses that have invalid freshness
    information to be stale.
 
-<span class="h4"><a class="selflink" id="section-4.2.2" href="#section-4.2.2">4.2.2</a>.  Calculating Heuristic Freshness</span>
+4.2.2.  Calculating Heuristic Freshness
 
    Since origin servers do not always provide explicit expiration times,
    a cache MAY assign a heuristic expiration time when an explicit time
@@ -873,43 +858,43 @@ Table of Contents
 
    A cache MUST NOT use heuristics to determine freshness when an
    explicit expiration time is present in the stored response.  Because
-   of the requirements in <a href="#section-3">Section 3</a>, this means that, effectively,
+   of the requirements in Section 3, this means that, effectively,
    heuristics can only be used on responses without explicit freshness
-   whose status codes are defined as cacheable by default (see <a href="/doc/html/rfc7231#section-6.1">Section</a>
-   <a href="/doc/html/rfc7231#section-6.1">6.1 of [RFC7231]</a>), and those responses without explicit freshness
-   that have been marked as explicitly cacheable (e.g., with a &quot;public&quot;
+   whose status codes are defined as cacheable by default (see Section
+   6.1 of [RFC7231]), and those responses without explicit freshness
+   that have been marked as explicitly cacheable (e.g., with a "public"
    response directive).
 
-   If the response has a Last-Modified header field (<a href="/doc/html/rfc7232#section-2.2">Section&nbsp;2.2 of
-   [RFC7232]</a>), caches are encouraged to use a heuristic expiration value
+   If the response has a Last-Modified header field (Section 2.2 of
+   [RFC7232]), caches are encouraged to use a heuristic expiration value
    that is no more than some fraction of the interval since that time.
    A typical setting of this fraction might be 10%.
 
    When a heuristic is used to calculate freshness lifetime, a cache
    SHOULD generate a Warning header field with a 113 warn-code (see
-   <a href="#section-5.5.4">Section 5.5.4</a>) in the response if its current_age is more than 24
+   Section 5.5.4) in the response if its current_age is more than 24
    hours and such a warning is not already present.
 
-      Note: <a href="/doc/html/rfc2616#section-13.9">Section&nbsp;13.9 of [RFC2616]</a> prohibited caches from calculating
+      Note: Section 13.9 of [RFC2616] prohibited caches from calculating
       heuristic freshness for URIs with query components (i.e., those
-      containing &#x27;?&#x27;).  In practice, this has not been widely
+      containing '?').  In practice, this has not been widely
       implemented.  Therefore, origin servers are encouraged to send
       explicit directives (e.g., Cache-Control: no-cache) if they wish
       to preclude caching.
 
-<span class="h4"><a class="selflink" id="section-4.2.3" href="#section-4.2.3">4.2.3</a>.  Calculating Age</span>
+4.2.3.  Calculating Age
 
    The Age header field is used to convey an estimated age of the
    response message when obtained from a cache.  The Age field value is
-   the cache&#x27;s estimate of the number of seconds since the response was
+   the cache's estimate of the number of seconds since the response was
    generated or validated by the origin server.  In essence, the Age
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 13]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-14" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 13]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    value is the sum of the time that the response has been resident in
@@ -920,21 +905,21 @@ Table of Contents
 
    age_value
 
-      The term &quot;age_value&quot; denotes the value of the Age header field
-      (<a href="#section-5.1">Section 5.1</a>), in a form appropriate for arithmetic operation; or
+      The term "age_value" denotes the value of the Age header field
+      (Section 5.1), in a form appropriate for arithmetic operation; or
       0, if not available.
 
    date_value
 
-      The term &quot;date_value&quot; denotes the value of the Date header field,
-      in a form appropriate for arithmetic operations.  See <a href="/doc/html/rfc7231#section-7.1.1.2">Section</a>
-      <a href="/doc/html/rfc7231#section-7.1.1.2">7.1.1.2 of [RFC7231]</a> for the definition of the Date header field,
+      The term "date_value" denotes the value of the Date header field,
+      in a form appropriate for arithmetic operations.  See Section
+      7.1.1.2 of [RFC7231] for the definition of the Date header field,
       and for requirements regarding responses without it.
 
    now
 
-      The term &quot;now&quot; means &quot;the current value of the clock at the host
-      performing the calculation&quot;.  A host ought to use NTP ([<a href="/doc/html/rfc5905" title="&quot;Network Time Protocol Version 4: Protocol and Algorithms Specification&quot;">RFC5905</a>])
+      The term "now" means "the current value of the clock at the host
+      performing the calculation".  A host ought to use NTP ([RFC5905])
       or some similar protocol to synchronize its clocks to Coordinated
       Universal Time.
 
@@ -948,14 +933,14 @@ Table of Contents
       The current value of the clock at the host at the time the
       response was received.
 
-   A response&#x27;s age can be calculated in two entirely independent ways:
+   A response's age can be calculated in two entirely independent ways:
 
-   1.  the &quot;apparent_age&quot;: response_time minus date_value, if the local
-       clock is reasonably well synchronized to the origin server&#x27;s
+   1.  the "apparent_age": response_time minus date_value, if the local
+       clock is reasonably well synchronized to the origin server's
        clock.  If the result is negative, the result is replaced by
        zero.
 
-   2.  the &quot;corrected_age_value&quot;, if all of the caches along the
+   2.  the "corrected_age_value", if all of the caches along the
        response path implement HTTP/1.1.  A cache MUST interpret this
        value relative to the time the request was initiated, not the
        time that the response was received.
@@ -963,9 +948,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 14]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-15" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 14]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
      apparent_age = max(0, response_time - date_value);
@@ -989,26 +974,26 @@ Table of Contents
      resident_time = now - response_time;
      current_age = corrected_initial_age + resident_time;
 
-<span class="h4"><a class="selflink" id="section-4.2.4" href="#section-4.2.4">4.2.4</a>.  Serving Stale Responses</span>
+4.2.4.  Serving Stale Responses
 
-   A &quot;stale&quot; response is one that either has explicit expiry information
+   A "stale" response is one that either has explicit expiry information
    or is allowed to have heuristic expiry calculated, but is not fresh
-   according to the calculations in <a href="#section-4.2">Section 4.2</a>.
+   according to the calculations in Section 4.2.
 
    A cache MUST NOT generate a stale response if it is prohibited by an
-   explicit in-protocol directive (e.g., by a &quot;no-store&quot; or &quot;no-cache&quot;
-   cache directive, a &quot;must-revalidate&quot; cache-response-directive, or an
-   applicable &quot;s-maxage&quot; or &quot;proxy-revalidate&quot; cache-response-directive;
-   see <a href="#section-5.2.2">Section 5.2.2</a>).
+   explicit in-protocol directive (e.g., by a "no-store" or "no-cache"
+   cache directive, a "must-revalidate" cache-response-directive, or an
+   applicable "s-maxage" or "proxy-revalidate" cache-response-directive;
+   see Section 5.2.2).
 
    A cache MUST NOT send stale responses unless it is disconnected
    (i.e., it cannot contact the origin server or otherwise find a
    forward path) or doing so is explicitly allowed (e.g., by the
-   max-stale request directive; see <a href="#section-5.2.1">Section 5.2.1</a>).
+   max-stale request directive; see Section 5.2.1).
 
    A cache SHOULD generate a Warning header field with the 110 warn-code
-   (see <a href="#section-5.5.1">Section 5.5.1</a>) in stale responses.  Likewise, a cache SHOULD
-   generate a 112 warn-code (see <a href="#section-5.5.3">Section 5.5.3</a>) in stale responses if
+   (see Section 5.5.1) in stale responses.  Likewise, a cache SHOULD
+   generate a 112 warn-code (see Section 5.5.3) in stale responses if
    the cache is disconnected.
 
    A cache SHOULD NOT generate a new Warning header field when
@@ -1019,23 +1004,23 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 15]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-16" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 15]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h3"><a class="selflink" id="section-4.3" href="#section-4.3">4.3</a>.  Validation</span>
+4.3.  Validation
 
    When a cache has one or more stored responses for a requested URI,
    but cannot serve any of them (e.g., because they are not fresh, or
-   one cannot be selected; see <a href="#section-4.1">Section 4.1</a>), it can use the conditional
-   request mechanism [<a href="/doc/html/rfc7232" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests&quot;">RFC7232</a>] in the forwarded request to give the next
+   one cannot be selected; see Section 4.1), it can use the conditional
+   request mechanism [RFC7232] in the forwarded request to give the next
    inbound server an opportunity to select a valid stored response to
    use, updating the stored metadata in the process, or to replace the
    stored response(s) with a new response.  This process is known as
-   &quot;validating&quot; or &quot;revalidating&quot; the stored response.
+   "validating" or "revalidating" the stored response.
 
-<span class="h4"><a class="selflink" id="section-4.3.1" href="#section-4.3.1">4.3.1</a>.  Sending a Validation Request</span>
+4.3.1.  Sending a Validation Request
 
    When sending a conditional request for cache validation, a cache
    sends one or more precondition header fields containing validator
@@ -1044,21 +1029,21 @@ Table of Contents
    current representation of the resource.
 
    One such validator is the timestamp given in a Last-Modified header
-   field (<a href="/doc/html/rfc7232#section-2.2">Section&nbsp;2.2 of [RFC7232]</a>), which can be used in an
+   field (Section 2.2 of [RFC7232]), which can be used in an
    If-Modified-Since header field for response validation, or in an
    If-Unmodified-Since or If-Range header field for representation
    selection (i.e., the client is referring specifically to a previously
    obtained representation with that timestamp).
 
    Another validator is the entity-tag given in an ETag header field
-   (<a href="/doc/html/rfc7232#section-2.3">Section&nbsp;2.3 of [RFC7232]</a>).  One or more entity-tags, indicating one
+   (Section 2.3 of [RFC7232]).  One or more entity-tags, indicating one
    or more stored responses, can be used in an If-None-Match header
    field for response validation, or in an If-Match or If-Range header
    field for representation selection (i.e., the client is referring
    specifically to one or more previously obtained representations with
    the listed entity-tags).
 
-<span class="h4"><a class="selflink" id="section-4.3.2" href="#section-4.3.2">4.3.2</a>.  Handling a Received Validation Request</span>
+4.3.2.  Handling a Received Validation Request
 
    Each client in the request chain may have its own cache, so it is
    common for a cache at an intermediary to receive conditional requests
@@ -1075,9 +1060,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 16]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-17" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 16]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    conditional header fields that are only applicable to an origin
@@ -1088,14 +1073,14 @@ Table of Contents
 
    The proper evaluation of conditional requests by a cache depends on
    the received precondition header fields and their precedence, as
-   defined in <a href="/doc/html/rfc7232#section-6">Section&nbsp;6 of [RFC7232]</a>.  The If-Match and
+   defined in Section 6 of [RFC7232].  The If-Match and
    If-Unmodified-Since conditional header fields are not applicable to a
    cache.
 
-   A request containing an If-None-Match header field (<a href="/doc/html/rfc7232#section-3.2">Section&nbsp;3.2 of
-   [RFC7232]</a>) indicates that the client wants to validate one or more of
+   A request containing an If-None-Match header field (Section 3.2 of
+   [RFC7232]) indicates that the client wants to validate one or more of
    its own stored responses in comparison to whichever stored response
-   is selected by the cache.  If the field-value is &quot;*&quot;, or if the
+   is selected by the cache.  If the field-value is "*", or if the
    field-value is a list of entity-tags and at least one of them matches
    the entity-tag of the selected stored response, a cache recipient
    SHOULD generate a 304 (Not Modified) response (using the metadata of
@@ -1112,13 +1097,13 @@ Table of Contents
    unless the request is for a range that would be fully satisfied by
    that partial stored response.  If the response to the forwarded
    request is 304 (Not Modified) and has an ETag header field value with
-   an entity-tag that is not in the client&#x27;s list, the cache MUST
+   an entity-tag that is not in the client's list, the cache MUST
    generate a 200 (OK) response for the client by reusing its
    corresponding stored response, as updated by the 304 response
-   metadata (<a href="#section-4.3.4">Section 4.3.4</a>).
+   metadata (Section 4.3.4).
 
    If an If-None-Match header field is not present, a request containing
-   an If-Modified-Since header field (<a href="/doc/html/rfc7232#section-3.3">Section&nbsp;3.3 of [RFC7232]</a>)
+   an If-Modified-Since header field (Section 3.3 of [RFC7232])
    indicates that the client wants to validate one or more of its own
    stored responses by modification date.  A cache recipient SHOULD
    generate a 304 (Not Modified) response (using the metadata of the
@@ -1131,9 +1116,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 17]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-18" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 17]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    present in the selected stored response, but the cache recorded it as
@@ -1141,17 +1126,17 @@ Table of Contents
    conditional timestamp.
 
    A cache that implements partial responses to range requests, as
-   defined in [<a href="/doc/html/rfc7233" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Range Requests&quot;">RFC7233</a>], also needs to evaluate a received If-Range
-   header field (<a href="/doc/html/rfc7233#section-3.2">Section&nbsp;3.2 of [RFC7233]</a>) with respect to its selected
+   defined in [RFC7233], also needs to evaluate a received If-Range
+   header field (Section 3.2 of [RFC7233]) with respect to its selected
    stored response.
 
-<span class="h4"><a class="selflink" id="section-4.3.3" href="#section-4.3.3">4.3.3</a>.  Handling a Validation Response</span>
+4.3.3.  Handling a Validation Response
 
    Cache handling of a response to a conditional request is dependent
    upon its status code:
 
    o  A 304 (Not Modified) response status code indicates that the
-      stored response can be updated and reused; see <a href="#section-4.3.4">Section 4.3.4</a>.
+      stored response can be updated and reused; see Section 4.3.4.
 
    o  A full response (i.e., one with a payload body) indicates that
       none of the stored responses nominated in the conditional request
@@ -1162,9 +1147,9 @@ Table of Contents
       attempting to validate a response, it can either forward this
       response to the requesting client, or act as if the server failed
       to respond.  In the latter case, the cache MAY send a previously
-      stored response (see <a href="#section-4.2.4">Section 4.2.4</a>).
+      stored response (see Section 4.2.4).
 
-<span class="h4"><a class="selflink" id="section-4.3.4" href="#section-4.3.4">4.3.4</a>.  Freshening Stored Responses upon Validation</span>
+4.3.4.  Freshening Stored Responses upon Validation
 
    When a cache receives a 304 (Not Modified) response and already has
    one or more stored 200 (OK) responses for the same cache key, the
@@ -1175,8 +1160,8 @@ Table of Contents
    The stored response to update is identified by using the first match
    (if any) of the following:
 
-   o  If the new response contains a strong validator (see <a href="/doc/html/rfc7232#section-2.1">Section&nbsp;2.1
-      of [RFC7232]</a>), then that strong validator identifies the selected
+   o  If the new response contains a strong validator (see Section 2.1
+      of [RFC7232]), then that strong validator identifies the selected
       representation for update.  All of the stored responses with the
       same strong validator are selected.  If none of the stored
       responses contain the same strong validator, then the cache MUST
@@ -1187,13 +1172,13 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 18]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-19" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 18]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    o  If the new response contains a weak validator and that validator
-      corresponds to one of the cache&#x27;s stored responses, then the most
+      corresponds to one of the cache's stored responses, then the most
       recent of those matching stored responses is selected for update.
 
    o  If the new response does not include any form of validator (such
@@ -1206,7 +1191,7 @@ Table of Contents
    If a stored response is selected for update, the cache MUST:
 
    o  delete any Warning header fields in the stored response with
-      warn-code 1xx (see <a href="#section-5.5">Section 5.5</a>);
+      warn-code 1xx (see Section 5.5);
 
    o  retain any Warning header fields in the stored response with
       warn-code 2xx; and,
@@ -1215,7 +1200,7 @@ Table of Contents
       response to replace all instances of the corresponding header
       fields in the stored response.
 
-<span class="h4"><a class="selflink" id="section-4.3.5" href="#section-4.3.5">4.3.5</a>.  Freshening Responses via HEAD</span>
+4.3.5.  Freshening Responses via HEAD
 
    A response to the HEAD method is identical to what an equivalent
    request made with a GET would have been, except it lacks a body.
@@ -1228,7 +1213,7 @@ Table of Contents
    When a cache makes an inbound HEAD request for a given request target
    and receives a 200 (OK) response, the cache SHOULD update or
    invalidate each of its stored GET responses that could have been
-   selected for that request (see <a href="#section-4.1">Section 4.1</a>).
+   selected for that request (see Section 4.1).
 
    For each of the stored responses that could have been selected, if
    the stored response and HEAD response have matching values for any
@@ -1243,51 +1228,51 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 19]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-20" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 19]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    If a cache updates a stored response with the metadata provided in a
    HEAD response, the cache MUST:
 
    o  delete any Warning header fields in the stored response with
-      warn-code 1xx (see <a href="#section-5.5">Section 5.5</a>);
+      warn-code 1xx (see Section 5.5);
 
    o  retain any Warning header fields in the stored response with
       warn-code 2xx; and,
 
    o  use other header fields provided in the HEAD response to replace
       all instances of the corresponding header fields in the stored
-      response and append new header fields to the stored response&#x27;s
+      response and append new header fields to the stored response's
       header section unless otherwise restricted by the Cache-Control
       header field.
 
-<span class="h3"><a class="selflink" id="section-4.4" href="#section-4.4">4.4</a>.  Invalidation</span>
+4.4.  Invalidation
 
-   Because unsafe request methods (<a href="/doc/html/rfc7231#section-4.2.1">Section&nbsp;4.2.1 of [RFC7231]</a>) such as
+   Because unsafe request methods (Section 4.2.1 of [RFC7231]) such as
    PUT, POST or DELETE have the potential for changing state on the
    origin server, intervening caches can use them to keep their contents
    up to date.
 
-   A cache MUST invalidate the effective Request URI (<a href="/doc/html/rfc7230#section-5.5">Section&nbsp;5.5 of
-   [RFC7230]</a>) as well as the URI(s) in the Location and Content-Location
+   A cache MUST invalidate the effective Request URI (Section 5.5 of
+   [RFC7230]) as well as the URI(s) in the Location and Content-Location
    response header fields (if present) when a non-error status code is
    received in response to an unsafe request method.
 
    However, a cache MUST NOT invalidate a URI from a Location or
    Content-Location response header field if the host part of that URI
-   differs from the host part in the effective request URI (<a href="/doc/html/rfc7230#section-5.5">Section&nbsp;5.5
-   of [RFC7230]</a>).  This helps prevent denial-of-service attacks.
+   differs from the host part in the effective request URI (Section 5.5
+   of [RFC7230]).  This helps prevent denial-of-service attacks.
 
-   A cache MUST invalidate the effective request URI (<a href="/doc/html/rfc7230#section-5.5">Section&nbsp;5.5 of
-   [RFC7230]</a>) when it receives a non-error response to a request with a
+   A cache MUST invalidate the effective request URI (Section 5.5 of
+   [RFC7230]) when it receives a non-error response to a request with a
    method whose safety is unknown.
 
-   Here, a &quot;non-error response&quot; is one with a 2xx (Successful) or 3xx
-   (Redirection) status code.  &quot;Invalidate&quot; means that the cache will
+   Here, a "non-error response" is one with a 2xx (Successful) or 3xx
+   (Redirection) status code.  "Invalidate" means that the cache will
    either remove all stored responses related to the effective request
-   URI or will mark these as &quot;invalid&quot; and in need of a mandatory
+   URI or will mark these as "invalid" and in need of a mandatory
    validation before they can be sent in response to a subsequent
    request.
 
@@ -1299,27 +1284,27 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 20]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-21" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 20]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h2"><a class="selflink" id="section-5" href="#section-5">5</a>.  Header Field Definitions</span>
+5.  Header Field Definitions
 
    This section defines the syntax and semantics of HTTP/1.1 header
    fields related to caching.
 
-<span class="h3"><a class="selflink" id="section-5.1" href="#section-5.1">5.1</a>.  Age</span>
+5.1.  Age
 
-   The &quot;Age&quot; header field conveys the sender&#x27;s estimate of the amount of
+   The "Age" header field conveys the sender's estimate of the amount of
    time since the response was generated or successfully validated at
    the origin server.  Age values are calculated as specified in
-   <a href="#section-4.2.3">Section 4.2.3</a>.
+   Section 4.2.3.
 
      Age = delta-seconds
 
    The Age field-value is a non-negative integer, representing time in
-   seconds (see <a href="#section-1.2.1">Section 1.2.1</a>).
+   seconds (see Section 1.2.1).
 
    The presence of an Age header field implies that the response was not
    generated or validated by the origin server for this request.
@@ -1327,15 +1312,15 @@ Table of Contents
    contacted, since the response might have been received from an
    HTTP/1.0 cache that does not implement Age.
 
-<span class="h3"><a class="selflink" id="section-5.2" href="#section-5.2">5.2</a>.  Cache-Control</span>
+5.2.  Cache-Control
 
-   The &quot;Cache-Control&quot; header field is used to specify directives for
+   The "Cache-Control" header field is used to specify directives for
    caches along the request/response chain.  Such cache directives are
    unidirectional in that the presence of a directive in a request does
    not imply that the same directive is to be given in the response.
 
    A cache MUST obey the requirements of the Cache-Control directives
-   defined in this section.  See <a href="#section-5.2.3">Section 5.2.3</a> for information about how
+   defined in this section.  See Section 5.2.3 for information about how
    Cache-Control directives defined elsewhere are handled.
 
       Note: Some HTTP/1.0 caches might not implement Cache-Control.
@@ -1355,43 +1340,43 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 21]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-22" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 21]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
      Cache-Control   = 1#cache-directive
 
-     cache-directive = token [ &quot;=&quot; ( token / quoted-string ) ]
+     cache-directive = token [ "=" ( token / quoted-string ) ]
 
    For the cache directives defined below, no argument is defined (nor
    allowed) unless stated otherwise.
 
-<span class="h4"><a class="selflink" id="section-5.2.1" href="#section-5.2.1">5.2.1</a>.  Request Cache-Control Directives</span>
+5.2.1.  Request Cache-Control Directives
 
-<span class="h5"><a class="selflink" id="section-5.2.1.1" href="#section-5.2.1.1">5.2.1.1</a>.  max-age</span>
+5.2.1.1.  max-age
 
    Argument syntax:
 
-      delta-seconds (see <a href="#section-1.2.1">Section 1.2.1</a>)
+      delta-seconds (see Section 1.2.1)
 
-   The &quot;max-age&quot; request directive indicates that the client is
+   The "max-age" request directive indicates that the client is
    unwilling to accept a response whose age is greater than the
    specified number of seconds.  Unless the max-stale request directive
    is also present, the client is not willing to accept a stale
    response.
 
    This directive uses the token form of the argument syntax: e.g.,
-   &#x27;max-age=5&#x27; not &#x27;max-age=&quot;5&quot;&#x27;.  A sender SHOULD NOT generate the
+   'max-age=5' not 'max-age="5"'.  A sender SHOULD NOT generate the
    quoted-string form.
 
-<span class="h5"><a class="selflink" id="section-5.2.1.2" href="#section-5.2.1.2">5.2.1.2</a>.  max-stale</span>
+5.2.1.2.  max-stale
 
    Argument syntax:
 
-      delta-seconds (see <a href="#section-1.2.1">Section 1.2.1</a>)
+      delta-seconds (see Section 1.2.1)
 
-   The &quot;max-stale&quot; request directive indicates that the client is
+   The "max-stale" request directive indicates that the client is
    willing to accept a response that has exceeded its freshness
    lifetime.  If max-stale is assigned a value, then the client is
    willing to accept a response that has exceeded its freshness lifetime
@@ -1400,44 +1385,44 @@ Table of Contents
    response of any age.
 
    This directive uses the token form of the argument syntax: e.g.,
-   &#x27;max-stale=10&#x27; not &#x27;max-stale=&quot;10&quot;&#x27;.  A sender SHOULD NOT generate
+   'max-stale=10' not 'max-stale="10"'.  A sender SHOULD NOT generate
    the quoted-string form.
 
-<span class="h5"><a class="selflink" id="section-5.2.1.3" href="#section-5.2.1.3">5.2.1.3</a>.  min-fresh</span>
+5.2.1.3.  min-fresh
 
    Argument syntax:
 
-      delta-seconds (see <a href="#section-1.2.1">Section 1.2.1</a>)
+      delta-seconds (see Section 1.2.1)
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 22]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-23" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 22]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-   The &quot;min-fresh&quot; request directive indicates that the client is
+   The "min-fresh" request directive indicates that the client is
    willing to accept a response whose freshness lifetime is no less than
    its current age plus the specified time in seconds.  That is, the
    client wants a response that will still be fresh for at least the
    specified number of seconds.
 
    This directive uses the token form of the argument syntax: e.g.,
-   &#x27;min-fresh=20&#x27; not &#x27;min-fresh=&quot;20&quot;&#x27;.  A sender SHOULD NOT generate
+   'min-fresh=20' not 'min-fresh="20"'.  A sender SHOULD NOT generate
    the quoted-string form.
 
-<span class="h5"><a class="selflink" id="section-5.2.1.4" href="#section-5.2.1.4">5.2.1.4</a>.  no-cache</span>
+5.2.1.4.  no-cache
 
-   The &quot;no-cache&quot; request directive indicates that a cache MUST NOT use
+   The "no-cache" request directive indicates that a cache MUST NOT use
    a stored response to satisfy the request without successful
    validation on the origin server.
 
-<span class="h5"><a class="selflink" id="section-5.2.1.5" href="#section-5.2.1.5">5.2.1.5</a>.  no-store</span>
+5.2.1.5.  no-store
 
-   The &quot;no-store&quot; request directive indicates that a cache MUST NOT
+   The "no-store" request directive indicates that a cache MUST NOT
    store any part of either this request or any response to it.  This
-   directive applies to both private and shared caches.  &quot;MUST NOT
-   store&quot; in this context means that the cache MUST NOT intentionally
+   directive applies to both private and shared caches.  "MUST NOT
+   store" in this context means that the cache MUST NOT intentionally
    store the information in non-volatile storage, and MUST make a
    best-effort attempt to remove the information from volatile storage
    as promptly as possible after forwarding it.
@@ -1451,15 +1436,15 @@ Table of Contents
    cache, the no-store request directive does not apply to the already
    stored response.
 
-<span class="h5"><a class="selflink" id="section-5.2.1.6" href="#section-5.2.1.6">5.2.1.6</a>.  no-transform</span>
+5.2.1.6.  no-transform
 
-   The &quot;no-transform&quot; request directive indicates that an intermediary
+   The "no-transform" request directive indicates that an intermediary
    (whether or not it implements a cache) MUST NOT transform the
-   payload, as defined in <a href="/doc/html/rfc7230#section-5.7.2">Section&nbsp;5.7.2 of [RFC7230]</a>.
+   payload, as defined in Section 5.7.2 of [RFC7230].
 
-<span class="h5"><a class="selflink" id="section-5.2.1.7" href="#section-5.2.1.7">5.2.1.7</a>.  only-if-cached</span>
+5.2.1.7.  only-if-cached
 
-   The &quot;only-if-cached&quot; request directive indicates that the client only
+   The "only-if-cached" request directive indicates that the client only
    wishes to obtain a stored response.  If it receives this directive, a
    cache SHOULD either respond using a stored response that is
    consistent with the other constraints of the request, or respond with
@@ -1467,20 +1452,20 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 23]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-24" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 23]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    a 504 (Gateway Timeout) status code.  If a group of caches is being
    operated as a unified system with good internal connectivity, a
    member cache MAY forward such a request within that group of caches.
 
-<span class="h4"><a class="selflink" id="section-5.2.2" href="#section-5.2.2">5.2.2</a>.  Response Cache-Control Directives</span>
+5.2.2.  Response Cache-Control Directives
 
-<span class="h5"><a class="selflink" id="section-5.2.2.1" href="#section-5.2.2.1">5.2.2.1</a>.  must-revalidate</span>
+5.2.2.1.  must-revalidate
 
-   The &quot;must-revalidate&quot; response directive indicates that once it has
+   The "must-revalidate" response directive indicates that once it has
    become stale, a cache MUST NOT use the response to satisfy subsequent
    requests without successful validation on the origin server.
 
@@ -1495,13 +1480,13 @@ Table of Contents
    in incorrect operation, such as a silently unexecuted financial
    transaction.
 
-<span class="h5"><a class="selflink" id="section-5.2.2.2" href="#section-5.2.2.2">5.2.2.2</a>.  no-cache</span>
+5.2.2.2.  no-cache
 
    Argument syntax:
 
       #field-name
 
-   The &quot;no-cache&quot; response directive indicates that the response MUST
+   The "no-cache" response directive indicates that the response MUST
    NOT be used to satisfy a subsequent request without successful
    validation on the origin server.  This allows an origin server to
    prevent a cache from using it to satisfy a request without contacting
@@ -1523,9 +1508,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 24]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-25" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 24]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    This directive uses the quoted-string form of the argument syntax.  A
@@ -1539,12 +1524,12 @@ Table of Contents
    the special handling for the qualified form is not widely
    implemented.
 
-<span class="h5"><a class="selflink" id="section-5.2.2.3" href="#section-5.2.2.3">5.2.2.3</a>.  no-store</span>
+5.2.2.3.  no-store
 
-   The &quot;no-store&quot; response directive indicates that a cache MUST NOT
+   The "no-store" response directive indicates that a cache MUST NOT
    store any part of either the immediate request or response.  This
-   directive applies to both private and shared caches.  &quot;MUST NOT
-   store&quot; in this context means that the cache MUST NOT intentionally
+   directive applies to both private and shared caches.  "MUST NOT
+   store" in this context means that the cache MUST NOT intentionally
    store the information in non-volatile storage, and MUST make a
    best-effort attempt to remove the information from volatile storage
    as promptly as possible after forwarding it.
@@ -1554,24 +1539,24 @@ Table of Contents
    recognize or obey this directive, and communications networks might
    be vulnerable to eavesdropping.
 
-<span class="h5"><a class="selflink" id="section-5.2.2.4" href="#section-5.2.2.4">5.2.2.4</a>.  no-transform</span>
+5.2.2.4.  no-transform
 
-   The &quot;no-transform&quot; response directive indicates that an intermediary
+   The "no-transform" response directive indicates that an intermediary
    (regardless of whether it implements a cache) MUST NOT transform the
-   payload, as defined in <a href="/doc/html/rfc7230#section-5.7.2">Section&nbsp;5.7.2 of [RFC7230]</a>.
+   payload, as defined in Section 5.7.2 of [RFC7230].
 
-<span class="h5"><a class="selflink" id="section-5.2.2.5" href="#section-5.2.2.5">5.2.2.5</a>.  public</span>
+5.2.2.5.  public
 
-   The &quot;public&quot; response directive indicates that any cache MAY store
+   The "public" response directive indicates that any cache MAY store
    the response, even if the response would normally be non-cacheable or
-   cacheable only within a private cache.  (See <a href="#section-3.2">Section 3.2</a> for
+   cacheable only within a private cache.  (See Section 3.2 for
    additional details related to the use of public in response to a
-   request containing Authorization, and <a href="#section-3">Section 3</a> for details of how
+   request containing Authorization, and Section 3 for details of how
    public affects responses that would normally not be stored, due to
    their status codes not being defined as cacheable by default; see
-   <a href="#section-4.2.2">Section 4.2.2</a>.)
+   Section 4.2.2.)
 
-<span class="h5"><a class="selflink" id="section-5.2.2.6" href="#section-5.2.2.6">5.2.2.6</a>.  private</span>
+5.2.2.6.  private
 
    Argument syntax:
 
@@ -1579,12 +1564,12 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 25]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-26" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 25]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-   The &quot;private&quot; response directive indicates that the response message
+   The "private" response directive indicates that the response message
    is intended for a single user and MUST NOT be stored by a shared
    cache.  A private cache MAY store the response and reuse it for later
    requests, even if the response would normally be non-cacheable.
@@ -1602,31 +1587,31 @@ Table of Contents
    sender SHOULD NOT generate the token form (even if quoting appears
    not to be needed for single-entry lists).
 
-   Note: This usage of the word &quot;private&quot; only controls where the
+   Note: This usage of the word "private" only controls where the
    response can be stored; it cannot ensure the privacy of the message
    content.  Also, private response directives with field-names are
    often handled by caches as if an unqualified private directive was
    received; i.e., the special handling for the qualified form is not
    widely implemented.
 
-<span class="h5"><a class="selflink" id="section-5.2.2.7" href="#section-5.2.2.7">5.2.2.7</a>.  proxy-revalidate</span>
+5.2.2.7.  proxy-revalidate
 
-   The &quot;proxy-revalidate&quot; response directive has the same meaning as the
+   The "proxy-revalidate" response directive has the same meaning as the
    must-revalidate response directive, except that it does not apply to
    private caches.
 
-<span class="h5"><a class="selflink" id="section-5.2.2.8" href="#section-5.2.2.8">5.2.2.8</a>.  max-age</span>
+5.2.2.8.  max-age
 
    Argument syntax:
 
-      delta-seconds (see <a href="#section-1.2.1">Section 1.2.1</a>)
+      delta-seconds (see Section 1.2.1)
 
-   The &quot;max-age&quot; response directive indicates that the response is to be
+   The "max-age" response directive indicates that the response is to be
    considered stale after its age is greater than the specified number
    of seconds.
 
    This directive uses the token form of the argument syntax: e.g.,
-   &#x27;max-age=5&#x27; not &#x27;max-age=&quot;5&quot;&#x27;.  A sender SHOULD NOT generate the
+   'max-age=5' not 'max-age="5"'.  A sender SHOULD NOT generate the
    quoted-string form.
 
 
@@ -1635,28 +1620,28 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 26]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-27" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 26]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h5"><a class="selflink" id="section-5.2.2.9" href="#section-5.2.2.9">5.2.2.9</a>.  s-maxage</span>
+5.2.2.9.  s-maxage
 
    Argument syntax:
 
-      delta-seconds (see <a href="#section-1.2.1">Section 1.2.1</a>)
+      delta-seconds (see Section 1.2.1)
 
-   The &quot;s-maxage&quot; response directive indicates that, in shared caches,
+   The "s-maxage" response directive indicates that, in shared caches,
    the maximum age specified by this directive overrides the maximum age
    specified by either the max-age directive or the Expires header
    field.  The s-maxage directive also implies the semantics of the
    proxy-revalidate response directive.
 
    This directive uses the token form of the argument syntax: e.g.,
-   &#x27;s-maxage=10&#x27; not &#x27;s-maxage=&quot;10&quot;&#x27;.  A sender SHOULD NOT generate the
+   's-maxage=10' not 's-maxage="10"'.  A sender SHOULD NOT generate the
    quoted-string form.
 
-<span class="h4"><a class="selflink" id="section-5.2.3" href="#section-5.2.3">5.2.3</a>.  Cache Control Extensions</span>
+5.2.3.  Cache Control Extensions
 
    The Cache-Control header field can be extended through the use of one
    or more cache-extension tokens, each with an optional value.  A cache
@@ -1676,13 +1661,13 @@ Table of Contents
    directives can be made without breaking deployed caches.
 
    For example, consider a hypothetical new response directive called
-   &quot;community&quot; that acts as a modifier to the private directive: in
+   "community" that acts as a modifier to the private directive: in
    addition to private caches, any cache that is shared only by members
    of the named community is allowed to cache the response.  An origin
    server wishing to allow the UCI community to use an otherwise private
    response in their shared cache(s) could do so by including
 
-     Cache-Control: private, community=&quot;UCI&quot;
+     Cache-Control: private, community="UCI"
 
    A cache that recognizes such a community cache-extension could
    broaden its behavior in accordance with that extension.  A cache that
@@ -1691,23 +1676,23 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 27]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-28" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 27]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h3"><a class="selflink" id="section-5.3" href="#section-5.3">5.3</a>.  Expires</span>
+5.3.  Expires
 
-   The &quot;Expires&quot; header field gives the date/time after which the
-   response is considered stale.  See <a href="#section-4.2">Section 4.2</a> for further discussion
+   The "Expires" header field gives the date/time after which the
+   response is considered stale.  See Section 4.2 for further discussion
    of the freshness model.
 
    The presence of an Expires field does not imply that the original
    resource will change or cease to exist at, before, or after that
    time.
 
-   The Expires value is an HTTP-date timestamp, as defined in <a href="/doc/html/rfc7231#section-7.1.1.1">Section</a>
-   <a href="/doc/html/rfc7231#section-7.1.1.1">7.1.1.1 of [RFC7231]</a>.
+   The Expires value is an HTTP-date timestamp, as defined in Section
+   7.1.1.1 of [RFC7231].
 
      Expires = HTTP-date
 
@@ -1716,13 +1701,13 @@ Table of Contents
      Expires: Thu, 01 Dec 1994 16:00:00 GMT
 
    A cache recipient MUST interpret invalid date formats, especially the
-   value &quot;0&quot;, as representing a time in the past (i.e., &quot;already
-   expired&quot;).
+   value "0", as representing a time in the past (i.e., "already
+   expired").
 
    If a response includes a Cache-Control field with the max-age
-   directive (<a href="#section-5.2.2.8">Section 5.2.2.8</a>), a recipient MUST ignore the Expires
+   directive (Section 5.2.2.8), a recipient MUST ignore the Expires
    field.  Likewise, if a response includes the s-maxage directive
-   (<a href="#section-5.2.2.9">Section 5.2.2.9</a>), a shared cache recipient MUST ignore the Expires
+   (Section 5.2.2.9), a shared cache recipient MUST ignore the Expires
    field.  In both these cases, the value in Expires is only intended
    for recipients that have not yet implemented the Cache-Control field.
 
@@ -1747,15 +1732,15 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 28]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-29" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 28]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h3"><a class="selflink" id="section-5.4" href="#section-5.4">5.4</a>.  Pragma</span>
+5.4.  Pragma
 
-   The &quot;Pragma&quot; header field allows backwards compatibility with
-   HTTP/1.0 caches, so that clients can specify a &quot;no-cache&quot; request
+   The "Pragma" header field allows backwards compatibility with
+   HTTP/1.0 caches, so that clients can specify a "no-cache" request
    that they will understand (as Cache-Control was not defined until
    HTTP/1.1).  When the Cache-Control header field is also present and
    understood in a request, Pragma is ignored.
@@ -1765,13 +1750,13 @@ Table of Contents
    specification deprecates such extensions to improve interoperability.
 
      Pragma           = 1#pragma-directive
-     pragma-directive = &quot;no-cache&quot; / extension-pragma
-     extension-pragma = token [ &quot;=&quot; ( token / quoted-string ) ]
+     pragma-directive = "no-cache" / extension-pragma
+     extension-pragma = token [ "=" ( token / quoted-string ) ]
 
    When the Cache-Control header field is not present in a request,
    caches MUST consider the no-cache request pragma-directive as having
-   the same effect as if &quot;Cache-Control: no-cache&quot; were present (see
-   <a href="#section-5.2.1">Section 5.2.1</a>).
+   the same effect as if "Cache-Control: no-cache" were present (see
+   Section 5.2.1).
 
    When sending a no-cache request, a client ought to include both the
    pragma and cache-control directives, unless Cache-Control: no-cache
@@ -1787,13 +1772,13 @@ Table of Contents
    seconds, while precluding implementations that do not understand
    Cache-Control from serving a cached response.
 
-      Note: Because the meaning of &quot;Pragma: no-cache&quot; in responses is
+      Note: Because the meaning of "Pragma: no-cache" in responses is
       not specified, it does not provide a reliable replacement for
-      &quot;Cache-Control: no-cache&quot; in them.
+      "Cache-Control: no-cache" in them.
 
-<span class="h3"><a class="selflink" id="section-5.5" href="#section-5.5">5.5</a>.  Warning</span>
+5.5.  Warning
 
-   The &quot;Warning&quot; header field is used to carry additional information
+   The "Warning" header field is used to carry additional information
    about the status or transformation of a message that might not be
    reflected in the status code.  This information is typically used to
    warn about possible incorrectness introduced by caching operations or
@@ -1803,9 +1788,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 29]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-30" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 29]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    Warnings can be used for other purposes, both cache-related and
@@ -1822,10 +1807,10 @@ Table of Contents
                                            [ SP warn-date ]
 
      warn-code  = 3DIGIT
-     warn-agent = ( uri-host [ &quot;:&quot; port ] ) / pseudonym
+     warn-agent = ( uri-host [ ":" port ] ) / pseudonym
                      ; the name or pseudonym of the server adding
                      ; the Warning header field, for use in debugging
-                     ; a single &quot;-&quot; is recommended when agent unknown
+                     ; a single "-" is recommended when agent unknown
      warn-text  = quoted-string
      warn-date  = DQUOTE HTTP-date DQUOTE
 
@@ -1859,9 +1844,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 30]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-31" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 30]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    If a sender generates one or more 1xx warn-codes in a message to be
@@ -1871,7 +1856,7 @@ Table of Contents
 
      HTTP/1.1 200 OK
      Date: Sat, 25 Aug 2012 23:34:45 GMT
-     Warning: 112 - &quot;network down&quot; &quot;Sat, 25 Aug 2012 23:34:45 GMT&quot;
+     Warning: 112 - "network down" "Sat, 25 Aug 2012 23:34:45 GMT"
 
 
    Warnings have accompanying warn-text that describes the error, e.g.,
@@ -1890,63 +1875,63 @@ Table of Contents
    The following warn-codes are defined by this specification, each with
    a recommended warn-text in English, and a description of its meaning.
    The procedure for defining additional warn codes is described in
-   <a href="#section-7.2.1">Section 7.2.1</a>.
+   Section 7.2.1.
 
-<span class="h4"><a class="selflink" id="section-5.5.1" href="#section-5.5.1">5.5.1</a>.  Warning: 110 - &quot;Response is Stale&quot;</span>
+5.5.1.  Warning: 110 - "Response is Stale"
 
    A cache SHOULD generate this whenever the sent response is stale.
 
-<span class="h4"><a class="selflink" id="section-5.5.2" href="#section-5.5.2">5.5.2</a>.  Warning: 111 - &quot;Revalidation Failed&quot;</span>
+5.5.2.  Warning: 111 - "Revalidation Failed"
 
    A cache SHOULD generate this when sending a stale response because an
    attempt to validate the response failed, due to an inability to reach
    the server.
 
-<span class="h4"><a class="selflink" id="section-5.5.3" href="#section-5.5.3">5.5.3</a>.  Warning: 112 - &quot;Disconnected Operation&quot;</span>
+5.5.3.  Warning: 112 - "Disconnected Operation"
 
    A cache SHOULD generate this if it is intentionally disconnected from
    the rest of the network for a period of time.
 
-<span class="h4"><a class="selflink" id="section-5.5.4" href="#section-5.5.4">5.5.4</a>.  Warning: 113 - &quot;Heuristic Expiration&quot;</span>
+5.5.4.  Warning: 113 - "Heuristic Expiration"
 
    A cache SHOULD generate this if it heuristically chose a freshness
-   lifetime greater than 24 hours and the response&#x27;s age is greater than
+   lifetime greater than 24 hours and the response's age is greater than
    24 hours.
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 31]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-32" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 31]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h4"><a class="selflink" id="section-5.5.5" href="#section-5.5.5">5.5.5</a>.  Warning: 199 - &quot;Miscellaneous Warning&quot;</span>
+5.5.5.  Warning: 199 - "Miscellaneous Warning"
 
    The warning text can include arbitrary information to be presented to
    a human user or logged.  A system receiving this warning MUST NOT
    take any automated action, besides presenting the warning to the
    user.
 
-<span class="h4"><a class="selflink" id="section-5.5.6" href="#section-5.5.6">5.5.6</a>.  Warning: 214 - &quot;Transformation Applied&quot;</span>
+5.5.6.  Warning: 214 - "Transformation Applied"
 
    This Warning code MUST be added by a proxy if it applies any
    transformation to the representation, such as changing the
    content-coding, media-type, or modifying the representation data,
    unless this Warning code already appears in the response.
 
-<span class="h4"><a class="selflink" id="section-5.5.7" href="#section-5.5.7">5.5.7</a>.  Warning: 299 - &quot;Miscellaneous Persistent Warning&quot;</span>
+5.5.7.  Warning: 299 - "Miscellaneous Persistent Warning"
 
    The warning text can include arbitrary information to be presented to
    a human user or logged.  A system receiving this warning MUST NOT
    take any automated action.
 
-<span class="h2"><a class="selflink" id="section-6" href="#section-6">6</a>.  History Lists</span>
+6.  History Lists
 
-   User agents often have history mechanisms, such as &quot;Back&quot; buttons and
+   User agents often have history mechanisms, such as "Back" buttons and
    history lists, that can be used to redisplay a representation
    retrieved earlier in a session.
 
-   The freshness model (<a href="#section-4.2">Section 4.2</a>) does not necessarily apply to
+   The freshness model (Section 4.2) does not necessarily apply to
    history mechanisms.  That is, a history mechanism can display a
    previous representation even if it has expired.
 
@@ -1954,16 +1939,16 @@ Table of Contents
    that a view might be stale or from honoring cache directives (e.g.,
    Cache-Control: no-store).
 
-<span class="h2"><a class="selflink" id="section-7" href="#section-7">7</a>.  IANA Considerations</span>
+7.  IANA Considerations
 
-<span class="h3"><a class="selflink" id="section-7.1" href="#section-7.1">7.1</a>.  Cache Directive Registry</span>
+7.1.  Cache Directive Registry
 
-   The &quot;Hypertext Transfer Protocol (HTTP) Cache Directive Registry&quot;
+   The "Hypertext Transfer Protocol (HTTP) Cache Directive Registry"
    defines the namespace for the cache directives.  It has been created
    and is now maintained at
-   &lt;<a href="http://www.iana.org/assignments/http-cache-directives">http://www.iana.org/assignments/http-cache-directives</a>&gt;.
+   <http://www.iana.org/assignments/http-cache-directives>.
 
-<span class="h4"><a class="selflink" id="section-7.1.1" href="#section-7.1.1">7.1.1</a>.  Procedure</span>
+7.1.1.  Procedure
 
    A registration MUST include the following fields:
 
@@ -1971,17 +1956,17 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 32]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-33" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 32]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    o  Pointer to specification text
 
    Values to be added to this namespace require IETF Review (see
-   <a href="/doc/html/rfc5226#section-4.1">[RFC5226], Section&nbsp;4.1</a>).
+   [RFC5226], Section 4.1).
 
-<span class="h4"><a class="selflink" id="section-7.1.2" href="#section-7.1.2">7.1.2</a>.  Considerations for New Cache Control Directives</span>
+7.1.2.  Considerations for New Cache Control Directives
 
    New extension directives ought to consider defining:
 
@@ -1996,29 +1981,29 @@ Table of Contents
    o  Whether the directive is specific to requests, responses, or able
       to be used in either.
 
-   See also <a href="#section-5.2.3">Section 5.2.3</a>.
+   See also Section 5.2.3.
 
-<span class="h4"><a class="selflink" id="section-7.1.3" href="#section-7.1.3">7.1.3</a>.  Registrations</span>
+7.1.3.  Registrations
 
    The registry has been populated with the registrations below:
 
    +------------------------+----------------------------------+
    | Cache Directive        | Reference                        |
    +------------------------+----------------------------------+
-   | max-age                | <a href="#section-5.2.1.1">Section 5.2.1.1</a>, <a href="#section-5.2.2.8">Section 5.2.2.8</a> |
-   | max-stale              | <a href="#section-5.2.1.2">Section 5.2.1.2</a>                  |
-   | min-fresh              | <a href="#section-5.2.1.3">Section 5.2.1.3</a>                  |
-   | must-revalidate        | <a href="#section-5.2.2.1">Section 5.2.2.1</a>                  |
-   | no-cache               | <a href="#section-5.2.1.4">Section 5.2.1.4</a>, <a href="#section-5.2.2.2">Section 5.2.2.2</a> |
-   | no-store               | <a href="#section-5.2.1.5">Section 5.2.1.5</a>, <a href="#section-5.2.2.3">Section 5.2.2.3</a> |
-   | no-transform           | <a href="#section-5.2.1.6">Section 5.2.1.6</a>, <a href="#section-5.2.2.4">Section 5.2.2.4</a> |
-   | only-if-cached         | <a href="#section-5.2.1.7">Section 5.2.1.7</a>                  |
-   | private                | <a href="#section-5.2.2.6">Section 5.2.2.6</a>                  |
-   | proxy-revalidate       | <a href="#section-5.2.2.7">Section 5.2.2.7</a>                  |
-   | public                 | <a href="#section-5.2.2.5">Section 5.2.2.5</a>                  |
-   | s-maxage               | <a href="#section-5.2.2.9">Section 5.2.2.9</a>                  |
-   | stale-if-error         | <a href="/doc/html/rfc5861#section-4">[RFC5861], Section&nbsp;4</a>             |
-   | stale-while-revalidate | <a href="/doc/html/rfc5861#section-3">[RFC5861], Section&nbsp;3</a>             |
+   | max-age                | Section 5.2.1.1, Section 5.2.2.8 |
+   | max-stale              | Section 5.2.1.2                  |
+   | min-fresh              | Section 5.2.1.3                  |
+   | must-revalidate        | Section 5.2.2.1                  |
+   | no-cache               | Section 5.2.1.4, Section 5.2.2.2 |
+   | no-store               | Section 5.2.1.5, Section 5.2.2.3 |
+   | no-transform           | Section 5.2.1.6, Section 5.2.2.4 |
+   | only-if-cached         | Section 5.2.1.7                  |
+   | private                | Section 5.2.2.6                  |
+   | proxy-revalidate       | Section 5.2.2.7                  |
+   | public                 | Section 5.2.2.5                  |
+   | s-maxage               | Section 5.2.2.9                  |
+   | stale-if-error         | [RFC5861], Section 4             |
+   | stale-while-revalidate | [RFC5861], Section 3             |
    +------------------------+----------------------------------+
 
 
@@ -2027,18 +2012,18 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 33]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-34" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 33]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h3"><a class="selflink" id="section-7.2" href="#section-7.2">7.2</a>.  Warn Code Registry</span>
+7.2.  Warn Code Registry
 
-   The &quot;Hypertext Transfer Protocol (HTTP) Warn Codes&quot; registry defines
+   The "Hypertext Transfer Protocol (HTTP) Warn Codes" registry defines
    the namespace for warn codes.  It has been created and is now
-   maintained at &lt;<a href="http://www.iana.org/assignments/http-warn-codes">http://www.iana.org/assignments/http-warn-codes</a>&gt;.
+   maintained at <http://www.iana.org/assignments/http-warn-codes>.
 
-<span class="h4"><a class="selflink" id="section-7.2.1" href="#section-7.2.1">7.2.1</a>.  Procedure</span>
+7.2.1.  Procedure
 
    A registration MUST include the following fields:
 
@@ -2049,29 +2034,29 @@ Table of Contents
    o  Pointer to specification text
 
    Values to be added to this namespace require IETF Review (see
-   <a href="/doc/html/rfc5226#section-4.1">[RFC5226], Section&nbsp;4.1</a>).
+   [RFC5226], Section 4.1).
 
-<span class="h4"><a class="selflink" id="section-7.2.2" href="#section-7.2.2">7.2.2</a>.  Registrations</span>
+7.2.2.  Registrations
 
    The registry has been populated with the registrations below:
 
    +-----------+----------------------------------+---------------+
    | Warn Code | Short Description                | Reference     |
    +-----------+----------------------------------+---------------+
-   | 110       | Response is Stale                | <a href="#section-5.5.1">Section 5.5.1</a> |
-   | 111       | Revalidation Failed              | <a href="#section-5.5.2">Section 5.5.2</a> |
-   | 112       | Disconnected Operation           | <a href="#section-5.5.3">Section 5.5.3</a> |
-   | 113       | Heuristic Expiration             | <a href="#section-5.5.4">Section 5.5.4</a> |
-   | 199       | Miscellaneous Warning            | <a href="#section-5.5.5">Section 5.5.5</a> |
-   | 214       | Transformation Applied           | <a href="#section-5.5.6">Section 5.5.6</a> |
-   | 299       | Miscellaneous Persistent Warning | <a href="#section-5.5.7">Section 5.5.7</a> |
+   | 110       | Response is Stale                | Section 5.5.1 |
+   | 111       | Revalidation Failed              | Section 5.5.2 |
+   | 112       | Disconnected Operation           | Section 5.5.3 |
+   | 113       | Heuristic Expiration             | Section 5.5.4 |
+   | 199       | Miscellaneous Warning            | Section 5.5.5 |
+   | 214       | Transformation Applied           | Section 5.5.6 |
+   | 299       | Miscellaneous Persistent Warning | Section 5.5.7 |
    +-----------+----------------------------------+---------------+
 
-<span class="h3"><a class="selflink" id="section-7.3" href="#section-7.3">7.3</a>.  Header Field Registration</span>
+7.3.  Header Field Registration
 
-   HTTP header fields are registered within the &quot;Message Headers&quot;
+   HTTP header fields are registered within the "Message Headers"
    registry maintained at
-   &lt;<a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>&gt;.
+   <http://www.iana.org/assignments/message-headers/>.
 
 
 
@@ -2083,34 +2068,34 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 34]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-35" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 34]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    This document defines the following HTTP header fields, so the
-   &quot;Permanent Message Header Field Names&quot; registry has been updated
-   accordingly (see [<a href="#ref-BCP90" title="&quot;Registration Procedures for Message Header Fields&quot;">BCP90</a>]).
+   "Permanent Message Header Field Names" registry has been updated
+   accordingly (see [BCP90]).
 
    +-------------------+----------+----------+-------------+
    | Header Field Name | Protocol | Status   | Reference   |
    +-------------------+----------+----------+-------------+
-   | Age               | http     | standard | <a href="#section-5.1">Section 5.1</a> |
-   | Cache-Control     | http     | standard | <a href="#section-5.2">Section 5.2</a> |
-   | Expires           | http     | standard | <a href="#section-5.3">Section 5.3</a> |
-   | Pragma            | http     | standard | <a href="#section-5.4">Section 5.4</a> |
-   | Warning           | http     | standard | <a href="#section-5.5">Section 5.5</a> |
+   | Age               | http     | standard | Section 5.1 |
+   | Cache-Control     | http     | standard | Section 5.2 |
+   | Expires           | http     | standard | Section 5.3 |
+   | Pragma            | http     | standard | Section 5.4 |
+   | Warning           | http     | standard | Section 5.5 |
    +-------------------+----------+----------+-------------+
 
-   The change controller is: &quot;IETF (iesg@ietf.org) - Internet
-   Engineering Task Force&quot;.
+   The change controller is: "IETF (iesg@ietf.org) - Internet
+   Engineering Task Force".
 
-<span class="h2"><a class="selflink" id="section-8" href="#section-8">8</a>.  Security Considerations</span>
+8.  Security Considerations
 
    This section is meant to inform developers, information providers,
    and users of known security concerns specific to HTTP caching.  More
    general security considerations are addressed in HTTP messaging
-   [<a href="/doc/html/rfc7230" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing&quot;">RFC7230</a>] and semantics [<a href="/doc/html/rfc7231" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content&quot;">RFC7231</a>].
+   [RFC7230] and semantics [RFC7231].
 
    Caches expose additional potential vulnerabilities, since the
    contents of the cache represent an attractive target for malicious
@@ -2121,13 +2106,13 @@ Table of Contents
    information.
 
    In particular, various attacks might be amplified by being stored in
-   a shared cache; such &quot;cache poisoning&quot; attacks use the cache to
+   a shared cache; such "cache poisoning" attacks use the cache to
    distribute a malicious payload to many clients, and are especially
    effective when an attacker can use implementation flaws, elevated
    privileges, or other techniques to insert such a response into a
    cache.  One common attack vector for cache poisoning is to exploit
    differences in message parsing on proxies and in user agents; see
-   <a href="/doc/html/rfc7230#section-3.3.3">Section&nbsp;3.3.3 of [RFC7230]</a> for the relevant requirements.
+   Section 3.3.3 of [RFC7230] for the relevant requirements.
 
    Likewise, implementation flaws (as well as misunderstanding of cache
    operation) might lead to caching of sensitive information (e.g.,
@@ -2139,9 +2124,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 35]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-36" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 35]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    Furthermore, the very use of a cache can bring about privacy
@@ -2150,78 +2135,78 @@ Table of Contents
    has been to that site, because the resources from it load more
    quickly, thanks to the cache.
 
-   Note that the Set-Cookie response header field [<a href="/doc/html/rfc6265" title="&quot;HTTP State Management Mechanism&quot;">RFC6265</a>] does not
+   Note that the Set-Cookie response header field [RFC6265] does not
    inhibit caching; a cacheable response with a Set-Cookie header field
    can be (and often is) used to satisfy subsequent requests to caches.
    Servers who wish to control caching of these responses are encouraged
    to emit appropriate Cache-Control response header fields.
 
-<span class="h2"><a class="selflink" id="section-9" href="#section-9">9</a>.  Acknowledgments</span>
+9.  Acknowledgments
 
-   See <a href="/doc/html/rfc7230#section-10">Section&nbsp;10 of [RFC7230]</a>.
+   See Section 10 of [RFC7230].
 
-<span class="h2"><a class="selflink" id="section-10" href="#section-10">10</a>.  References</span>
+10.  References
 
-<span class="h3"><a class="selflink" id="section-10.1" href="#section-10.1">10.1</a>.  Normative References</span>
+10.1.  Normative References
 
-   [<a id="ref-RFC2119">RFC2119</a>]  Bradner, S., &quot;Key words for use in RFCs to Indicate
-              Requirement Levels&quot;, <a href="/doc/html/bcp14">BCP 14</a>, <a href="/doc/html/rfc2119">RFC 2119</a>, March 1997.
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [<a id="ref-RFC5234">RFC5234</a>]  Crocker, D., Ed. and P. Overell, &quot;Augmented BNF for Syntax
-              Specifications: ABNF&quot;, STD 68, <a href="/doc/html/rfc5234">RFC 5234</a>, January 2008.
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234, January 2008.
 
-   [<a id="ref-RFC7230">RFC7230</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Message Syntax and Routing&quot;,
-              <a href="/doc/html/rfc7230">RFC 7230</a>, June 2014.
+   [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Message Syntax and Routing",
+              RFC 7230, June 2014.
 
-   [<a id="ref-RFC7231">RFC7231</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Semantics and Content&quot;, <a href="/doc/html/rfc7231">RFC 7231</a>,
+   [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               June 2014.
 
-   [<a id="ref-RFC7232">RFC7232</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Conditional Requests&quot;, <a href="/doc/html/rfc7232">RFC 7232</a>,
+   [RFC7232]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Conditional Requests", RFC 7232,
               June 2014.
 
-   [<a id="ref-RFC7233">RFC7233</a>]  Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed.,
-              &quot;Hypertext Transfer Protocol (HTTP/1.1): Range Requests&quot;,
-              <a href="/doc/html/rfc7233">RFC 7233</a>, June 2014.
+   [RFC7233]  Fielding, R., Ed., Lafon, Y., Ed., and J. Reschke, Ed.,
+              "Hypertext Transfer Protocol (HTTP/1.1): Range Requests",
+              RFC 7233, June 2014.
 
-   [<a id="ref-RFC7235">RFC7235</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Authentication&quot;, <a href="/doc/html/rfc7235">RFC 7235</a>, June 2014.
-
-
+   [RFC7235]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Authentication", RFC 7235, June 2014.
 
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 36]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-37" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
 
 
-<span class="h3"><a class="selflink" id="section-10.2" href="#section-10.2">10.2</a>.  Informative References</span>
+Fielding, et al.             Standards Track                   [Page 36]
 
-   [<a id="ref-BCP90">BCP90</a>]    Klyne, G., Nottingham, M., and J. Mogul, &quot;Registration
-              Procedures for Message Header Fields&quot;, <a href="/doc/html/bcp90">BCP 90</a>, <a href="/doc/html/rfc3864">RFC 3864</a>,
+RFC 7234                    HTTP/1.1 Caching                   June 2014
+
+
+10.2.  Informative References
+
+   [BCP90]    Klyne, G., Nottingham, M., and J. Mogul, "Registration
+              Procedures for Message Header Fields", BCP 90, RFC 3864,
               September 2004.
 
-   [<a id="ref-RFC2616">RFC2616</a>]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
-              Masinter, L., Leach, P., and T. Berners-Lee, &quot;Hypertext
-              Transfer Protocol -- HTTP/1.1&quot;, <a href="/doc/html/rfc2616">RFC 2616</a>, June 1999.
+   [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
+              Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
+              Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
 
-   [<a id="ref-RFC5226">RFC5226</a>]  Narten, T. and H. Alvestrand, &quot;Guidelines for Writing an
-              IANA Considerations Section in RFCs&quot;, <a href="/doc/html/bcp26">BCP 26</a>, <a href="/doc/html/rfc5226">RFC 5226</a>,
+   [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
+              IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               May 2008.
 
-   [<a id="ref-RFC5861">RFC5861</a>]  Nottingham, M., &quot;HTTP Cache-Control Extensions for Stale
-              Content&quot;, <a href="/doc/html/rfc5861">RFC 5861</a>, April 2010.
+   [RFC5861]  Nottingham, M., "HTTP Cache-Control Extensions for Stale
+              Content", RFC 5861, April 2010.
 
-   [<a id="ref-RFC5905">RFC5905</a>]  Mills, D., Martin, J., Ed., Burbank, J., and W. Kasch,
-              &quot;Network Time Protocol Version 4: Protocol and Algorithms
-              Specification&quot;, <a href="/doc/html/rfc5905">RFC 5905</a>, June 2010.
+   [RFC5905]  Mills, D., Martin, J., Ed., Burbank, J., and W. Kasch,
+              "Network Time Protocol Version 4: Protocol and Algorithms
+              Specification", RFC 5905, June 2010.
 
-   [<a id="ref-RFC6265">RFC6265</a>]  Barth, A., &quot;HTTP State Management Mechanism&quot;, <a href="/doc/html/rfc6265">RFC 6265</a>,
+   [RFC6265]  Barth, A., "HTTP State Management Mechanism", RFC 6265,
               April 2011.
 
 
@@ -2251,107 +2236,107 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 37]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-38" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 37]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h2"><a class="selflink" id="appendix-A" href="#appendix-A">Appendix A</a>.  Changes from <a href="/doc/html/rfc2616">RFC 2616</a></span>
+Appendix A.  Changes from RFC 2616
 
    The specification has been substantially rewritten for clarity.
 
    The conditions under which an authenticated response can be cached
-   have been clarified.  (<a href="#section-3.2">Section 3.2</a>)
+   have been clarified.  (Section 3.2)
 
    New status codes can now define that caches are allowed to use
    heuristic freshness with them.  Caches are now allowed to calculate
-   heuristic freshness for URIs with query components.  (<a href="#section-4.2.2">Section 4.2.2</a>)
+   heuristic freshness for URIs with query components.  (Section 4.2.2)
 
    The algorithm for calculating age is now less conservative.  Caches
-   are now required to handle dates with time zones as if they&#x27;re
-   invalid, because it&#x27;s not possible to accurately guess.
-   (<a href="#section-4.2.3">Section 4.2.3</a>)
+   are now required to handle dates with time zones as if they're
+   invalid, because it's not possible to accurately guess.
+   (Section 4.2.3)
 
    The Content-Location response header field is no longer used to
    determine the appropriate response to use when validating.
-   (<a href="#section-4.3">Section 4.3</a>)
+   (Section 4.3)
 
    The algorithm for selecting a cached negotiated response to use has
    been clarified in several ways.  In particular, it now explicitly
    allows header-specific canonicalization when processing selecting
-   header fields.  (<a href="#section-4.1">Section 4.1</a>)
+   header fields.  (Section 4.1)
 
    Requirements regarding denial-of-service attack avoidance when
-   performing invalidation have been clarified.  (<a href="#section-4.4">Section 4.4</a>)
+   performing invalidation have been clarified.  (Section 4.4)
 
    Cache invalidation only occurs when a successful response is
-   received.  (<a href="#section-4.4">Section 4.4</a>)
+   received.  (Section 4.4)
 
    Cache directives are explicitly defined to be case-insensitive.
    Handling of multiple instances of cache directives when only one is
-   expected is now defined.  (<a href="#section-5.2">Section 5.2</a>)
+   expected is now defined.  (Section 5.2)
 
-   The &quot;no-store&quot; request directive doesn&#x27;t apply to responses; i.e., a
+   The "no-store" request directive doesn't apply to responses; i.e., a
    cache can satisfy a request with no-store on it and does not
-   invalidate it.  (<a href="#section-5.2.1.5">Section 5.2.1.5</a>)
+   invalidate it.  (Section 5.2.1.5)
 
    The qualified forms of the private and no-cache cache directives are
-   noted to not be widely implemented; for example, &quot;private=foo&quot; is
-   interpreted by many caches as simply &quot;private&quot;.  Additionally, the
+   noted to not be widely implemented; for example, "private=foo" is
+   interpreted by many caches as simply "private".  Additionally, the
    meaning of the qualified form of no-cache has been clarified.
-   (<a href="#section-5.2.2">Section 5.2.2</a>)
+   (Section 5.2.2)
 
-   The &quot;no-cache&quot; response directive&#x27;s meaning has been clarified.
-   (<a href="#section-5.2.2.2">Section 5.2.2.2</a>)
-
-
+   The "no-cache" response directive's meaning has been clarified.
+   (Section 5.2.2.2)
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 38]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-39" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+
+
+Fielding, et al.             Standards Track                   [Page 38]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
    The one-year limit on Expires header field values has been removed;
    instead, the reasoning for using a sensible value is given.
-   (<a href="#section-5.3">Section 5.3</a>)
+   (Section 5.3)
 
    The Pragma header field is now only defined for backwards
-   compatibility; future pragmas are deprecated.  (<a href="#section-5.4">Section 5.4</a>)
+   compatibility; future pragmas are deprecated.  (Section 5.4)
 
    Some requirements regarding production and processing of the Warning
    header fields have been relaxed, as it is not widely implemented.
-   Furthermore, the Warning header field no longer uses <a href="/doc/html/rfc2047">RFC 2047</a>
+   Furthermore, the Warning header field no longer uses RFC 2047
    encoding, nor does it allow multiple languages, as these aspects were
-   not implemented.  (<a href="#section-5.5">Section 5.5</a>)
+   not implemented.  (Section 5.5)
 
    This specification introduces the Cache Directive and Warn Code
    Registries, and defines considerations for new cache directives.
-   (<a href="#section-7.1">Section 7.1</a> and <a href="#section-7.2">Section 7.2</a>)
+   (Section 7.1 and Section 7.2)
 
-<span class="h2"><a class="selflink" id="appendix-B" href="#appendix-B">Appendix B</a>.  Imported ABNF</span>
+Appendix B.  Imported ABNF
 
    The following core rules are included by reference, as defined in
-   <a href="/doc/html/rfc5234#appendix-B.1">Appendix&nbsp;B.1 of [RFC5234]</a>: ALPHA (letters), CR (carriage return),
+   Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return),
    CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double
    quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any
    8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII
    character).
 
-   The rules below are defined in [<a href="/doc/html/rfc7230" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing&quot;">RFC7230</a>]:
+   The rules below are defined in [RFC7230]:
 
-     OWS           = &lt;OWS, see <a href="/doc/html/rfc7230#section-3.2.3">[RFC7230], Section&nbsp;3.2.3</a>&gt;
-     field-name    = &lt;field-name, see <a href="/doc/html/rfc7230#section-3.2">[RFC7230], Section&nbsp;3.2</a>&gt;
-     quoted-string = &lt;quoted-string, see <a href="/doc/html/rfc7230#section-3.2.6">[RFC7230], Section&nbsp;3.2.6</a>&gt;
-     token         = &lt;token, see <a href="/doc/html/rfc7230#section-3.2.6">[RFC7230], Section&nbsp;3.2.6</a>&gt;
+     OWS           = <OWS, see [RFC7230], Section 3.2.3>
+     field-name    = <field-name, see [RFC7230], Section 3.2>
+     quoted-string = <quoted-string, see [RFC7230], Section 3.2.6>
+     token         = <token, see [RFC7230], Section 3.2.6>
 
-     port          = &lt;port, see <a href="/doc/html/rfc7230#section-2.7">[RFC7230], Section&nbsp;2.7</a>&gt;
-     pseudonym     = &lt;pseudonym, see <a href="/doc/html/rfc7230#section-5.7.1">[RFC7230], Section&nbsp;5.7.1</a>&gt;
-     uri-host      = &lt;uri-host, see <a href="/doc/html/rfc7230#section-2.7">[RFC7230], Section&nbsp;2.7</a>&gt;
+     port          = <port, see [RFC7230], Section 2.7>
+     pseudonym     = <pseudonym, see [RFC7230], Section 5.7.1>
+     uri-host      = <uri-host, see [RFC7230], Section 2.7>
 
    The rules below are defined in other parts:
 
-     HTTP-date     = &lt;HTTP-date, see <a href="/doc/html/rfc7231#section-7.1.1.1">[RFC7231], Section&nbsp;7.1.1.1</a>&gt;
+     HTTP-date     = <HTTP-date, see [RFC7231], Section 7.1.1.1>
 
 
 
@@ -2363,52 +2348,52 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 39]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-40" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 39]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-<span class="h2"><a class="selflink" id="appendix-C" href="#appendix-C">Appendix C</a>.  Collected ABNF</span>
+Appendix C.  Collected ABNF
 
-   In the collected ABNF below, list rules are expanded as per <a href="/doc/html/rfc7230#section-1.2">Section</a>
-   <a href="/doc/html/rfc7230#section-1.2">1.2 of [RFC7230]</a>.
+   In the collected ABNF below, list rules are expanded as per Section
+   1.2 of [RFC7230].
 
    Age = delta-seconds
 
-   Cache-Control = *( &quot;,&quot; OWS ) cache-directive *( OWS &quot;,&quot; [ OWS
+   Cache-Control = *( "," OWS ) cache-directive *( OWS "," [ OWS
     cache-directive ] )
 
    Expires = HTTP-date
 
-   HTTP-date = &lt;HTTP-date, see <a href="/doc/html/rfc7231#section-7.1.1.1">[RFC7231], Section&nbsp;7.1.1.1</a>&gt;
+   HTTP-date = <HTTP-date, see [RFC7231], Section 7.1.1.1>
 
-   OWS = &lt;OWS, see <a href="/doc/html/rfc7230#section-3.2.3">[RFC7230], Section&nbsp;3.2.3</a>&gt;
+   OWS = <OWS, see [RFC7230], Section 3.2.3>
 
-   Pragma = *( &quot;,&quot; OWS ) pragma-directive *( OWS &quot;,&quot; [ OWS
+   Pragma = *( "," OWS ) pragma-directive *( OWS "," [ OWS
     pragma-directive ] )
 
-   Warning = *( &quot;,&quot; OWS ) warning-value *( OWS &quot;,&quot; [ OWS warning-value ]
+   Warning = *( "," OWS ) warning-value *( OWS "," [ OWS warning-value ]
     )
 
-   cache-directive = token [ &quot;=&quot; ( token / quoted-string ) ]
+   cache-directive = token [ "=" ( token / quoted-string ) ]
 
    delta-seconds = 1*DIGIT
 
-   extension-pragma = token [ &quot;=&quot; ( token / quoted-string ) ]
+   extension-pragma = token [ "=" ( token / quoted-string ) ]
 
-   field-name = &lt;field-name, see <a href="/doc/html/rfc7230#section-3.2">[RFC7230], Section&nbsp;3.2</a>&gt;
+   field-name = <field-name, see [RFC7230], Section 3.2>
 
-   port = &lt;port, see <a href="/doc/html/rfc7230#section-2.7">[RFC7230], Section&nbsp;2.7</a>&gt;
-   pragma-directive = &quot;no-cache&quot; / extension-pragma
-   pseudonym = &lt;pseudonym, see <a href="/doc/html/rfc7230#section-5.7.1">[RFC7230], Section&nbsp;5.7.1</a>&gt;
+   port = <port, see [RFC7230], Section 2.7>
+   pragma-directive = "no-cache" / extension-pragma
+   pseudonym = <pseudonym, see [RFC7230], Section 5.7.1>
 
-   quoted-string = &lt;quoted-string, see <a href="/doc/html/rfc7230#section-3.2.6">[RFC7230], Section&nbsp;3.2.6</a>&gt;
+   quoted-string = <quoted-string, see [RFC7230], Section 3.2.6>
 
-   token = &lt;token, see <a href="/doc/html/rfc7230#section-3.2.6">[RFC7230], Section&nbsp;3.2.6</a>&gt;
+   token = <token, see [RFC7230], Section 3.2.6>
 
-   uri-host = &lt;uri-host, see <a href="/doc/html/rfc7230#section-2.7">[RFC7230], Section&nbsp;2.7</a>&gt;
+   uri-host = <uri-host, see [RFC7230], Section 2.7>
 
-   warn-agent = ( uri-host [ &quot;:&quot; port ] ) / pseudonym
+   warn-agent = ( uri-host [ ":" port ] ) / pseudonym
    warn-code = 3DIGIT
    warn-date = DQUOTE HTTP-date DQUOTE
    warn-text = quoted-string
@@ -2419,9 +2404,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 40]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-41" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 40]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
 Index
@@ -2475,9 +2460,9 @@ Index
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 41]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-42" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 41]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
          Warning  29
@@ -2531,12 +2516,12 @@ Index
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 42]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-43" ></span>
-<span class="grey"><a href="/doc/html/rfc7234">RFC 7234</a>                    HTTP/1.1 Caching                   June 2014</span>
+Fielding, et al.             Standards Track                   [Page 42]
+
+RFC 7234                    HTTP/1.1 Caching                   June 2014
 
 
-Authors&#x27; Addresses
+Authors' Addresses
 
    Roy T. Fielding (editor)
    Adobe Systems Incorporated
@@ -2545,14 +2530,14 @@ Authors&#x27; Addresses
    USA
 
    EMail: fielding@gbiv.com
-   URI:   <a href="http://roy.gbiv.com/">http://roy.gbiv.com/</a>
+   URI:   http://roy.gbiv.com/
 
 
    Mark Nottingham (editor)
    Akamai
 
    EMail: mnot@mnot.net
-   URI:   <a href="http://www.mnot.net/">http://www.mnot.net/</a>
+   URI:   http://www.mnot.net/
 
 
    Julian F. Reschke (editor)
@@ -2562,7 +2547,7 @@ Authors&#x27; Addresses
    Germany
 
    EMail: julian.reschke@greenbytes.de
-   URI:   <a href="http://greenbytes.de/tech/webdav/">http://greenbytes.de/tech/webdav/</a>
+   URI:   http://greenbytes.de/tech/webdav/
 
 
 
@@ -2588,48 +2573,37 @@ Authors&#x27; Addresses
 
 
 Fielding, et al.             Standards Track                   [Page 43]
-</pre>
-    </div>
 
-  </div>
+    
 
-
+            
         
-	  </div>
+        
+    
+    
+        var legend_html = 'Color legend: \
+         \
+        Unknown:                        \
+        Draft:                          \
+        Informational:                  \
+        Experimental:                   \
+        Best Common Practice:           \
+        Proposed Standard:              \
+        Draft Standard (old designation):      \
+        Internet Standard:              \
+        Historic:                       \
+        Obsolete:                       \
+        ';
+        function showLegend() {
+            var elem = document.getElementById('legend');
+            elem.innerHTML = legend_html
+            elem.style.visibility='visible';
+        }
+        function hideLegend() {
+            var elem = document.getElementById('legend');
+            elem.style.visibility='hidden';
+            elem.innerHTML = "";
+        }
+    
 
-	
-
-	
-
-    </div>
-
-      
-    <script type="text/javascript"><!--
-    var legend_html = "Colour legend:<br /> \
-     <table> \
-        <tr><td>Unknown:</td>                   <td><span class='cplate bgwhite'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Draft:</td>                     <td><span class='cplate bgred'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Informational:</td>             <td><span class='cplate bgorange'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Experimental:</td>              <td><span class='cplate bgyellow'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Best Common Practice:</td>      <td><span class='cplate bgmagenta'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Proposed Standard:</td>         <td><span class='cplate bgblue'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Draft Standard (old designation):</td> <td><span class='cplate bgcyan'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Internet Standard:</td>         <td><span class='cplate bggreen'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Historic:</td>                  <td><span class='cplate bggrey'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Obsolete:</td>                  <td><span class='cplate bgbrown'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-    </table>";
-    function showLegend() {
-        var elem = document.getElementById('legend');
-        elem.innerHTML = legend_html
-        elem.style.visibility='visible';
-    }
-    function hideLegend() {
-        var elem = document.getElementById('legend');
-        elem.style.visibility='hidden';
-        elem.innerHTML = "";
-    }
-    // -->
-    </script>
-
-  </body>
-</html>
+(function(){window['__CF$cv$params']={r:'706036a6baac6453',m:'jixV5eQzl2PefGPjNq_C1nacxTqmUzgka9L0AGGuzsg-1651656582-0-AZ0Ue0CE8K2H1ftZDcSlGcYW+DnR/w4ym6/fqx4ya5+/UuFdMBkido15/Tb0E0YDjKQLZiI4JCvfVLUPA6Fx6prRGYEp4/nXavC2Q9g+SXW1kaGAdd7PjZ449S327cdl2GQA3598WInMsPWarfyy19g=',s:[0xb2e8dc08dc,0xbb11b8cb0e],}})();

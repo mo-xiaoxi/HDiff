@@ -1,0 +1,14 @@
+version: '3'
+services:
+  squid:
+    build: .
+    restart: always
+    volumes:
+      - ./conf/squid.conf:/etc/squid/squid.conf
+    ports:
+      - "9013:3128"
+    depends_on:
+      - echo-server
+  echo-server:
+    build: '../echo'
+    restart: always

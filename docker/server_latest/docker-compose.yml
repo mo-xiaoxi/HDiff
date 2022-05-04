@@ -1,0 +1,51 @@
+version: "3"
+services:
+    php-fpm:
+        image: php:7.3.32-fpm-alpine3.14
+        restart: always
+        ports:
+            - "9050:9000"
+        volumes:
+            - "./www:/var/www/html"
+    nginx-server:
+        image: nginx:1.21.4-alpine
+        restart: always
+        depends_on:
+            - "php-fpm"
+        ports:
+            - "9051:80"
+        volumes:
+            - "./nginx/conf.d:/etc/nginx/conf.d"
+            - "./nginx/logs:/var/log/nginx"
+            - "./www:/var/www/html"
+    apache-server:
+        image: httpd:2.4.51-alpine
+        restart: always
+        depends_on:
+            - "php-fpm"
+        ports:
+            - "9052:80"
+        volumes:
+            - "./apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+            - "./apache/conf/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf"
+            - "./apache/logs:/usr/local/apache2/logs"
+            - "./www:/var/www/html"
+#    lighttpd-server:
+#        image: sebp/lighttpd:1.4.57-r0
+#        restart: always
+#        depends_on:
+#            - "php-fpm"
+#        ports:
+#            - "9053:80"
+#        volumes:
+#            - "./www:/var/www/html"
+#            - "./lighttpd/conf/lighttpd.conf:/etc/lighttpd/lighttpd.conf"
+#            - "./lighttpd/conf/mod_fastcgi_fpm.conf:/etc/lighttpd/mod_fastcgi_fpm.conf"
+#            # - "./lighttpd/logs:/var/log/lighttpd"
+
+    tomcat-server:
+        image: tomcat:10.0.13
+        ports:
+            - "9054:8080"
+        volumes:
+            - "./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT"

@@ -1,0 +1,856 @@
+{
+    "av-pairs": {
+        "2965": "     av-pair *(\";\" av-pair)",
+        "2109": "       av-pair *(\";\" av-pair)"
+    },
+    "av-pair": {
+        "2965": "     attr [\"=\" value]              ",
+        "2109": "       attr [\"=\" value]        "
+    },
+    "attr": {
+        "2965": "     token",
+        "2109": "       token"
+    },
+    "value": {
+        "2965": "     token | quoted-string",
+        "2109": "       word",
+        "1945": " token | quoted-string",
+        "2068": " token | quoted-string",
+        "2616": " token | quoted-string"
+    },
+    "the": {
+        "2965": " sign.",
+        "2109": " that separates attribute-value pairs.  Therefore such whitespace should be used with caution in new implementations."
+    },
+    "set-cookie": {
+        "2965": "       \"Set-Cookie2:\" cookies",
+        "2109": "       \"Set-Cookie:\" cookies"
+    },
+    "cookie": {
+        "2965": "  \"Cookie:\" cookie-version 1*((\";\" | \",\") cookie-value)",
+        "2109": "       \"Cookie:\" cookie-version 1*((\";\" | \",\") cookie-value)"
+    },
+    "NAME": {
+        "2965": "  attr",
+        "2109": "       attr"
+    },
+    "VALUE": {
+        "2965": "  value",
+        "2109": "       value"
+    },
+    "cookie-value": {
+        "2965": "  NAME \"=\" VALUE [\";\" path] [\";\" domain] [\";\" port]",
+        "2109": "       NAME \"=\" VALUE [\";\" path] [\";\" domain]"
+    },
+    "cookie-version": {
+        "2965": "  \"$Version\" \"=\" value",
+        "2109": "       \"$Version\" \"=\" value"
+    },
+    "path": {
+        "2965": "  \"$Path\" \"=\" value",
+        "2109": "       \"$Path\" \"=\" value",
+        "3986": " path-abempty     / path-absolute    / path-noscheme    / path-rootless    / path-empty      ",
+        "1945": " fsegment *( \"/\" segment )",
+        "5322": "   angle-addr / ([CFWS] \"<\" [CFWS] \">\" [CFWS])",
+        "2068": " fsegment *( \"/\" segment )"
+    },
+    "domain": {
+        "2965": "  \"$Domain\" \"=\" value",
+        "2109": "       \"$Domain\" \"=\" value",
+        "2069": " \"domain\" \"=\" <\"> 1#URI <\">",
+        "5322": "   dot-atom / domain-literal / obs-domain",
+        "2617": " \"domain\" \"=\" <\"> URI ( 1*SP URI ) <\">"
+    },
+    "port": {
+        "2965": "  \"$Port\" [ \"=\" <\"> value <\"> ]",
+        "7230": " <port, see [RFC3986], Section\u00a03.2.3>",
+        "3986": " *DIGIT",
+        "1945": " *DIGIT",
+        "2068": " *DIGIT"
+    },
+    "BWS": {
+        "7230": " OWS",
+        "7231": " <BWS, see [RFC7230], Section\u00a03.2.3>"
+    },
+    "Connection": {
+        "7230": " *( \",\" OWS ) connection-option *( OWS \",\" [ OWS connection-option ] )",
+        "2616": " \"Connection\" \":\" 1#(connection-token)"
+    },
+    "Content-Length": {
+        "7230": " 1*DIGIT",
+        "1945": " \"Content-Length\" \":\" 1*DIGIT",
+        "2068": " \"Content-Length\" \":\" 1*DIGIT",
+        "2616": " \"Content-Length\" \":\" 1*DIGIT"
+    },
+    "HTTP-message": {
+        "7230": " start-line *( header-field CRLF ) CRLF [ message-body ]",
+        "1945": " Simple-Request            | Simple-Response | Full-Request              | Full-Response",
+        "2068": " Request | Response     ",
+        "2616": " Request | Response     "
+    },
+    "Host": {
+        "7230": " uri-host [ \":\" port ]",
+        "2068": " \"Host\" \":\" host [ \":\" port ]    ",
+        "2616": " \"Host\" \":\" host [ \":\" port ] "
+    },
+    "OWS": {
+        "7230": " *( SP / HTAB )",
+        "7231": " <OWS, see [RFC7230], Section\u00a03.2.3>"
+    },
+    "RWS": {
+        "7230": " 1*( SP / HTAB )",
+        "7231": " <RWS, see [RFC7230], Section\u00a03.2.3>"
+    },
+    "TE": {
+        "7230": " [ ( \",\" / t-codings ) *( OWS \",\" [ OWS t-codings ] ) ]",
+        "2616": " \"TE\" \":\" #( t-codings )"
+    },
+    "Trailer": {
+        "7230": " *( \",\" OWS ) field-name *( OWS \",\" [ OWS field-name ] )",
+        "2616": " \"Trailer\" \":\" 1#field-name"
+    },
+    "Transfer-Encoding": {
+        "7230": " *( \",\" OWS ) transfer-coding *( OWS \",\" [ OWS transfer-coding ] )",
+        "2068": " \"Transfer-Encoding\" \":\" 1#transfer- coding",
+        "2616": " \"Transfer-Encoding\" \":\" 1#transfer-coding"
+    },
+    "URI-reference": {
+        "7230": " <URI-reference, see [RFC3986], Section\u00a04.1>",
+        "3986": " URI / relative-ref",
+        "7231": " <URI-reference, see [RFC7230], Section\u00a02.7>"
+    },
+    "Upgrade": {
+        "7230": " *( \",\" OWS ) protocol *( OWS \",\" [ OWS protocol ] )",
+        "2068": " \"Upgrade\" \":\" 1#product",
+        "2616": " \"Upgrade\" \":\" 1#product"
+    },
+    "Via": {
+        "7230": " *( \",\" OWS ) ( received-protocol RWS received-by [ RWS comment ] ) *( OWS \",\" [ OWS ( received-protocol RWS received-by [ RWS comment ] ) ] )",
+        "2068": "  \"Via\" \":\" 1#( received-protocol received-by [ comment ] )",
+        "2616": "  \"Via\" \":\" 1#( received-protocol received-by [ comment ] )"
+    },
+    "absolute-URI": {
+        "7230": " <absolute-URI, see [RFC3986], Section\u00a04.3>",
+        "3986": " scheme \":\" hier-part [ \"?\" query ]",
+        "7231": " <absolute-URI, see [RFC7230], Section\u00a02.7>"
+    },
+    "authority": {
+        "7230": " <authority, see [RFC3986], Section\u00a03.2>",
+        "3986": " [ userinfo \"@\" ] host [ \":\" port ]"
+    },
+    "chunk": {
+        "7230": " chunk-size [ chunk-ext ] CRLF chunk-data CRLF",
+        "2068": " chunk-size [ chunk-ext ] CRLF chunk-data CRLF",
+        "2616": " chunk-size [ chunk-extension ] CRLF chunk-data CRLF"
+    },
+    "chunk-data": {
+        "7230": " 1*OCTET",
+        "2068": " chunk-size(OCTET)",
+        "2616": " chunk-size(OCTET)"
+    },
+    "chunk-ext": {
+        "7230": " *( \";\" chunk-ext-name [ \"=\" chunk-ext-val ] )",
+        "2068": " *( \";\" chunk-ext-name [ \"=\" chunk-ext-value ] )"
+    },
+    "chunk-ext-val": {
+        "7230": " token / quoted-string",
+        "2068": " token | quoted-string",
+        "2616": " token | quoted-string"
+    },
+    "chunk-size": {
+        "7230": " 1*HEXDIG",
+        "2068": " hex-no-zero *HEX",
+        "2616": " 1*HEX"
+    },
+    "comment": {
+        "7230": " \"(\" *( ctext / quoted-pair / comment ) \")\"",
+        "1945": " \"(\" *( ctext | comment ) \")\"",
+        "7231": " <comment, see [RFC7230], Section\u00a03.2.6>",
+        "5322": "   \"(\" *([FWS] ccontent) [FWS] \")\"",
+        "2068": " \"(\" *( ctext | comment ) \")\"",
+        "2616": " \"(\" *( ctext | quoted-pair | comment ) \")\""
+    },
+    "ctext": {
+        "7230": " HTAB / SP / %x21-27  / %x2A-5B  / %x5D-7E  / obs-text",
+        "1945": " <any TEXT excluding \"(\" and \")\">",
+        "5322": "   %d33-39 /           %d42-91 /           %d93-126 /          obs-ctext",
+        "2068": " <any TEXT excluding \"(\" and \")\">",
+        "2616": " <any TEXT excluding \"(\" and \")\">"
+    },
+    "field-content": {
+        "7230": " field-vchar [ 1*( SP / HTAB ) field-vchar ]",
+        "1945": " <the OCTETs making up the field-value and consisting of either *TEXT or combinations of token, tspecials, and quoted-string>",
+        "2068": " <the OCTETs making up the field-value and consisting of either *TEXT or combinations of token, tspecials, and quoted-string>",
+        "2616": " <the OCTETs making up the field-value and consisting of either *TEXT or combinations of token, separators, and quoted-string>"
+    },
+    "field-name": {
+        "7230": " token",
+        "5646": " (ALPHA / DIGIT) [*(ALPHA / DIGIT / \"-\") (ALPHA / DIGIT)]",
+        "1945": " token",
+        "7231": " <comment, see [RFC7230], Section\u00a03.2>",
+        "5322": "   1*ftext",
+        "2068": " token",
+        "2616": " token"
+    },
+    "field-value": {
+        "7230": " *( field-content / obs-fold )",
+        "1945": " *( field-content | LWS )",
+        "2068": " *( field-content | LWS )",
+        "2616": " *( field-content | LWS )"
+    },
+    "fragment": {
+        "7230": " <fragment, see [RFC3986], Section\u00a03.5>",
+        "3986": " *( pchar / \"/\" / \"?\" )",
+        "1945": " *( uchar | reserved )",
+        "2068": " *( uchar | reserved )"
+    },
+    "last-chunk": {
+        "7230": " 1*\"0\" [ chunk-ext ] CRLF",
+        "2616": " 1*(\"0\") [ chunk-extension ] CRLF"
+    },
+    "message-body": {
+        "7230": " *OCTET",
+        "2068": " entity-body | <entity-body encoded as per Transfer-Encoding>",
+        "2616": " entity-body | <entity-body encoded as per Transfer-Encoding>"
+    },
+    "method": {
+        "7230": " token",
+        "2660": " \"inband\" |  \"outband\"",
+        "7231": " token"
+    },
+    "partial-URI": {
+        "7230": " relative-part [ \"?\" query ]",
+        "7231": " <partial-URI, see [RFC7230], Section\u00a02.7>"
+    },
+    "path-abempty": {
+        "7230": " <path-abempty, see [RFC3986], Section\u00a03.3>",
+        "3986": " *( \"/\" segment )"
+    },
+    "qdtext": {
+        "7230": " HTAB / SP / \"!\" / %x23-5B  / %x5D-7E  / obs-text",
+        "1945": " <any CHAR except <\"> and CTLs, but including LWS>",
+        "2831": " <any TEXT except <\">>",
+        "2068": " <any TEXT except <\">>",
+        "2616": " <any TEXT except <\">>"
+    },
+    "query": {
+        "7230": " <query, see [RFC3986], Section\u00a03.4>",
+        "3986": " *( pchar / \"/\" / \"?\" )",
+        "1945": " *( uchar | reserved )",
+        "2068": " *( uchar | reserved )"
+    },
+    "quoted-pair": {
+        "7230": " \"\\\" ( HTAB / SP / VCHAR / obs-text )",
+        "2831": " \"\\\" CHAR",
+        "5322": "   (\"\\\" (VCHAR / WSP)) / obs-qp",
+        "2068": " \"\\\" CHAR",
+        "2616": " \"\\\" CHAR"
+    },
+    "quoted-string": {
+        "7230": " DQUOTE *( qdtext / quoted-pair ) DQUOTE",
+        "1945": " ( <\"> *(qdtext) <\"> )",
+        "7231": " <quoted-string, see [RFC7230], Section\u00a03.2.6>",
+        "2831": " ( <\"> qdstr-val <\"> )",
+        "5322": "   [CFWS] DQUOTE *([FWS] qcontent) [FWS] DQUOTE [CFWS]",
+        "2068": " ( <\"> *(qdtext) <\"> )",
+        "2616": " ( <\"> *(qdtext | quoted-pair ) <\"> )"
+    },
+    "received-by": {
+        "7230": " ( uri-host [ \":\" port ] ) / pseudonym",
+        "2068": " ( host [ \":\" port ] ) | pseudonym",
+        "2616": " ( host [ \":\" port ] ) | pseudonym"
+    },
+    "relative-part": {
+        "7230": " <relative-part, see [RFC3986], Section\u00a04.2>",
+        "3986": " \"//\" authority path-abempty / path-absolute / path-noscheme / path-empty"
+    },
+    "scheme": {
+        "7230": " <scheme, see [RFC3986], Section\u00a03.1>",
+        "3986": " ALPHA *( ALPHA / DIGIT / \"+\" / \"-\" / \".\" )",
+        "1945": " 1*( ALPHA | DIGIT | \"+\" | \"-\" | \".\" )",
+        "2068": " 1*( ALPHA | DIGIT | \"+\" | \"-\" | \".\" )"
+    },
+    "segment": {
+        "7230": " <segment, see [RFC3986], Section\u00a03.3>",
+        "3986": " *pchar",
+        "1945": " *pchar",
+        "2068": " *pchar"
+    },
+    "start-line": {
+        "7230": " request-line / status-line",
+        "2068": " Request-Line | Status-Line",
+        "2616": " Request-Line | Status-Line"
+    },
+    "t-codings": {
+        "7230": " \"trailers\" / ( transfer-coding [ t-ranking ] )",
+        "2616": " \"trailers\" | ( transfer-extension [ accept-params ] )"
+    },
+    "token": {
+        "7230": " 1*tchar",
+        "1945": " 1*<any CHAR except CTLs or tspecials>",
+        "7231": " <token, see [RFC7230], Section\u00a03.2.6>",
+        "2831": " 1*<any CHAR except CTLs or separators>",
+        "2068": " 1*<any CHAR except CTLs or tspecials>",
+        "2616": " 1*<any CHAR except CTLs or separators>"
+    },
+    "transfer-coding": {
+        "7230": " \"chunked\" / \"compress\" / \"deflate\" / \"gzip\" / transfer-extension",
+        "2068": " \"chunked\" | transfer-extension",
+        "2616": " \"chunked\" | transfer-extension"
+    },
+    "transfer-extension": {
+        "7230": " token *( OWS \";\" OWS transfer-parameter )",
+        "2068": " token",
+        "2616": " token *( \";\" parameter )"
+    },
+    "word": {
+        "2109": "       token | quoted-string",
+        "1945": " token | quoted-string",
+        "5322": "   atom / quoted-string"
+    },
+    "Q": {
+        "2296": " round5( qs * qt * qc * ql * qf ) * q_adjust",
+        "2295": " round5( qs * qt * qc * ql * qf * qa )"
+    },
+    "Key": {
+        "2936": " iotpString.GetBuffer(1)",
+        "2660": " Mode\"-\"Action             "
+    },
+    "Method": {
+        "2660": "\"inband\"",
+        "1945": " \"GET\"                     | \"HEAD\"                    | \"POST\"                    | extension-method",
+        "2068": " \"OPTIONS\"                 | \"GET\"                     | \"HEAD\"                    | \"POST\"                    | \"PUT\"                     | \"DELETE\"                  | \"TRACE\"                   | extension-method",
+        "2616": " \"OPTIONS\"                 | \"GET\"                     | \"HEAD\"                    | \"POST\"                    | \"PUT\"                     | \"DELETE\"                  | \"TRACE\"                   | \"CONNECT\"                 | extension-method"
+    },
+    "alphanum": {
+        "5646": " (ALPHA / DIGIT)     ",
+        "4647": " ALPHA / DIGIT"
+    },
+    "subtag": {
+        "5646": " 1*8(ALPHA / DIGIT)",
+        "2068": " 1*8ALPHA",
+        "2616": " 1*8ALPHA"
+    },
+    "URI": {
+        "3986": " scheme \":\" hier-part [ \"?\" query ] [ \"#\" fragment ]",
+        "1945": " ( absoluteURI | relativeURI ) [ \"#\" fragment ]",
+        "2068": " ( absoluteURI | relativeURI ) [ \"#\" fragment ]",
+        "2617": " absoluteURI | abs_path"
+    },
+    "host": {
+        "3986": " IP-literal / IPv4address / reg-name",
+        "1945": " <A legal Internet host domain name or IP address (in dotted-decimal form), as defined by Section\u00a02.1 of RFC 1123>",
+        "2831": " 1*( ALPHA | DIGIT | \"-\" | \".\" )",
+        "2068": " <A legal Internet host domain name or IP address (in dotted-decimal form), as defined by Section\u00a02.1 of RFC 1123>"
+    },
+    "pchar": {
+        "3986": " unreserved / pct-encoded / sub-delims / \":\" / \"@\"",
+        "1945": " uchar | \":\" | \"@\" | \"&\" | \"=\" | \"+\"",
+        "2068": " uchar | \":\" | \"@\" | \"&\" | \"=\" | \"+\""
+    },
+    "unreserved": {
+        "3986": " ALPHA / DIGIT / \"-\" / \".\" / \"_\" / \"~\"",
+        "1945": " ALPHA | DIGIT | safe | extra | national",
+        "2068": " ALPHA | DIGIT | safe | extra | national"
+    },
+    "reserved": {
+        "3986": " gen-delims / sub-delims",
+        "1945": " \";\" | \"/\" | \"?\" | \":\" | \"@\" | \"&\" | \"=\" | \"+\"",
+        "2068": " \";\" | \"/\" | \"?\" | \":\" | \"@\" | \"&\" | \"=\" | \"+\""
+    },
+    "name": {
+        "1945": " definition",
+        "2831": " definition The name of a rule is simply the name itself (without any enclosing \"<\" and \">\") and is separated from its definition by the equal \"=\" character. White space is only significant in that indentation of continuation lines is used to indicate a rule definition that spans more than one line. Certain basic rules are in uppercase, such as SP, LWS, HT, CRLF, DIGIT, ALPHA, etc. Angle brackets are used within definitions whenever their presence will facilitate discerning the use of rule names.",
+        "2068": " definition The name of a rule is simply the name itself (without any enclosing \"<\" and \">\") and is separated from its definition by the equal \"=\" character. Whitespace is only significant in that indentation of continuation lines is used to indicate a rule definition that spans more than one line. Certain basic rules are in uppercase, such as SP, LWS, HT, CRLF, DIGIT, ALPHA, etc. Angle brackets are used within definitions whenever their presence will facilitate discerning the use of rule names.",
+        "2616": " definition The name of a rule is simply the name itself (without any enclosing \"<\" and \">\") and is separated from its definition by the equal \"=\" character. White space is only significant in that indentation of continuation lines is used to indicate a rule definition that spans more than one line. Certain basic rules are in uppercase, such as SP, LWS, HT, CRLF, DIGIT, ALPHA, etc. Angle brackets are used within definitions whenever their presence will facilitate discerning the use of rule names."
+    },
+    "national": {
+        "1945": " <any OCTET excluding ALPHA, DIGIT,",
+        "2068": " <any OCTET excluding ALPHA, DIGIT, reserved, extra, safe, and unsafe>"
+    },
+    "HTTP-date": {
+        "1945": " rfc1123-date | rfc850-date | asctime-date",
+        "7231": " IMF-fixdate / obs-date",
+        "2068": " rfc1123-date | rfc850-date | asctime-date",
+        "2616": " rfc1123-date | rfc850-date | asctime-date"
+    },
+    "rfc850-date": {
+        "1945": " weekday \",\" SP date2 SP time SP \"GMT\"",
+        "7231": " day-name-l \",\" SP date2 SP time-of-day SP GMT",
+        "2068": " weekday \",\" SP date2 SP time SP \"GMT\"",
+        "2616": " weekday \",\" SP date2 SP time SP \"GMT\""
+    },
+    "asctime-date": {
+        "1945": " wkday SP date3 SP time SP 4DIGIT",
+        "7231": " day-name SP date3 SP time-of-day SP year",
+        "2068": " wkday SP date3 SP time SP 4DIGIT",
+        "2616": " wkday SP date3 SP time SP 4DIGIT"
+    },
+    "date1": {
+        "1945": " 2DIGIT SP month SP 4DIGIT",
+        "7231": " day SP month SP year",
+        "2068": " 2DIGIT SP month SP 4DIGIT",
+        "2616": " 2DIGIT SP month SP 4DIGIT"
+    },
+    "date2": {
+        "1945": " 2DIGIT \"-\" month \"-\" 2DIGIT",
+        "7231": " day \"-\" month \"-\" 2DIGIT",
+        "2068": " 2DIGIT \"-\" month \"-\" 2DIGIT",
+        "2616": " 2DIGIT \"-\" month \"-\" 2DIGIT"
+    },
+    "date3": {
+        "1945": " month SP ( 2DIGIT | ( SP 1DIGIT ))",
+        "7231": " month SP ( 2DIGIT / ( SP DIGIT ) )",
+        "2068": " month SP ( 2DIGIT | ( SP 1DIGIT ))",
+        "2616": " month SP ( 2DIGIT | ( SP 1DIGIT ))"
+    },
+    "time": {
+        "1945": " 2DIGIT \":\" 2DIGIT \":\" 2DIGIT",
+        "5322": "   time-of-day zone",
+        "2068": " 2DIGIT \":\" 2DIGIT \":\" 2DIGIT",
+        "2616": " 2DIGIT \":\" 2DIGIT \":\" 2DIGIT"
+    },
+    "month": {
+        "1945": " \"Jan\" | \"Feb\" | \"Mar\" | \"Apr\" | \"May\" | \"Jun\" | \"Jul\" | \"Aug\" | \"Sep\" | \"Oct\" | \"Nov\" | \"Dec\"",
+        "7231": " %x4A.61.6E  / %x46.65.62  / %x4D.61.72  / %x41.70.72  / %x4D.61.79  / %x4A.75.6E  / %x4A.75.6C  / %x41.75.67  / %x53.65.70  / %x4F.63.74  / %x4E.6F.76  / %x44.65.63 ",
+        "5322": "   \"Jan\" / \"Feb\" / \"Mar\" / \"Apr\" / \"May\" / \"Jun\" / \"Jul\" / \"Aug\" / \"Sep\" / \"Oct\" / \"Nov\" / \"Dec\"",
+        "2068": " \"Jan\" | \"Feb\" | \"Mar\" | \"Apr\" | \"May\" | \"Jun\" | \"Jul\" | \"Aug\" | \"Sep\" | \"Oct\" | \"Nov\" | \"Dec\"",
+        "2616": " \"Jan\" | \"Feb\" | \"Mar\" | \"Apr\" | \"May\" | \"Jun\" | \"Jul\" | \"Aug\" | \"Sep\" | \"Oct\" | \"Nov\" | \"Dec\""
+    },
+    "charset": {
+        "1945": " \"US-ASCII\" | \"ISO-8859-1\" | \"ISO-8859-2\" | \"ISO-8859-3\" | \"ISO-8859-4\" | \"ISO-8859-5\" | \"ISO-8859-6\" | \"ISO-8859-7\" | \"ISO-8859-8\" | \"ISO-8859-9\" | \"ISO-2022-JP\" | \"ISO-2022-JP-2\" | \"ISO-2022-KR\" | \"UNICODE-1-1\" | \"UNICODE-1-1-UTF-7\" | \"UNICODE-1-1-UTF-8\" | token",
+        "7231": " token",
+        "2831": " \"charset\" \"=\" \"utf-8\"",
+        "2068": " token",
+        "2616": " token"
+    },
+    "content-coding": {
+        "1945": " \"x-gzip\" | \"x-compress\" | token",
+        "7231": " token",
+        "2068": " token",
+        "2616": " token"
+    },
+    "media-type": {
+        "1945": " type \"/\" subtype *( \";\" parameter )",
+        "7231": " type \"/\" subtype *( OWS \";\" OWS parameter )",
+        "2068": " type \"/\" subtype *( \";\" parameter )",
+        "2616": " type \"/\" subtype *( \";\" parameter )"
+    },
+    "parameter": {
+        "1945": " attribute \"=\" value",
+        "7231": " token \"=\" ( token / quoted-string )",
+        "2068": " attribute \"=\" value",
+        "2616": " attribute \"=\" value"
+    },
+    "product": {
+        "1945": " token [\"/\" product-version]",
+        "7231": " token [ \"/\" product-version ]",
+        "2068": " token [\"/\" product-version]",
+        "2616": " token [\"/\" product-version]",
+        "2817": " token [\"/\" product-version]"
+    },
+    "Request": {
+        "1945": " Simple-Request | Full-Request",
+        "2068": " Request-Line               *( general-header          | request-header          | entity-header )         CRLF [ message-body ]          ",
+        "2616": " Request-Line               *(( general-header         | request-header          | entity-header ) CRLF)   CRLF [ message-body ]          "
+    },
+    "Request-URI": {
+        "1945": " absoluteURI | abs_path",
+        "2068": " \"*\" | absoluteURI | abs_path",
+        "2616": " \"*\" | absoluteURI | abs_path | authority"
+    },
+    "Response": {
+        "1945": " Simple-Response | Full-Response",
+        "2068": " Status-Line                *( general-header          | response-header         | entity-header )         CRLF [ message-body ]          ",
+        "2616": " Status-Line                *(( general-header         | response-header         | entity-header ) CRLF)   CRLF [ message-body ]          "
+    },
+    "Status-Code": {
+        "1945": " \"200\"    | \"201\"    | \"202\"    | \"204\"    | \"301\"    | \"302\"    | \"304\"    | \"400\"    | \"401\"    | \"403\"    | \"404\"    | \"500\"    | \"501\"    | \"502\"    | \"503\"    | extension-code",
+        "2068": " \"100\"    | \"101\"    | \"200\"    | \"201\"    | \"202\"    | \"203\"    | \"204\"    | \"205\"    | \"206\"    | \"300\"    | \"301\"    | \"302\"   "
+    },
+    "extension-header": {
+        "1945": " HTTP-header",
+        "2068": " message-header",
+        "2616": " message-header"
+    },
+    "Allow": {
+        "1945": " \"Allow\" \":\" 1#method",
+        "7231": " [ ( \",\" / method ) *( OWS \",\" [ OWS method ] ) ]",
+        "2068": " \"Allow\" \":\" 1#method",
+        "2616": " \"Allow\" \":\" #Method"
+    },
+    "Authorization": {
+        "1945": " \"Authorization\" \":\" credentials",
+        "2069": " \"Authorization\" \":\" \"Digest\" digest-response",
+        "2068": " \"Authorization\" \":\" credentials",
+        "2616": " \"Authorization\" \":\" credentials"
+    },
+    "Content-Encoding": {
+        "1945": " \"Content-Encoding\" \":\" content-coding",
+        "7231": " *( \",\" OWS ) content-coding *( OWS \",\" [ OWS content-coding ] )",
+        "2068": " \"Content-Encoding\" \":\" 1#content-coding",
+        "2616": " \"Content-Encoding\" \":\" 1#content-coding"
+    },
+    "Content-Type": {
+        "1945": " \"Content-Type\" \":\" media-type",
+        "7231": " media-type",
+        "2068": " \"Content-Type\" \":\" media-type Media types are defined in section 3.7. An example of the field is",
+        "2616": " \"Content-Type\" \":\" media-type"
+    },
+    "Date": {
+        "1945": " \"Date\" \":\" HTTP-date",
+        "7231": " HTTP-date",
+        "2068": " \"Date\" \":\" HTTP-date",
+        "2616": " \"Date\" \":\" HTTP-date"
+    },
+    "From": {
+        "1945": " \"From\" \":\" mailbox",
+        "7231": " mailbox",
+        "2068": " \"From\" \":\" mailbox",
+        "2616": " \"From\" \":\" mailbox"
+    },
+    "Location": {
+        "1945": " \"Location\" \":\" absoluteURI",
+        "7231": " URI-reference",
+        "2068": " \"Location\" \":\" absoluteURI",
+        "2616": " \"Location\" \":\" absoluteURI"
+    },
+    "extension-pragma": {
+        "1945": " token [ \"=\" word ]",
+        "2068": " token [ \"=\" ( token | quoted-string ) ]",
+        "2616": " token [ \"=\" ( token | quoted-string ) ]"
+    },
+    "Referer": {
+        "1945": " \"Referer\" \":\" ( absoluteURI | relativeURI )",
+        "7231": " absolute-URI / partial-URI",
+        "2068": " \"Referer\" \":\" ( absoluteURI | relativeURI )",
+        "2616": " \"Referer\" \":\" ( absoluteURI | relativeURI )"
+    },
+    "Server": {
+        "1945": " \"Server\" \":\" 1*( product | comment )",
+        "7231": " product *( RWS ( product / comment ) )",
+        "2068": " \"Server\" \":\" 1*( product | comment )",
+        "2616": " \"Server\" \":\" 1*( product | comment )"
+    },
+    "User-Agent": {
+        "1945": " \"User-Agent\" \":\" 1*( product | comment )",
+        "7231": " product *( RWS ( product / comment ) )",
+        "2068": " \"User-Agent\" \":\" 1*( product | comment )",
+        "2616": " \"User-Agent\" \":\" 1*( product | comment )"
+    },
+    "WWW-Authenticate": {
+        "1945": " \"WWW-Authenticate\" \":\" 1#challenge",
+        "2069": " \"WWW-Authenticate\" \":\" \"Digest\" digest-challenge",
+        "2068": " \"WWW-Authenticate\" \":\" 1#challenge",
+        "2616": " \"WWW-Authenticate\" \":\" 1#challenge"
+    },
+    "auth-param": {
+        "1945": " token \"=\" quoted-string",
+        "2831": " token \"=\" ( token | quoted-string )",
+        "2068": " token \"=\" quoted-string",
+        "2617": " token \"=\" ( token | quoted-string )"
+    },
+    "challenge": {
+        "1945": " auth-scheme 1*SP realm *( \",\" auth-param )",
+        "2068": " auth-scheme 1*SP realm *( \",\" auth-param )",
+        "2617": "  \"Digest\" digest-challenge"
+    },
+    "realm": {
+        "1945": " \"realm\" \"=\" realm-value",
+        "2069": " \"realm\" \"=\" realm-value",
+        "2831": " \"realm\" \"=\" <\"> realm-value <\">",
+        "2068": " \"realm\" \"=\" realm-value",
+        "2617": " \"realm\" \"=\" realm-value"
+    },
+    "realm-value": {
+        "1945": " quoted-string",
+        "2069": " quoted-string",
+        "2831": " qdstr-val",
+        "2068": " quoted-string",
+        "2617": " quoted-string"
+    },
+    "credentials": {
+        "1945": " basic-credentials | ( auth-scheme #auth-param )",
+        "2068": " basic-credentials | auth-scheme #auth-param",
+        "2617": " \"Digest\" digest-response"
+    },
+    "basic-credentials": {
+        "1945": " \"Basic\" SP basic-cookie",
+        "2068": " \"Basic\" SP basic-cookie",
+        "2617": " base64-user-pass"
+    },
+    "basic-cookie": {
+        "1945": " <base64 [5] encoding of userid-password, except not limited to 76 char/line>",
+        "2068": " <base64 [7] encoding of user-pass, except not limited to 76 char/line>"
+    },
+    "digest-challenge": {
+        "2069": " 1#( realm | [ domain ] | nonce | [ digest-opaque ] |[ stale ] | [ algorithm ] )",
+        "2617": " 1#( realm | [ domain ] | nonce | [ opaque ] |[ stale ] | [ algorithm ] | [ qop-options ] | [auth-param] )"
+    },
+    "nonce": {
+        "2069": " \"nonce\" \"=\" nonce-value",
+        "2831": " \"nonce\" \"=\" <\"> nonce-value <\">",
+        "2617": " \"nonce\" \"=\" nonce-value"
+    },
+    "nonce-value": {
+        "2069": " quoted-string",
+        "2831": " qdstr-val",
+        "2617": " quoted-string"
+    },
+    "stale": {
+        "2069": " \"stale\" \"=\" ( \"true\" | \"false\" )",
+        "2831": " \"stale\" \"=\" \"true\"",
+        "2617": " \"stale\" \"=\" ( \"true\" | \"false\" )"
+    },
+    "algorithm": {
+        "2069": " \"algorithm\" \"=\" ( \"MD5\" | token )",
+        "2831": " \"algorithm\" \"=\" \"md5-sess\"",
+        "2617": " \"algorithm\" \"=\" ( \"MD5\" | \"MD5-sess\" | token )"
+    },
+    "digest-response": {
+        "2069": " 1#( username | realm | nonce | digest-uri | response | [ digest ] | [ algorithm ] | opaque )",
+        "2831": " 1#( username | realm | nonce | cnonce | nonce-count | qop | digest-uri | response | maxbuf | charset | cipher | authzid | auth-param )",
+        "2617": " 1#( username | realm | nonce | digest-uri | response | [ algorithm ] | [cnonce] | [opaque] | [message-qop] | [nonce-count]  | [auth-param] )"
+    },
+    "username": {
+        "2069": " \"username\" \"=\" username-value",
+        "2831": " \"username\" \"=\" <\"> username-value <\">",
+        "2617": " \"username\" \"=\" username-value"
+    },
+    "username-value": {
+        "2069": " quoted-string",
+        "2831": " qdstr-val",
+        "2617": " quoted-string"
+    },
+    "digest-uri": {
+        "2069": " \"uri\" \"=\" digest-uri-value",
+        "2831": " \"digest-uri\" \"=\" <\"> digest-uri-value <\">",
+        "2617": " \"uri\" \"=\" digest-uri-value"
+    },
+    "digest-uri-value": {
+        "2069": " request-uri         ",
+        "2831": " serv-type \"/\" host [ \"/\" serv-name ]",
+        "2617": " request-uri   "
+    },
+    "response": {
+        "2069": " \"response\" \"=\" response-digest",
+        "2831": " \"response\" \"=\" response-value",
+        "2617": " \"response\" \"=\" request-digest"
+    },
+    "LHEX": {
+        "2069": " \"0\" | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"a\" | \"b\" | \"c\" | \"d\" | \"e\" | \"f\"",
+        "2831": " \"0\" | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"a\" | \"b\" | \"c\" | \"d\" | \"e\" | \"f\"",
+        "2617": "  \"0\" | \"1\" | \"2\" | \"3\" | \"4\" | \"5\" | \"6\" | \"7\" | \"8\" | \"9\" | \"a\" | \"b\" | \"c\" | \"d\" | \"e\" | \"f\""
+    },
+    "A1": {
+        "2069": " unquoted username-value \":\" unquoted realm-value \":\" password",
+        "2831": " { H( { username-value, \":\", realm-value, \":\", passwd } ), \":\", nonce-value, \":\", cnonce-value }",
+        "2617": " H( unq(username-value) \":\" unq(realm-value) \":\" passwd ) \":\" unq(nonce-value) \":\" unq(cnonce-value)"
+    },
+    "password": {
+        "2069": " < user's password >",
+        "2068": " *TEXT",
+        "2617": " *TEXT"
+    },
+    "A2": {
+        "2069": " Method \":\" digest-uri-value",
+        "2831": " { \":\", digest-uri-value, \":00000000000000000000000000000000\" }",
+        "2617": " \":\" digest-uri-value \":\" H(entity-body)"
+    },
+    "date": {
+        "2069": " = rfc1123-date            ",
+        "5322": "   day month year"
+    },
+    "AuthenticationInfo": {
+        "2069": " \"Authentication-info\" \":\" 1#( digest | nextnonce )",
+        "2617": " \"Authentication-Info\" \":\" auth-info"
+    },
+    "Proxy-Authorization": {
+        "2069": " \"Proxy-Authorization\" \":\" digest-response",
+        "2068": " \"Proxy-Authorization\" \":\" credentials",
+        "2616": " \"Proxy-Authorization\" \":\" credentials"
+    },
+    "Accept": {
+        "7231": " [ ( \",\" / ( media-range [ accept-params ] ) ) *( OWS \",\" [ OWS ( media-range [ accept-params ] ) ] ) ]",
+        "2068": " \"Accept\" \":\" #( media-range [ accept-params ] )",
+        "2616": " \"Accept\" \":\" #( media-range [ accept-params ] )"
+    },
+    "Accept-Charset": {
+        "7231": " *( \",\" OWS ) ( ( charset / \"*\" ) [ weight ] ) *( OWS \",\" [ OWS ( ( charset / \"*\" ) [ weight ] ) ] )",
+        "2068": " \"Accept-Charset\" \":\" 1#( charset [ \";\" \"q\" \"=\" qvalue ] )",
+        "2616": " \"Accept-Charset\" \":\" 1#( ( charset | \"*\" )[ \";\" \"q\" \"=\" qvalue ] )"
+    },
+    "Accept-Encoding": {
+        "7231": " [ ( \",\" / ( codings [ weight ] ) ) *( OWS \",\" [ OWS ( codings [ weight ] ) ] ) ]",
+        "2068": " \"Accept-Encoding\" \":\" #( content-coding )",
+        "2616": " \"Accept-Encoding\" \":\""
+    },
+    "Accept-Language": {
+        "7231": " *( \",\" OWS ) ( language-range [ weight ] ) *( OWS \",\" [ OWS ( language-range [ weight ] ) ] )",
+        "2068": " \"Accept-Language\" \":\" 1#( language-range [ \";\" \"q\" \"=\" qvalue ] )",
+        "2616": " \"Accept-Language\" \":\" 1#( language-range [ \";\" \"q\" \"=\" qvalue ] )"
+    },
+    "Content-Language": {
+        "7231": " *( \",\" OWS ) language-tag *( OWS \",\" [ OWS language-tag ] )",
+        "2068": " \"Content-Language\" \":\" 1#language-tag",
+        "2616": " \"Content-Language\" \":\" 1#language-tag"
+    },
+    "Content-Location": {
+        "7231": " absolute-URI / partial-URI",
+        "2068": " \"Content-Location\" \":\" ( absoluteURI | relativeURI )",
+        "2616": " \"Content-Location\" \":\" ( absoluteURI | relativeURI )"
+    },
+    "Expect": {
+        "7231": " \"100-continue\"",
+        "2616": "  \"Expect\" \":\" 1#expectation"
+    },
+    "Max-Forwards": {
+        "7231": " 1*DIGIT",
+        "2068": " \"Max-Forwards\" \":\" 1*DIGIT",
+        "2616": " \"Max-Forwards\" \":\" 1*DIGIT"
+    },
+    "Retry-After": {
+        "7231": " HTTP-date / delay-seconds",
+        "2068": " \"Retry-After\" \":\" ( HTTP-date | delta-seconds )",
+        "2616": " \"Retry-After\" \":\" ( HTTP-date | delta-seconds )"
+    },
+    "Vary": {
+        "7231": " \"*\" / ( *( \",\" OWS ) field-name *( OWS \",\" [ OWS field-name ] ) )",
+        "2068": " \"Vary\" \":\" ( \"*\" | 1#field-name )",
+        "2616": " \"Vary\" \":\" ( \"*\" | 1#field-name )"
+    },
+    "accept-params": {
+        "7231": " weight *accept-ext",
+        "2068": " \";\" \"q\" \"=\" qvalue *( accept-extension )",
+        "2616": " \";\" \"q\" \"=\" qvalue *( accept-extension )"
+    },
+    "codings": {
+        "7231": " content-coding / \"identity\" / \"*\"",
+        "2616": " ( content-coding | \"*\" )"
+    },
+    "day": {
+        "7231": " 2DIGIT",
+        "5322": "   ([FWS] 1*2DIGIT FWS) / obs-day"
+    },
+    "day-name": {
+        "7231": " %x4D.6F.6E  / %x54.75.65  / %x57.65.64  / %x54.68.75  / %x46.72.69  / %x53.61.74  / %x53.75.6E ",
+        "5322": "   \"Mon\" / \"Tue\" / \"Wed\" / \"Thu\" / \"Fri\" / \"Sat\" / \"Sun\""
+    },
+    "hour": {
+        "7231": " 2DIGIT",
+        "5322": "   2DIGIT / obs-hour"
+    },
+    "language-range": {
+        "7231": " <language-range, see [RFC4647], Section\u00a02.1>",
+        "2068": " ( ( 1*8ALPHA *( \"-\" 1*8ALPHA ) ) | \"*\" )",
+        "4647": " (1*8ALPHA *(\"-\" 1*8alphanum)) / \"*\"",
+        "2616": " ( ( 1*8ALPHA *( \"-\" 1*8ALPHA ) ) | \"*\" )"
+    },
+    "language-tag": {
+        "7231": " <Language-Tag, see [RFC5646], Section\u00a02.1>",
+        "2068": " primary-tag *( \"-\" subtag )",
+        "2616": " primary-tag *( \"-\" subtag )"
+    },
+    "mailbox": {
+        "7231": " <mailbox, see [RFC5322], Section\u00a03.4>",
+        "5322": "   name-addr / addr-spec"
+    },
+    "media-range": {
+        "7231": " ( \"*/*\" / ( type \"/*\" ) / ( type \"/\" subtype ) ) *( OWS \";\" OWS parameter )",
+        "2068": " ( \"*/*\" | ( type \"/\" \"*\" ) | ( type \"/\" subtype ) ) *( \";\" parameter )",
+        "2616": " ( \"*/*\" | ( type \"/\" \"*\" ) | ( type \"/\" subtype ) ) *( \";\" parameter )"
+    },
+    "minute": {
+        "7231": " 2DIGIT",
+        "5322": "   2DIGIT / obs-minute"
+    },
+    "qvalue": {
+        "7231": " ( \"0\" [ \".\" *3DIGIT ] ) / ( \"1\" [ \".\" *3\"0\" ] )",
+        "2068": " ( \"0\" [ \".\" 0*3DIGIT ] ) | ( \"1\" [ \".\" 0*3(\"0\") ] )",
+        "2616": " ( \"0\" [ \".\" 0*3DIGIT ] ) | ( \"1\" [ \".\" 0*3(\"0\") ] )"
+    },
+    "second": {
+        "7231": " 2DIGIT",
+        "5322": "   2DIGIT / obs-second"
+    },
+    "time-of-day": {
+        "7231": " hour \":\" minute \":\" second",
+        "5322": "   hour \":\" minute [ \":\" second ]"
+    },
+    "year": {
+        "7231": " 4DIGIT",
+        "5322": "   (FWS 4*DIGIT FWS) / obs-year"
+    },
+    "qop-options": {
+        "2831": " \"qop\" \"=\" <\"> qop-list <\">",
+        "2617": " \"qop\" \"=\" <\"> 1#qop-value <\">"
+    },
+    "qop-value": {
+        "2831": " \"auth\" | \"auth-int\" | \"auth-conf\" | token",
+        "2617": " \"auth\" | \"auth-int\" | token"
+    },
+    "cnonce": {
+        "2831": " \"cnonce\" \"=\" <\"> cnonce-value <\">",
+        "2617": " \"cnonce\" \"=\" cnonce-value"
+    },
+    "cnonce-value": {
+        "2831": " qdstr-val",
+        "2617": " nonce-value"
+    },
+    "passwd": {
+        "2831": " *OCTET",
+        "2617": " < user's password >"
+    },
+    "response-auth": {
+        "2831": " \"rspauth\" \"=\" response-value",
+        "2617": " \"rspauth\" \"=\" response-digest"
+    },
+    "date-time": {
+        "2518": " full-date \"T\" full-time",
+        "5322": "   [ day-of-week \",\" ] date time [CFWS]"
+    },
+    "Chunked-Body": {
+        "2068": " *chunk \"0\" CRLF footer CRLF",
+        "2616": " *chunk last-chunk trailer CRLF"
+    },
+    "generic-message": {
+        "2068": " start-line *message-header CRLF [ message-body ]",
+        "2616": " start-line *(message-header CRLF) CRLF [ message-body ]"
+    },
+    "message-header": {
+        "2068": " field-name \":\" [ field-value ] CRLF",
+        "2616": " field-name \":\" [ field-value ]"
+    },
+    "general-header": {
+        "2068": " Cache-Control             | Connection                | Date                      | Pragma                    | Transfer-Encoding         | Upgrade                   | Via                      ",
+        "2616": " Cache-Control             | Connection                | Date                      | Pragma                    | Trailer                   | Transfer-Encoding         | Upgrade                   | Via                       | Warning                  "
+    },
+    "request-header": {
+        "2068": " Accept                    | Accept-Charset            | Accept-Encoding           | Accept-Language           | Authorization             | From                      | Host                      | If-Modified-Since         | If-Match                  | If-None-Match             | If-Range                  | If-Unmodified-Since       | Max-Forwards              | Proxy-Authorization       | Range                     | Referer                   | User-Agent               ",
+        "2616": " Accept                    | Accept-Charset            | Accept-Encoding           | Accept-Language           | Authorization             | Expect                    | From                      | Host                      | If-Match                 "
+    },
+    "response-header": {
+        "2068": " Age                      | Location                 | Proxy-Authenticate       | Public                   | Retry-After              | Server                   | Vary                     | Warning                  | WWW-Authenticate        ",
+        "2616": " Accept-Ranges            | Age                      | ETag                     | Location                 | Proxy-Authenticate      "
+    },
+    "entity-header": {
+        "2068": " Allow                     | Content-Base              | Content-Encoding          | Content-Language          | Content-Length            | Content-Location          | Content-MD5               | Content-Range             | Content-Type              | ETag                      | Expires                   | Last-Modified             | extension-header",
+        "2616": " Allow                     | Content-Encoding          | Content-Language          | Content-Length            | Content-Location          | Content-MD5               | Content-Range             | Content-Type              | Expires                   | Last-Modified             | extension-header"
+    },
+    "byte-content-range-spec": {
+        "2068": " bytes-unit SP first-byte-pos \"-\" last-byte-pos \"/\" entity-length",
+        "2616": " bytes-unit SP byte-range-resp-spec \"/\" ( instance-length | \"*\" )"
+    },
+    "Proxy-Authenticate": {
+        "2068": " \"Proxy-Authenticate\" \":\" challenge",
+        "2616": " \"Proxy-Authenticate\" \":\" 1#challenge"
+    },
+    "warning-value": {
+        "2068": " warn-code SP warn-agent SP warn-text",
+        "2616": " warn-code SP warn-agent SP warn-text [SP warn-date]"
+    },
+    "warn-code": {
+        "2068": " 2DIGIT",
+        "2616": " 3DIGIT"
+    }
+}

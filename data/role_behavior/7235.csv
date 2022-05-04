@@ -1,0 +1,13 @@
+sentences
+"Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server SHOULD send a 401 (Unauthorized) response that contains a WWW-Authenticate header field with at least one (possibly new) challenge applicable to the requested resource."
+"If a prior request has been authorized, the user agent MAY reuse the same credentials for all other requests within that protection space for a period of time determined by the authentication scheme, parameters, and/or user preferences (such as a configurable inactivity timeout)."
+"For historical reasons, a sender MUST only generate the quoted-string syntax."
+"The server generating a 401 response MUST send a WWW-Authenticate header field (<a href=""#section-4.1"">Section 4.1</a>) containing at least one challenge applicable to the target resource."
+"The user agent MAY repeat the request with a new or replaced Authorization header field (<a href=""#section-4.2"">Section 4.2</a>)."
+"If the 401 response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent SHOULD present the enclosed representation to the user, since it usually contains relevant diagnostic information."
+"The proxy MUST send a Proxy-Authenticate header field (<a href=""#section-4.3"">Section 4.3</a>) containing a challenge applicable to that proxy for the target resource."
+"The client MAY repeat the request with a new or replaced Proxy-Authorization header field (<a href=""#section-4.4"">Section 4.4</a>)."
+A server generating a 401 (Unauthorized) response MUST send a WWW-Authenticate header field containing at least one challenge.
+A server MAY generate a WWW-Authenticate header field in other response messages to indicate that supplying credentials (or different credentials) might affect the response.
+A proxy MUST send at least one Proxy-Authenticate header field in each 407 (Proxy Authentication Required) response that it generates.
+A proxy MAY relay the credentials from the client request to the next proxy if that is the mechanism by which the proxies cooperatively authenticate a given request.

@@ -1,0 +1,51 @@
+{
+    "sentence": "Recipients of an invalid request-line SHOULD respond with either a 400 (Bad Request) error or a 301 (Moved Permanently) redirect with the request-target properly encoded.",
+    "role": [
+        "recipient"
+    ],
+    "message": {
+        "new_grammar": "\n                    request-line = method SP request-target SP HTTP-version CRLF\n                ",
+        "name": "request-line",
+        "relation": [
+            "invalid"
+        ]
+    },
+    "assertion": {
+        "status_code": "400|301",
+        "comment": "invalid_request_line"
+    },
+    "reqs": [
+        "GET/?id=testid1897506262183504idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 11f901761ee7f15cc56add61abfc588c\r\n\r\n",
+        "GET / ?id=testid0342798635729618idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 1f7b7f8c0fd48c1d653aadb475a3490c\r\n\r\n",
+        "GET /?id=testid2089561487391560idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 20dd56eceecfabca9e4bc54580ea059f\r\nContent-Length: 6\r\n\r\ntest=1",
+        "GET /?id=testid7342081992731604idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 62fd812ac99272cc893ec9b868a2c137\r\n\r\ntest=1",
+        "POST /?id=testid7205618343806571idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: b58559927fd5e0fc9c4b441403c8f1cf\r\nContent-Length: 0\r\n\r\n",
+        "POST/?id=testid5294863778531604idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 240836cab73372cce42b23b936adce69\r\nContent-Length: 6\r\n\r\ntest=1",
+        "POST/?id=testid0421593868102379idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: b8458b7101f65e287711bbe442861e8c\r\n\r\n",
+        "GET/?id=testid3487619027384106idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 99fd226dcf347505186688156bac59f4\r\nContent-Length: 0\r\n\r\n",
+        "GET/?id=testid8912536016945780idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 00d960eac089c8def636a07523d6631d\r\nContent-Length: 0\r\n\r\n",
+        "POST/?id=testid4862091303845769idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: bae0a232398cef1e9420743f989087a1\r\n\r\ntest=1",
+        "GET / ?id=testid2784603185679041idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 93cf3068385bf8dd798b87e4f80801b0\r\nContent-Length: 6\r\n\r\ntest=1",
+        "POST / ?id=testid7903164543107985idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 8a9208d5028bc1e8ce5dab1e056793f7\r\nContent-Length: 6\r\n\r\ntest=1",
+        "POST/?id=testid0237694534189065idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 6fce85e360fdfd24b7261f433a9ad364\r\nContent-Length: 0\r\n\r\n",
+        "POST/?id=testid2987103691064527idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 9d9bd42f9f1082c2b89e08c10fe7f784\r\nContent-Length: 6\r\n\r\ntest=1",
+        "POST / ?id=testid0591826339702461idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: c6268cf92b418e7daad4fe704d46f6a9\r\nContent-Length: 0\r\n\r\n",
+        "POST /?id=testid7260349536710924idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: ec12b4835407ed58444313180894e54f\r\nContent-Length: 6\r\n\r\ntest=1",
+        "GET /?id=testid9341068742758019idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 73e161a8c03baf2d4076804f0045cc31\r\nContent-Length: 0\r\n\r\n",
+        "GET/?id=testid6983254734602785idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 4d2755897482ec72390a041147d13ab5\r\n\r\ntest=1",
+        "POST /?id=testid3278965091306824idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: ba360553d1a5434d5c7a40ea77df50c1\r\n\r\ntest=1",
+        "POST / ?id=testid7960284171532806idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 5999cca310809374fbd6ea327627dc81\r\n\r\ntest=1",
+        "GET/?id=testid7524813673510842idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: ad6b21ff7c4aa865929b20059ccee0ce\r\nContent-Length: 6\r\n\r\ntest=1",
+        "GET/?id=testid0754231974109256idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 5e7ac063addd536955a6e05f6304844e\r\n\r\ntest=1",
+        "GET/?id=testid6950482360372984idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: fefe98625897c3189d69d544b601762d\r\n\r\n",
+        "POST / ?id=testid3847519268192543idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: fb38b04cd1c31e51c9b3b169eb557e60\r\n\r\n",
+        "POST/?id=testid8759013634621507idhereHTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 88710a71faee1aaed9876822186ebd74\r\nContent-Length: 0\r\n\r\n",
+        "GET / ?id=testid6128574047935012idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 620c137359108b0d20015b7c9c6009c4\r\n\r\ntest=1",
+        "POST /?id=testid3056198740283576idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: c96c8721fc787227b593e2eb60d53024\r\n\r\n",
+        "POST/?id=testid2308567496480217idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 0c618a020f8023dc95767afcc9d21f11\r\n\r\ntest=1",
+        "GET/?id=testid3057612404597236idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 3517710c5f51600747f27318f6d16a8c\r\nContent-Length: 6\r\n\r\ntest=1",
+        "GET / ?id=testid5746128389562047idhere HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 86c548002c49d0008bbc8fbac371aa5f\r\nContent-Length: 0\r\n\r\n",
+        "GET /?id=testid0793218512394570idhere  HTTP/1.1\r\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: 22805b5c6955c4ab6f88ae2433cc0626\r\n\r\n",
+        "POST/?id=testid2507481650497321idhereHTTP/1.1\nHost: {host}\r\nConnection:close\r\nX-Basic-ID: cde246c6d06004986d481d87fe4cec84\r\n\r\n"
+    ]
+}

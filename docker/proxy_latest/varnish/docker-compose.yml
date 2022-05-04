@@ -1,0 +1,18 @@
+version: "3"
+services:
+  varnish:
+    image: varnish:7.0.1
+    restart: always
+    volumes:
+      # - workdir:/var/lib/varnish
+      - ./default.vcl:/etc/varnish/default.vcl
+      - ./logs:/var/log/varnish
+    ports:
+      - "9013:80"
+    depends_on:
+      - echo-server
+  # 需要运行 docker exec varnish_varnish_1 varnishncsa -D -a -w /var/log/varnish/varnishncsa.log -F '"%{Host}i" %s \"%r\"'
+
+  echo-server:
+    build: '../echo'
+    restart: always

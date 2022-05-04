@@ -1,0 +1,3 @@
+smuggling:
+    path: /
+    controller: App\Controller\SmugglingController::smuggling

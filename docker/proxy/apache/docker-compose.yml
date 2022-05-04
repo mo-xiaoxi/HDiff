@@ -1,0 +1,19 @@
+version: '3'
+services:
+  apache:
+      image: httpd:2.4.47-alpine
+      restart: always
+      depends_on:
+        - apache-echo-server
+      ports:
+          - "9013:80"
+      volumes:
+          - "./conf/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+          - "./conf/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf"
+          - "./logs:/usr/local/apache2/logs"
+
+  apache-echo-server:
+    build: '../echo'
+    restart: always
+    ports:
+      - "9014:8001"

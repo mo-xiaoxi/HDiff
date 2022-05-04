@@ -1,0 +1,84 @@
+version: '3'
+services:
+  echo-server:
+    build: './echo'
+    restart: always
+    ports:
+      - "8001:8001"
+
+  apache:
+      image: httpd:2.4.51-alpine
+      restart: always
+      depends_on:
+        - echo-server
+      ports:
+          - "8002:80"
+      volumes:
+          - "./apache/conf/httpd.conf:/usr/local/apache2/conf/httpd.conf"
+          - "./apache/conf/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf"
+          - "./apache/logs:/usr/local/apache2/logs"
+
+  nginx:
+    image: nginx:1.21.4-alpine
+    restart: always
+    depends_on:
+      - echo-server
+    ports:
+      - "8003:80"
+    volumes:
+      - "./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./nginx/logs:/var/log/nginx"
+
+  apache_traffic_server:
+    build: ./apache_traffic_server
+    restart: always
+    depends_on:
+      - echo-server
+    ports:
+      - "8004:8080"
+    volumes:
+      - "./apache_traffic_server/conf/records.config:/opt/ats/etc/trafficserver/records.config"
+      - "./apache_traffic_server/conf/remap.config:/opt/ats/etc/trafficserver/remap.config"
+      - "./apache_traffic_server/conf/logging.yaml:/opt/ats/etc/trafficserver/logging.yaml"
+
+  squid:
+    build: squid/.
+    restart: always
+    volumes:
+      - ./squid/conf/squid.conf:/etc/squid/squid.conf
+    ports:
+      - "8005:3128"
+    depends_on:
+      - echo-server
+
+  haproxy:
+    image: haproxy:2.5.0
+    restart: always
+    depends_on:
+      - rsyslog
+      - echo-server
+    volumes:
+      - "./haproxy/conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+    ports:
+      - "8006:8080"
+  rsyslog:
+    image: jumanjiman/rsyslog
+    restart: always
+    volumes:
+      - "./haproxy/conf/rsyslog.conf:/etc/rsyslog.d/haproxy.conf"
+    ports:
+      - "514:514"
+
+  varnish:
+    image: varnish:7.0.1
+    restart: always
+    volumes:
+      # - workdir:/var/lib/varnish
+      - ./varnish/default.vcl:/etc/varnish/default.vcl
+      - ./varnish/logs:/var/log/varnish
+    ports:
+      - "8007:80"
+    depends_on:
+      - echo-server
+
+  # 需要运行 docker exec proxy_varnish_1 varnishncsa -D -a -w /var/log/varnish/varnishncsa.log -F '"%{Host}i" %s \"%r\"'

@@ -1,0 +1,19 @@
+version: '3'
+services:
+  apache_traffic_server:
+    build: .
+    restart: always
+    depends_on:
+      - apache_traffic_server-echo-server
+    ports:
+      - "9013:8080"
+    volumes:
+      - "./conf/records.config:/opt/ts/etc/trafficserver/records.config"
+      - "./conf/remap.config:/opt/ts/etc/trafficserver/remap.config"
+      - "./conf/logging.yaml:/opt/ts/etc/trafficserver/logging.yaml"
+
+  apache_traffic_server-echo-server:
+    build: '../echo'
+    restart: always
+    ports:
+      - "9014:8001"

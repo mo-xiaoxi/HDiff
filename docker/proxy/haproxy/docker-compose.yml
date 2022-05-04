@@ -1,0 +1,23 @@
+version: '3'
+services:
+  haproxy:
+    image: haproxy:2.4.0
+    restart: always
+    depends_on:
+      - rsyslog
+      - haproxy-echo-server
+    volumes:
+      - "./conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+    ports:
+      - "9013:8080"
+  rsyslog:
+    image: jumanjiman/rsyslog
+    volumes:
+      - "./conf/rsyslog.conf:/etc/rsyslog.d/haproxy.conf"
+    ports:
+      - "514:514"
+  haproxy-echo-server:
+    build: '../echo'
+    restart: always
+    ports:
+        - "9014:8001"

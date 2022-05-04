@@ -1,0 +1,132 @@
+{
+    "example": {
+        "sentence": "example",
+        "role": [
+            "proxy",
+            "server"
+        ],
+        "message": {
+            "new_grammar": "",
+            "name": "HTTP-version",
+            "relation": []
+        },
+        "assertion": {
+            "comment": "example"
+        }
+    },
+    "HTTP-version1": {
+        "sentence": "Intermediaries that process HTTP messages (i.e., all intermediaries other than those acting as tunnels) MUST send their own HTTP-version in forwarded messages.",
+        "role": [
+            "proxy"
+        ],
+        "message": {
+            "new_grammar": "",
+            "name": "HTTP-version",
+            "relation": [
+                "valid",
+                "invalid"
+            ]
+        },
+        "assertion": {
+            "proxy_version": "own HTTP-version",
+            "comment": "HTTP-version1"
+        }
+    },
+    "empty_host": {
+        "sentence": "A sender MUST NOT generate an &quot;http&quot; URI with an empty host identifier. A recipient that processes such a URI reference MUST reject it as invalid.",
+        "role": [
+            "sender",
+            "recipient"
+        ],
+        "message": {
+            "new_grammar": "",
+            "name": "Host",
+            "relation": [
+                "empty"
+            ]
+        },
+        "assertion": {
+            "status_code": "!200",
+            "comment": "empty_host"
+        }
+    },
+    "whitespace_first_header": {
+        "sentence": "A sender MUST NOT send whitespace between the start-line and the first header field.",
+        "role": [
+            "sender"
+        ],
+        "message": {
+            "new_grammar": "\n                    HTTP-message = start-line first-header base-header basic-id [ entity-size-header ] CRLF  [ message-body ]\n                    first-header = 'first-header' CRLF\n                ",
+            "name": "first-header",
+            "relation": [
+                "invalid"
+            ]
+        },
+        "assertion": {
+            "status_code": "!200",
+            "comment": "whitespace_first_header"
+        }
+    },
+    "invalid_request_line": {
+        "sentence": "Recipients of an invalid request-line SHOULD respond with either a 400 (Bad Request) error or a 301 (Moved Permanently) redirect with the request-target properly encoded.",
+        "role": [
+            "recipient"
+        ],
+        "message": {
+            "new_grammar": "\n                    request-line = method SP request-target SP HTTP-version CRLF\n                ",
+            "name": "request-line",
+            "relation": [
+                "invalid"
+            ]
+        },
+        "assertion": {
+            "status_code": "400|301",
+            "comment": "invalid_request_line"
+        }
+    },
+    "CL-CL": {
+        "sentence": "CL-CL",
+        "role": [
+            "proxy"
+        ],
+        "message": {
+            "new_grammar": "\n                    HTTP-message = start-line base-header basic-id entity-size-header CRLF message-body \n                    method = 'POST'\n                    base-header = Host 'Content-Type: application/x-www-form-urlencoded' CRLF 'Connection: Keep-Alive' CRLF\n                    entity-size-header =  Content-Length [ extra-header ] Content-Length \n                    extra-header = 'X-Test: test' CRLF\n                    Content-Length = 'Content-Length:' OWS Content-Length-Value CRLF\n                    Content-Length-Value = '{{CT_value}}' / '40' / '1'\n                    message-body = 'test=1'\n                ",
+            "name": "",
+            "relation": []
+        },
+        "assertion": {
+            "status_code": "!200",
+            "comment": "CL-CL"
+        }
+    },
+    "CL-TE": {
+        "sentence": "CL-TE",
+        "role": [
+            "proxy"
+        ],
+        "message": {
+            "new_grammar": "\n                HTTP-message = start-line base-header basic-id entity-size-header CRLF message-body \n                method = 'POST'\n                base-header = Host 'Content-Type: application/x-www-form-urlencoded' CRLF 'Connection: Keep-Alive' CRLF\n                entity-size-header =  ( Content-Length [ extra-header ] Transfer-Encoding ) / ( Transfer-Encoding [ extra-header ]  Content-Length)\n                extra-header = 'X-Test: test' CRLF\n                Transfer-Encoding  = 'Transfer-Encoding:' OWS 'chunked' CRLF\n                Content-Length = 'Content-Length:' OWS Content-Length-Value CRLF\n                Content-Length-Value = '{{CT_value}}' / '40' / '1'\n                message-body = CRLF 'A' CRLF 'BBBBBBBBBB' CRLF '0' CRLF CRLF 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'\n                ",
+            "name": "",
+            "relation": []
+        },
+        "assertion": {
+            "status_code": "!200",
+            "comment": "CL-TE"
+        }
+    },
+    "TE-TE": {
+        "sentence": "CL-TE",
+        "role": [
+            "proxy"
+        ],
+        "message": {
+            "new_grammar": "\n                HTTP-message = start-line base-header basic-id entity-size-header CRLF message-body \n                method = 'POST'\n                base-header = Host 'Connection: Keep-Alive' CRLF\n                entity-size-header =  Transfer-Encoding [ extra-header ] Transfer-Encoding \n                extra-header = 'X-Test: test' CRLF\n                Transfer-Encoding  = 'Transfer-Encoding:' OWS Transfer-Encoding-value CRLF\n                Transfer-Encoding-value = 'gzip' / 'compress' / 'deflate' / 'br' / 'identity' / 'chunked'\n                Content-Length = 'Content-Length:' OWS Content-Length-Value CRLF\n                Content-Length-Value = '{{CT_value}}' / '40' / '1'\n                message-body = CRLF '10' CRLF 'GPOST / HTTP/1.1' CRLF '0' CRLF\n                ",
+            "name": "",
+            "relation": []
+        },
+        "assertion": {
+            "status_code": "!200",
+            "comment": "TE-TE"
+        }
+    }
+}

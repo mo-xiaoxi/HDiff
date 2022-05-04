@@ -1,0 +1,12 @@
+import 'dart:io';
+main(List<String> arguments) {
+  HttpServer.bind("0.0.0.0", 8080).then((server){
+    print("Serving at ${server.address}:${server.port}");
+    server.listen((HttpRequest request){
+      request.response
+        ..headers.contentType=new ContentType("text","html",charset:"utf-8")
+        ..write("<h1>Dart 2.7.1: Smuggling Test.</h1>")
+        ..close();
+    });
+  });
+}

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    image: tomcat:9.0.29
+    ports:
+      - "8085:8080"
+    volumes:
+      - "./ROOT:/usr/local/tomcat/webapps/ROOT"

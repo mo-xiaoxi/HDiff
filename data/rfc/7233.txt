@@ -1,199 +1,184 @@
-<!DOCTYPE html> 
 
-<!-- template: /a/www/ietf-datatracker/web/ietf/templates/doc/htmlized_base.html -->
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-  
-    rfc7233
-  
-</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
 
-  @media only screen 
-    and (min-width: 992px)
-    and (max-width: 1199px) {
-      body { font-size: 14pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (min-width: 768px)
-    and (max-width: 991px) {
-            body { font-size: 14pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (min-width: 480px)
-    and (max-width: 767px) {
-            body { font-size: 11pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (max-width: 479px) {
-            body { font-size: 8pt; }
-            div.content { width: 96ex; margin: 0 auto; }
-        }
-  @media only screen 
-    and (min-device-width : 375px) 
-    and (max-device-width : 667px) {
-            body { font-size: 9.5pt; }
-            div.content { width: 96ex; margin: 0; }
-        }
-  @media only screen 
-    and (min-device-width: 1200px) {
-            body { font-size: 10pt; margin: 0 4em; }
-            div.content { width: 96ex; margin: 0; }
-        }
-        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-      font-weight: bold;
-            /* line-height: 0pt; */
-            display: inline;
-            white-space: pre;
-            font-family: monospace;
-            font-size: 1em;
-      font-weight: bold;
-        }
-        pre {
-            font-size: 1em;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
-  .pre {
-      white-space: pre;
-      font-family: monospace;
-  }
-  .header{
-      font-weight: bold;
-  }
-        .newpage {
-            page-break-before: always;
-        }
-        .invisible {
-            text-decoration: none;
-            color: white;
-        }
-        @media print {
-            body {
-                margin-top: 5em;
+
+
+
+
+    
+        
+        
+        
+            
+    
+        RFC 7233 - Hypertext Transfer Protocol (HTTP/1.1): Range Requests
+    
+
+        
+        
+        
+            @media only screen
+            and (min-width: 992px)
+            and (max-width: 1199px) {
+                body { font-size: 14pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (min-width: 768px)
+            and (max-width: 991px) {
+                body { font-size: 14pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (min-width: 480px)
+            and (max-width: 767px) {
+                body { font-size: 11pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (max-width: 479px) {
+                body { font-size: 8pt; }
+                div.content { width: 96ex; margin: 0 auto; }
+            }
+            @media only screen
+            and (min-width : 375px)
+            and (max-width : 667px) {
+                body { font-size: 9.5pt; }
+                div.content { width: 96ex; margin: 0; }
+            }
+            @media only screen
+            and (min-width: 1200px) {
+                body { font-size: 10pt; margin: 0 4em; }
+                div.content { width: 96ex; margin: 0; }
+            }
+            h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+                font-weight: bold;
+                /* line-height: 0pt; */
+                display: inline;
+                white-space: pre;
                 font-family: monospace;
-                font-size: 10.5pt;
-            }
-            h1, h2, h3, h4, h5, h6 {
                 font-size: 1em;
+                font-weight: bold;
             }
-        
-            a:link, a:visited {
-                color: inherit;
+            pre {
+                font-size: 1em;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            .pre {
+                white-space: pre;
+                font-family: monospace;
+            }
+            .header{
+                font-weight: bold;
+            }
+            .newpage {
+                page-break-before: always;
+            }
+            .invisible {
                 text-decoration: none;
+                color: white;
             }
-            .noprint {
-                display: none;
+            @media print {
+                body {
+                    margin-top: 5em;
+                    font-family: monospace;
+                    font-size: 10.5pt;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-size: 1em;
+                }
+
+                a:link, a:visited {
+                    color: inherit;
+                    text-decoration: none;
+                }
+                .noprint {
+                    display: none;
+                }
             }
-        }
-  @media screen {
-      .grey, .grey a:link, .grey a:visited {
-    color: #777;
-      }
-            .meta-info {
-                background-color: #EEE;
+            @media screen {
+                .grey, .grey a:link, .grey a:visited {
+                    color: #777;
+                }
+                .meta-info {
+                    background-color: #EEE;
+                    width: 96ex;
+                }
+                .top {
+                    border-top: 7px solid #EEE;
+                }
+                .pad {
+                    padding-top: 7px;
+                    line-height: 24px;
+                    padding-bottom: 4px;
+                }
+                .bgwhite  { background-color: white; }
+                .bgred    { background-color: #F44; }
+                .bggrey   { background-color: #666; }
+                .bgbrown  { background-color: #840; }
+                .bgorange { background-color: #FA0; }
+                .bgyellow { background-color: #EE0; }
+                .bgmagenta{ background-color: #F4F; }
+                .bgblue   { background-color: #66F; }
+                .bgcyan   { background-color: #4DD; }
+                .bggreen  { background-color: #4F4; }
+
+                .legend   { font-size: 90%; }
+                .cplate   { font-size: 70%; border: solid grey 1px; }
             }
-            .top {
-                border-top: 7px solid #EEE;
-            }
-            .pad {
-                padding-top: 7px;
-                line-height: 24px;
-                padding-bottom: 4px;
-            }
-            .bgwhite  { background-color: white; }
-            .bgred    { background-color: #F44; }
-            .bggrey   { background-color: #666; }
-            .bgbrown  { background-color: #840; }            
-            .bgorange { background-color: #FA0; }
-            .bgyellow { background-color: #EE0; }
-            .bgmagenta{ background-color: #F4F; }
-            .bgblue   { background-color: #66F; }
-            .bgcyan   { background-color: #4DD; }
-            .bggreen  { background-color: #4F4; }
 
-            .legend   { font-size: 90%; }
-            .cplate   { font-size: 70%; border: solid grey 1px; }
-  }
-    
-     
+            
+    .bgwhite  { background-color: white; }
+    .bgred    { background-color: #F44; }
+    .bggrey   { background-color: #666; }
+    .bgbrown  { background-color: #840; }
+    .bgorange { background-color: #FA0; }
+    .bgyellow { background-color: #EE0; }
+    .bgmagenta{ background-color: #F4F; }
+    .bgblue   { background-color: #66F; }
+    .bgcyan   { background-color: #4DD; }
+    .bggreen  { background-color: #4F4; }
+    .draftcontent { margin-top:1em;}
 
-.bgwhite  { background-color: white; }
-.bgred    { background-color: #F44; }
-.bggrey   { background-color: #666; }
-.bgbrown  { background-color: #840; }            
-.bgorange { background-color: #FA0; }
-.bgyellow { background-color: #EE0; }
-.bgmagenta{ background-color: #F4F; }
-.bgblue   { background-color: #66F; }
-.bgcyan   { background-color: #4DD; }
-.bggreen  { background-color: #4F4; }
-
-.draftcontent { margin-top:0px !important;}
-
-
-    </style>
-
-    
-  <link rel="alternate" type="application/atom+xml" title="Document changes" href="/feed/document-changes/draft-ietf-httpbis-p5-range/">
-  <meta name="description" content="Hypertext Transfer Protocol (HTTP/1.1): Range Requests (RFC )">
-
-
-    
-    <link rel="shortcut icon" href="https://www.ietf.org/lib/dt/7.40.0/ietf/images/ietf-icon-blue3.png">
-    
-    <link rel="apple-touch-icon" href="https://www.ietf.org/lib/dt/7.40.0/ietf/images/apple-touch-icon.png">
-  </head>
-
-  <body style="padding-top: 0;">
-
-	  <div class="content" id="content">
         
-  <!-- template: /a/www/ietf-datatracker/web/ietf/templates/doc/document_html.html -->
- 
-  <div class="rfcmarkup">
-    <div class="noprint" style="height: 6px;">
-      <div onmouseover="this.style.cursor='pointer';"
-         onclick="showLegend();"
-         onmouseout="hideLegend()"
-         style="height: 6px; min-height: 6px; width: 96ex; position: absolute; margin-top:0; "
-         class="meta-info bgblue"
-         title="Click for colour legend." >&nbsp;</div>
-      <div id="legend"
-           class="meta-info noprint pre legend"
-           style="position:absolute; top: 4px; left: 4ex; visibility:hidden; background-color: white; padding: 4px 9px 5px 7px; border: solid #345 1px; "
-           onmouseover="showLegend();"
-           onmouseout="hideLegend();">
-      </div>
-    </div>
-
+        
     
-      <div class="noprint">
-	 <pre class="pre meta-info">[<a href="https://datatracker.ietf.org" title="Document search and retrieval page">Search</a>] [<a href="https://www.rfc-editor.org/rfc/rfc7233.txt" title="Plaintext version of this document">txt</a>|<a href="https://www.rfc-editor.org/rfc/rfc7233.html" title="HTML version of this document, from XML2RFC">html</a>|<a href="https://www.rfc-editor.org/rfc/pdfrfc/rfc7233.txt.pdf" title="PDF version of this document">pdf</a>|<a href="https://www.rfc-editor.org/rfc/inline-errata/rfc7233.html">with errata</a>|<a href="/doc/rfc7233/bibtex" title="BibTex entry for this document">bibtex</a>] [<a href="/doc/rfc7233/" title="Datatracker information for this document">Tracker</a>] [<a href="/group/httpbis/" title="The working group handling this document">WG</a>] [<a href="mailto:draft-ietf-httpbis-p5-range@ietf.org?subject=draft-ietf-httpbis-p5-range" title="Send email to the document authors">Email</a>] [<a href="https://www.ietf.org/rfcdiff?difftype=--hwdiff&url2=draft-ietf-httpbis-p5-range-26.txt" title="Inline diff (wdiff)">Diff1</a>] [<a href="https://www.ietf.org/rfcdiff?url2=draft-ietf-httpbis-p5-range-26.txt" title="Side-by-side diff">Diff2</a>] [<a href="https://www.ietf.org/tools/idnits?url=https://www.ietf.org/archive/id/draft-ietf-httpbis-p5-range-26.txt" title="Run an idnits check of this document">Nits</a>]
-
-From: <a href="/doc/html/draft-ietf-httpbis-p5-range-26">draft-ietf-httpbis-p5-range-26</a>                   Proposed Standard
-                                                            <a class="text-warning" href="https://www.rfc-editor.org/errata_search.php?rfc=7233&amp;rec_status=0">Errata exist</a></pre>
-      </div>
     
 
-    <div class="draftcontent">
-    <pre>Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
+        
+            
+        
+        
+    
+    
+        
+            
+
+    
+    
+        
+            
+            
+            
+            
+        
+        
+            
+                [Search] [txt|html|pdf|with errata|bibtex] [Tracker] [WG] [Email] [Diff1] [Diff2] [Nits]
+From: draft-ietf-httpbis-p5-range-26                   Proposed Standard
+                                                            Errata exist
+            
+        
+        Internet Engineering Task Force (IETF)                  R. Fielding, Ed.
 Request for Comments: 7233                                         Adobe
-Obsoletes: <a href="/doc/html/rfc2616">2616</a>                                            Y. Lafon, Ed.
+Obsoletes: 2616                                            Y. Lafon, Ed.
 Category: Standards Track                                            W3C
 ISSN: 2070-1721                                          J. Reschke, Ed.
                                                               greenbytes
                                                               June 2014
 
 
-         <span class="h1">Hypertext Transfer Protocol (HTTP/1.1): Range Requests</span>
+         Hypertext Transfer Protocol (HTTP/1.1): Range Requests
 
 Abstract
 
@@ -210,11 +195,11 @@ Status of This Memo
    (IETF).  It represents the consensus of the IETF community.  It has
    received public review and has been approved for publication by the
    Internet Engineering Steering Group (IESG).  Further information on
-   Internet Standards is available in <a href="/doc/html/rfc5741#section-2">Section&nbsp;2 of RFC 5741</a>.
+   Internet Standards is available in Section 2 of RFC 5741.
 
    Information about the current status of this document, any errata,
    and how to provide feedback on it may be obtained at
-   <a href="http://www.rfc-editor.org/info/rfc7233">http://www.rfc-editor.org/info/rfc7233</a>.
+   http://www.rfc-editor.org/info/rfc7233.
 
 
 
@@ -235,9 +220,9 @@ Status of This Memo
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 1]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-2" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 1]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
 Copyright Notice
@@ -245,9 +230,9 @@ Copyright Notice
    Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to <a href="/doc/html/bcp78">BCP 78</a> and the IETF Trust&#x27;s Legal
+   This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (<a href="http://trustee.ietf.org/license-info">http://trustee.ietf.org/license-info</a>) in effect on the date of
+   (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -291,47 +276,47 @@ Copyright Notice
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 2]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-3" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 2]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
 Table of Contents
 
-   <a href="#section-1">1</a>. Introduction ....................................................<a href="#page-4">4</a>
-      <a href="#section-1.1">1.1</a>. Conformance and Error Handling .............................<a href="#page-4">4</a>
-      <a href="#section-1.2">1.2</a>. Syntax Notation ............................................<a href="#page-4">4</a>
-   <a href="#section-2">2</a>. Range Units .....................................................<a href="#page-5">5</a>
-      <a href="#section-2.1">2.1</a>. Byte Ranges ................................................<a href="#page-5">5</a>
-      <a href="#section-2.2">2.2</a>. Other Range Units ..........................................<a href="#page-7">7</a>
-      <a href="#section-2.3">2.3</a>. Accept-Ranges ..............................................<a href="#page-7">7</a>
-   <a href="#section-3">3</a>. Range Requests ..................................................<a href="#page-8">8</a>
-      <a href="#section-3.1">3.1</a>. Range ......................................................<a href="#page-8">8</a>
-      <a href="#section-3.2">3.2</a>. If-Range ...................................................<a href="#page-9">9</a>
-   <a href="#section-4">4</a>. Responses to a Range Request ...................................<a href="#page-10">10</a>
-      <a href="#section-4.1">4.1</a>. 206 Partial Content .......................................<a href="#page-10">10</a>
-      <a href="#section-4.2">4.2</a>. Content-Range .............................................<a href="#page-12">12</a>
-      <a href="#section-4.3">4.3</a>. Combining Ranges ..........................................<a href="#page-14">14</a>
-      <a href="#section-4.4">4.4</a>. 416 Range Not Satisfiable .................................<a href="#page-15">15</a>
-   <a href="#section-5">5</a>. IANA Considerations ............................................<a href="#page-16">16</a>
-      <a href="#section-5.1">5.1</a>. Range Unit Registry .......................................<a href="#page-16">16</a>
-           <a href="#section-5.1.1">5.1.1</a>. Procedure ..........................................<a href="#page-16">16</a>
-           <a href="#section-5.1.2">5.1.2</a>. Registrations ......................................<a href="#page-16">16</a>
-      <a href="#section-5.2">5.2</a>. Status Code Registration ..................................<a href="#page-17">17</a>
-      <a href="#section-5.3">5.3</a>. Header Field Registration .................................<a href="#page-17">17</a>
-      <a href="#section-5.4">5.4</a>. Internet Media Type Registration ..........................<a href="#page-17">17</a>
-           <a href="#section-5.4.1">5.4.1</a>. Internet Media Type multipart/byteranges ...........<a href="#page-18">18</a>
-   <a href="#section-6">6</a>. Security Considerations ........................................<a href="#page-19">19</a>
-      <a href="#section-6.1">6.1</a>. Denial-of-Service Attacks Using Range .....................<a href="#page-19">19</a>
-   <a href="#section-7">7</a>. Acknowledgments ................................................<a href="#page-19">19</a>
-   <a href="#section-8">8</a>. References .....................................................<a href="#page-20">20</a>
-      <a href="#section-8.1">8.1</a>. Normative References ......................................<a href="#page-20">20</a>
-      <a href="#section-8.2">8.2</a>. Informative References ....................................<a href="#page-20">20</a>
-   <a href="#appendix-A">Appendix A</a>. Internet Media Type multipart/byteranges ..............<a href="#page-21">21</a>
-   <a href="#appendix-B">Appendix B</a>. Changes from <a href="/doc/html/rfc2616">RFC 2616</a> .................................<a href="#page-22">22</a>
-   <a href="#appendix-C">Appendix C</a>. Imported ABNF .........................................<a href="#page-22">22</a>
-   <a href="#appendix-D">Appendix D</a>. Collected ABNF ........................................<a href="#page-23">23</a>
-   Index .............................................................<a href="#page-24">24</a>
+   1. Introduction ....................................................4
+      1.1. Conformance and Error Handling .............................4
+      1.2. Syntax Notation ............................................4
+   2. Range Units .....................................................5
+      2.1. Byte Ranges ................................................5
+      2.2. Other Range Units ..........................................7
+      2.3. Accept-Ranges ..............................................7
+   3. Range Requests ..................................................8
+      3.1. Range ......................................................8
+      3.2. If-Range ...................................................9
+   4. Responses to a Range Request ...................................10
+      4.1. 206 Partial Content .......................................10
+      4.2. Content-Range .............................................12
+      4.3. Combining Ranges ..........................................14
+      4.4. 416 Range Not Satisfiable .................................15
+   5. IANA Considerations ............................................16
+      5.1. Range Unit Registry .......................................16
+           5.1.1. Procedure ..........................................16
+           5.1.2. Registrations ......................................16
+      5.2. Status Code Registration ..................................17
+      5.3. Header Field Registration .................................17
+      5.4. Internet Media Type Registration ..........................17
+           5.4.1. Internet Media Type multipart/byteranges ...........18
+   6. Security Considerations ........................................19
+      6.1. Denial-of-Service Attacks Using Range .....................19
+   7. Acknowledgments ................................................19
+   8. References .....................................................20
+      8.1. Normative References ......................................20
+      8.2. Informative References ....................................20
+   Appendix A. Internet Media Type multipart/byteranges ..............21
+   Appendix B. Changes from RFC 2616 .................................22
+   Appendix C. Imported ABNF .........................................22
+   Appendix D. Collected ABNF ........................................23
+   Index .............................................................24
 
 
 
@@ -347,12 +332,12 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 3]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-4" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 3]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="section-1" href="#section-1">1</a>.  Introduction</span>
+1.  Introduction
 
    Hypertext Transfer Protocol (HTTP) clients often encounter
    interrupted data transfers as a result of canceled requests or
@@ -377,23 +362,23 @@ Table of Contents
    extensible range types, this specification only defines requests for
    byte ranges.
 
-<span class="h3"><a class="selflink" id="section-1.1" href="#section-1.1">1.1</a>.  Conformance and Error Handling</span>
+1.1.  Conformance and Error Handling
 
-   The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
-   &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this
-   document are to be interpreted as described in [<a href="/doc/html/rfc2119" title="&quot;Key words for use in RFCs to Indicate Requirement Levels&quot;">RFC2119</a>].
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
 
    Conformance criteria and considerations regarding error handling are
-   defined in <a href="/doc/html/rfc7230#section-2.5">Section&nbsp;2.5 of [RFC7230]</a>.
+   defined in Section 2.5 of [RFC7230].
 
-<span class="h3"><a class="selflink" id="section-1.2" href="#section-1.2">1.2</a>.  Syntax Notation</span>
+1.2.  Syntax Notation
 
    This specification uses the Augmented Backus-Naur Form (ABNF)
-   notation of [<a href="/doc/html/rfc5234" title="&quot;Augmented BNF for Syntax Specifications: ABNF&quot;">RFC5234</a>] with a list extension, defined in <a href="/doc/html/rfc7230#section-7">Section&nbsp;7 of
-   [RFC7230]</a>, that allows for compact definition of comma-separated
-   lists using a &#x27;#&#x27; operator (similar to how the &#x27;*&#x27; operator indicates
-   repetition).  <a href="#appendix-C">Appendix C</a> describes rules imported from other
-   documents.  <a href="#appendix-D">Appendix D</a> shows the collected grammar with all list
+   notation of [RFC5234] with a list extension, defined in Section 7 of
+   [RFC7230], that allows for compact definition of comma-separated
+   lists using a '#' operator (similar to how the '*' operator indicates
+   repetition).  Appendix C describes rules imported from other
+   documents.  Appendix D shows the collected grammar with all list
    operators expanded to standard ABNF notation.
 
 
@@ -403,40 +388,40 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 4]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-5" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 4]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="section-2" href="#section-2">2</a>.  Range Units</span>
+2.  Range Units
 
    A representation can be partitioned into subranges according to
    various structural units, depending on the structure inherent in the
-   representation&#x27;s media type.  This &quot;range unit&quot; is used in the
-   Accept-Ranges (<a href="#section-2.3">Section 2.3</a>) response header field to advertise
-   support for range requests, the Range (<a href="#section-3.1">Section 3.1</a>) request header
+   representation's media type.  This "range unit" is used in the
+   Accept-Ranges (Section 2.3) response header field to advertise
+   support for range requests, the Range (Section 3.1) request header
    field to delineate the parts of a representation that are requested,
-   and the Content-Range (<a href="#section-4.2">Section 4.2</a>) payload header field to describe
+   and the Content-Range (Section 4.2) payload header field to describe
    which part of a representation is being transferred.
 
      range-unit       = bytes-unit / other-range-unit
 
-<span class="h3"><a class="selflink" id="section-2.1" href="#section-2.1">2.1</a>.  Byte Ranges</span>
+2.1.  Byte Ranges
 
    Since representation data is transferred in payloads as a sequence of
    octets, a byte range is a meaningful substructure for any
-   representation transferable over HTTP (<a href="/doc/html/rfc7231#section-3">Section&nbsp;3 of [RFC7231]</a>).  The
-   &quot;bytes&quot; range unit is defined for expressing subranges of the data&#x27;s
+   representation transferable over HTTP (Section 3 of [RFC7231]).  The
+   "bytes" range unit is defined for expressing subranges of the data's
    octet sequence.
 
-     bytes-unit       = &quot;bytes&quot;
+     bytes-unit       = "bytes"
 
    A byte-range request can specify a single range of bytes or a set of
    ranges within a single representation.
 
-     byte-ranges-specifier = bytes-unit &quot;=&quot; byte-range-set
+     byte-ranges-specifier = bytes-unit "=" byte-range-set
      byte-range-set  = 1#( byte-range-spec / suffix-byte-range-spec )
-     byte-range-spec = first-byte-pos &quot;-&quot; [ last-byte-pos ]
+     byte-range-spec = first-byte-pos "-" [ last-byte-pos ]
      first-byte-pos  = 1*DIGIT
      last-byte-pos   = 1*DIGIT
 
@@ -459,9 +444,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 5]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-6" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 5]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    A byte-range-spec is invalid if the last-byte-pos value is present
@@ -478,7 +463,7 @@ Table of Contents
    A client can request the last N bytes of the selected representation
    using a suffix-byte-range-spec.
 
-     suffix-byte-range-spec = &quot;-&quot; suffix-length
+     suffix-byte-range-spec = "-" suffix-length
      suffix-length = 1*DIGIT
 
    If the selected representation is shorter than the specified
@@ -515,9 +500,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 6]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-7" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 6]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    In the byte-range syntax, first-byte-pos, last-byte-pos, and
@@ -526,20 +511,20 @@ Table of Contents
    anticipate potentially large decimal numerals and prevent parsing
    errors due to integer conversion overflows.
 
-<span class="h3"><a class="selflink" id="section-2.2" href="#section-2.2">2.2</a>.  Other Range Units</span>
+2.2.  Other Range Units
 
    Range units are intended to be extensible.  New range units ought to
-   be registered with IANA, as defined in <a href="#section-5.1">Section 5.1</a>.
+   be registered with IANA, as defined in Section 5.1.
 
      other-range-unit = token
 
-<span class="h3"><a class="selflink" id="section-2.3" href="#section-2.3">2.3</a>.  Accept-Ranges</span>
+2.3.  Accept-Ranges
 
-   The &quot;Accept-Ranges&quot; header field allows a server to indicate that it
+   The "Accept-Ranges" header field allows a server to indicate that it
    supports range requests for the target resource.
 
      Accept-Ranges     = acceptable-ranges
-     acceptable-ranges = 1#range-unit / &quot;none&quot;
+     acceptable-ranges = 1#range-unit / "none"
 
    An origin server that supports byte-range requests for a given target
    resource MAY send
@@ -548,7 +533,7 @@ Table of Contents
 
    to indicate what range units are supported.  A client MAY generate
    range requests without having received this header field for the
-   resource involved.  Range units are defined in <a href="#section-2">Section 2</a>.
+   resource involved.  Range units are defined in Section 2.
 
    A server that does not support any kind of range request for the
    target resource MAY send
@@ -571,22 +556,22 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 7]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-8" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 7]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="section-3" href="#section-3">3</a>.  Range Requests</span>
+3.  Range Requests
 
-<span class="h3"><a class="selflink" id="section-3.1" href="#section-3.1">3.1</a>.  Range</span>
+3.1.  Range
 
-   The &quot;Range&quot; header field on a GET request modifies the method
+   The "Range" header field on a GET request modifies the method
    semantics to request transfer of only one or more subranges of the
    selected representation data, rather than the entire selected
    representation data.
 
      Range = byte-ranges-specifier / other-ranges-specifier
-     other-ranges-specifier = other-range-unit &quot;=&quot; other-range-set
+     other-ranges-specifier = other-range-unit "=" other-range-set
      other-range-set = 1*VCHAR
 
    A server MAY ignore the Range header field.  However, origin servers
@@ -604,7 +589,7 @@ Table of Contents
    header field that consists of more than two overlapping ranges, or a
    set of many small ranges that are not listed in ascending order,
    since both are indications of either a broken client or a deliberate
-   denial-of-service attack (<a href="#section-6.1">Section 6.1</a>).  A client SHOULD NOT request
+   denial-of-service attack (Section 6.1).  A client SHOULD NOT request
    multiple ranges that are inherently less efficient to process and
    transfer than a single range that encompasses the same data.
 
@@ -618,7 +603,7 @@ Table of Contents
    agent wishes to transfer one page at a time.
 
    The Range header field is evaluated after evaluating the precondition
-   header fields defined in [<a href="/doc/html/rfc7232" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests&quot;">RFC7232</a>], and only if the result in absence
+   header fields defined in [RFC7232], and only if the result in absence
    of the Range header field would be a 200 (OK) response.  In other
    words, Range is ignored when a conditional GET would result in a 304
    (Not Modified) response.
@@ -627,27 +612,27 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 8]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-9" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 8]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-   The If-Range header field (<a href="#section-3.2">Section 3.2</a>) can be used as a precondition
+   The If-Range header field (Section 3.2) can be used as a precondition
    to applying the Range header field.
 
    If all of the preconditions are true, the server supports the Range
    header field for the target resource, and the specified range(s) are
-   valid and satisfiable (as defined in <a href="#section-2.1">Section 2.1</a>), the server SHOULD
+   valid and satisfiable (as defined in Section 2.1), the server SHOULD
    send a 206 (Partial Content) response with a payload containing one
    or more partial representations that correspond to the satisfiable
-   ranges requested, as defined in <a href="#section-4">Section 4</a>.
+   ranges requested, as defined in Section 4.
 
    If all of the preconditions are true, the server supports the Range
    header field for the target resource, and the specified range(s) are
    invalid or unsatisfiable, the server SHOULD send a 416 (Range Not
    Satisfiable) response.
 
-<span class="h3"><a class="selflink" id="section-3.2" href="#section-3.2">3.2</a>.  If-Range</span>
+3.2.  If-Range
 
    If a client has a partial copy of a representation and wishes to have
    an up-to-date copy of the entire representation, it could use the
@@ -657,7 +642,7 @@ Table of Contents
    then have to make a second request to obtain the entire current
    representation.
 
-   The &quot;If-Range&quot; header field allows a client to &quot;short-circuit&quot; the
+   The "If-Range" header field allows a client to "short-circuit" the
    second request.  Informally, its meaning is as follows: if the
    representation is unchanged, send me the part(s) that I am requesting
    in Range; otherwise, send me the entire representation.
@@ -675,21 +660,21 @@ Table of Contents
    entity-tag that is marked as weak.  A client MUST NOT generate an
    If-Range header field containing an HTTP-date unless the client has
    no entity-tag for the corresponding representation and the date is a
-   strong validator in the sense defined by <a href="/doc/html/rfc7232#section-2.2.2">Section&nbsp;2.2.2 of [RFC7232]</a>.
+   strong validator in the sense defined by Section 2.2.2 of [RFC7232].
 
    A server that evaluates an If-Range precondition MUST use the strong
-   comparison function when comparing entity-tags (<a href="/doc/html/rfc7232#section-2.3.2">Section&nbsp;2.3.2 of
-   [RFC7232]</a>) and MUST evaluate the condition as false if an HTTP-date
+   comparison function when comparing entity-tags (Section 2.3.2 of
+   [RFC7232]) and MUST evaluate the condition as false if an HTTP-date
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                    [Page 9]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-10" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                    [Page 9]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    validator is provided that is not a strong validator in the sense
-   defined by <a href="/doc/html/rfc7232#section-2.2.2">Section&nbsp;2.2.2 of [RFC7232]</a>.  A valid entity-tag can be
+   defined by Section 2.2.2 of [RFC7232].  A valid entity-tag can be
    distinguished from a valid HTTP-date by examining the first two
    characters for a DQUOTE.
 
@@ -699,18 +684,18 @@ Table of Contents
    requested.  If the validator does not match, the server MUST ignore
    the Range header field.  Note that this comparison by exact match,
    including when the validator is an HTTP-date, differs from the
-   &quot;earlier than or equal to&quot; comparison used when evaluating an
+   "earlier than or equal to" comparison used when evaluating an
    If-Unmodified-Since conditional.
 
-<span class="h2"><a class="selflink" id="section-4" href="#section-4">4</a>.  Responses to a Range Request</span>
+4.  Responses to a Range Request
 
-<span class="h3"><a class="selflink" id="section-4.1" href="#section-4.1">4.1</a>.  206 Partial Content</span>
+4.1.  206 Partial Content
 
    The 206 (Partial Content) status code indicates that the server is
    successfully fulfilling a range request for the target resource by
    transferring one or more parts of the selected representation that
-   correspond to the satisfiable ranges found in the request&#x27;s Range
-   header field (<a href="#section-3.1">Section 3.1</a>).
+   correspond to the satisfiable ranges found in the request's Range
+   header field (Section 3.1).
 
    If a single part is being transferred, the server generating the 206
    response MUST generate a Content-Range header field, describing what
@@ -727,8 +712,8 @@ Table of Contents
      ... 26012 bytes of partial image data ...
 
    If multiple parts are being transferred, the server generating the
-   206 response MUST generate a &quot;multipart/byteranges&quot; payload, as
-   defined in <a href="#appendix-A">Appendix A</a>, and a Content-Type header field containing the
+   206 response MUST generate a "multipart/byteranges" payload, as
+   defined in Appendix A, and a Content-Type header field containing the
    multipart/byteranges media type and its required boundary parameter.
    To avoid confusion with single-part responses, a server MUST NOT
    generate a Content-Range header field in the HTTP header section of a
@@ -739,9 +724,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 10]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-11" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 10]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    Within the header area of each body part in the multipart payload,
@@ -775,7 +760,7 @@ Table of Contents
    in which the corresponding byte-range-spec appeared in the received
    Range header field.  Since the typical overhead between parts of a
    multipart/byteranges payload is around 80 bytes, depending on the
-   selected representation&#x27;s media type and the chosen boundary
+   selected representation's media type and the chosen boundary
    parameter length, it can be less efficient to transfer many small
    disjoint parts than it is to transfer the entire selected
    representation.
@@ -795,9 +780,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 11]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-12" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 11]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    excluding those ranges that were deemed unsatisfiable or that were
@@ -822,12 +807,12 @@ Table of Contents
    response to the same request.
 
    A 206 response is cacheable by default; i.e., unless otherwise
-   indicated by explicit cache controls (see <a href="/doc/html/rfc7234#section-4.2.2">Section&nbsp;4.2.2 of
-   [RFC7234]</a>).
+   indicated by explicit cache controls (see Section 4.2.2 of
+   [RFC7234]).
 
-<span class="h3"><a class="selflink" id="section-4.2" href="#section-4.2">4.2</a>.  Content-Range</span>
+4.2.  Content-Range
 
-   The &quot;Content-Range&quot; header field is sent in a single part 206
+   The "Content-Range" header field is sent in a single part 206
    (Partial Content) response to indicate the partial range of the
    selected representation enclosed as the message payload, sent in each
    part of a multipart 206 response to indicate the range enclosed
@@ -840,9 +825,9 @@ Table of Contents
      byte-content-range  = bytes-unit SP
                            ( byte-range-resp / unsatisfied-range )
 
-     byte-range-resp     = byte-range &quot;/&quot; ( complete-length / &quot;*&quot; )
-     byte-range          = first-byte-pos &quot;-&quot; last-byte-pos
-     unsatisfied-range   = &quot;*/&quot; complete-length
+     byte-range-resp     = byte-range "/" ( complete-length / "*" )
+     byte-range          = first-byte-pos "-" last-byte-pos
+     unsatisfied-range   = "*/" complete-length
 
      complete-length     = 1*DIGIT
 
@@ -851,13 +836,13 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 12]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-13" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 12]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    If a 206 (Partial Content) response contains a Content-Range header
-   field with a range unit (<a href="#section-2">Section 2</a>) that the recipient does not
+   field with a range unit (Section 2) that the recipient does not
    understand, the recipient MUST NOT attempt to recombine it with a
    stored representation.  A proxy that receives such a message SHOULD
    forward it downstream.
@@ -865,7 +850,7 @@ Table of Contents
    For byte ranges, a sender SHOULD indicate the complete length of the
    representation from which the range has been extracted, unless the
    complete length is unknown or difficult to determine.  An asterisk
-   character (&quot;*&quot;) in place of the complete-length indicates that the
+   character ("*") in place of the complete-length indicates that the
    representation length was unknown when the header field was
    generated.
 
@@ -907,9 +892,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 13]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-14" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 13]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    The following are examples of Content-Range values in which the
@@ -931,14 +916,14 @@ Table of Contents
 
         Content-Range: bytes 734-1233/1234
 
-<span class="h3"><a class="selflink" id="section-4.3" href="#section-4.3">4.3</a>.  Combining Ranges</span>
+4.3.  Combining Ranges
 
    A response might transfer only a subrange of a representation if the
    connection closed prematurely or if the request used one or more
    Range specifications.  After several such transfers, a client might
    have received several ranges of the same representation.  These
    ranges can only be safely combined if they all have in common the
-   same strong validator (<a href="/doc/html/rfc7232#section-2.1">Section&nbsp;2.1 of [RFC7232]</a>).
+   same strong validator (Section 2.1 of [RFC7232]).
 
    A client that has received multiple partial responses to GET requests
    on a target resource MAY combine those responses into a larger
@@ -951,7 +936,7 @@ Table of Contents
    If the most recent response is a 206 (Partial Content) response and
    at least one of the matching stored responses is a 200 (OK), then the
    combined response header fields consist of the most recent 200
-   response&#x27;s header fields.  If all of the matching stored responses
+   response's header fields.  If all of the matching stored responses
    are 206 responses, then the stored response with the most recent
    header fields is used as the source of header fields for the combined
    response, except that the client MUST use other header fields
@@ -963,9 +948,9 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 14]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-15" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 14]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    The combined response message body consists of the union of partial
@@ -981,10 +966,10 @@ Table of Contents
    (Partial Content) responses, each with one continuous range that is
    indicated by a Content-Range header field.
 
-<span class="h3"><a class="selflink" id="section-4.4" href="#section-4.4">4.4</a>.  416 Range Not Satisfiable</span>
+4.4.  416 Range Not Satisfiable
 
    The 416 (Range Not Satisfiable) status code indicates that none of
-   the ranges in the request&#x27;s Range header field (<a href="#section-3.1">Section 3.1</a>) overlap
+   the ranges in the request's Range header field (Section 3.1) overlap
    the current extent of the selected resource or that the set of ranges
    requested has been rejected due to invalid ranges or an excessive
    request of small or overlapping ranges.
@@ -994,7 +979,7 @@ Table of Contents
    the current length of the selected representation.  When this status
    code is generated in response to a byte-range request, the sender
    SHOULD generate a Content-Range header field specifying the current
-   length of the selected representation (<a href="#section-4.2">Section 4.2</a>).
+   length of the selected representation (Section 4.2).
 
    For example:
 
@@ -1019,21 +1004,21 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 15]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-16" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 15]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="section-5" href="#section-5">5</a>.  IANA Considerations</span>
+5.  IANA Considerations
 
-<span class="h3"><a class="selflink" id="section-5.1" href="#section-5.1">5.1</a>.  Range Unit Registry</span>
+5.1.  Range Unit Registry
 
-   The &quot;HTTP Range Unit Registry&quot; defines the namespace for the range
+   The "HTTP Range Unit Registry" defines the namespace for the range
    unit names and refers to their corresponding specifications.  The
    registry has been created and is now maintained at
-   &lt;<a href="http://www.iana.org/assignments/http-parameters">http://www.iana.org/assignments/http-parameters</a>&gt;.
+   <http://www.iana.org/assignments/http-parameters>.
 
-<span class="h4"><a class="selflink" id="section-5.1.1" href="#section-5.1.1">5.1.1</a>.  Procedure</span>
+5.1.1.  Procedure
 
    Registration of an HTTP Range Unit MUST include the following fields:
 
@@ -1044,9 +1029,9 @@ Table of Contents
    o  Pointer to specification text
 
    Values to be added to this namespace require IETF Review (see
-   <a href="/doc/html/rfc5226#section-4.1">[RFC5226], Section&nbsp;4.1</a>).
+   [RFC5226], Section 4.1).
 
-<span class="h4"><a class="selflink" id="section-5.1.2" href="#section-5.1.2">5.1.2</a>.  Registrations</span>
+5.1.2.  Registrations
 
    The initial range unit registry contains the registrations below:
 
@@ -1054,13 +1039,13 @@ Table of Contents
    | Range Unit  | Description                           | Reference   |
    | Name        |                                       |             |
    +-------------+---------------------------------------+-------------+
-   | bytes       | a range of octets                     | <a href="#section-2.1">Section 2.1</a> |
-   | none        | reserved as keyword, indicating no    | <a href="#section-2.3">Section 2.3</a> |
+   | bytes       | a range of octets                     | Section 2.1 |
+   | none        | reserved as keyword, indicating no    | Section 2.3 |
    |             | ranges are supported                  |             |
    +-------------+---------------------------------------+-------------+
 
-   The change controller is: &quot;IETF (iesg@ietf.org) - Internet
-   Engineering Task Force&quot;.
+   The change controller is: "IETF (iesg@ietf.org) - Internet
+   Engineering Task Force".
 
 
 
@@ -1075,53 +1060,53 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 16]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-17" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 16]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h3"><a class="selflink" id="section-5.2" href="#section-5.2">5.2</a>.  Status Code Registration</span>
+5.2.  Status Code Registration
 
-   The &quot;Hypertext Transfer Protocol (HTTP) Status Code Registry&quot; located
-   at &lt;<a href="http://www.iana.org/assignments/http-status-codes">http://www.iana.org/assignments/http-status-codes</a>&gt; has been
+   The "Hypertext Transfer Protocol (HTTP) Status Code Registry" located
+   at <http://www.iana.org/assignments/http-status-codes> has been
    updated to include the registrations below:
 
    +-------+-----------------------+-------------+
    | Value | Description           | Reference   |
    +-------+-----------------------+-------------+
-   | 206   | Partial Content       | <a href="#section-4.1">Section 4.1</a> |
-   | 416   | Range Not Satisfiable | <a href="#section-4.4">Section 4.4</a> |
+   | 206   | Partial Content       | Section 4.1 |
+   | 416   | Range Not Satisfiable | Section 4.4 |
    +-------+-----------------------+-------------+
 
-<span class="h3"><a class="selflink" id="section-5.3" href="#section-5.3">5.3</a>.  Header Field Registration</span>
+5.3.  Header Field Registration
 
-   HTTP header fields are registered within the &quot;Message Headers&quot;
+   HTTP header fields are registered within the "Message Headers"
    registry maintained at
-   &lt;<a href="http://www.iana.org/assignments/message-headers/">http://www.iana.org/assignments/message-headers/</a>&gt;.
+   <http://www.iana.org/assignments/message-headers/>.
 
    This document defines the following HTTP header fields, so their
    associated registry entries have been updated according to the
-   permanent registrations below (see [<a href="#ref-BCP90" title="&quot;Registration Procedures for Message Header Fields&quot;">BCP90</a>]):
+   permanent registrations below (see [BCP90]):
 
    +-------------------+----------+----------+-------------+
    | Header Field Name | Protocol | Status   | Reference   |
    +-------------------+----------+----------+-------------+
-   | Accept-Ranges     | http     | standard | <a href="#section-2.3">Section 2.3</a> |
-   | Content-Range     | http     | standard | <a href="#section-4.2">Section 4.2</a> |
-   | If-Range          | http     | standard | <a href="#section-3.2">Section 3.2</a> |
-   | Range             | http     | standard | <a href="#section-3.1">Section 3.1</a> |
+   | Accept-Ranges     | http     | standard | Section 2.3 |
+   | Content-Range     | http     | standard | Section 4.2 |
+   | If-Range          | http     | standard | Section 3.2 |
+   | Range             | http     | standard | Section 3.1 |
    +-------------------+----------+----------+-------------+
 
-   The change controller is: &quot;IETF (iesg@ietf.org) - Internet
-   Engineering Task Force&quot;.
+   The change controller is: "IETF (iesg@ietf.org) - Internet
+   Engineering Task Force".
 
-<span class="h3"><a class="selflink" id="section-5.4" href="#section-5.4">5.4</a>.  Internet Media Type Registration</span>
+5.4.  Internet Media Type Registration
 
-   IANA maintains the registry of Internet media types [<a href="#ref-BCP13" title="&quot;Media Type Specifications and Registration Procedures&quot;">BCP13</a>] at
-   &lt;<a href="http://www.iana.org/assignments/media-types">http://www.iana.org/assignments/media-types</a>&gt;.
+   IANA maintains the registry of Internet media types [BCP13] at
+   <http://www.iana.org/assignments/media-types>.
 
    This document serves as the specification for the Internet media type
-   &quot;multipart/byteranges&quot;.  The following has been registered with IANA.
+   "multipart/byteranges".  The following has been registered with IANA.
 
 
 
@@ -1131,12 +1116,12 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 17]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-18" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 17]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h4"><a class="selflink" id="section-5.4.1" href="#section-5.4.1">5.4.1</a>.  Internet Media Type multipart/byteranges</span>
+5.4.1.  Internet Media Type multipart/byteranges
 
    Type name:  multipart
 
@@ -1146,14 +1131,14 @@ Table of Contents
 
    Optional parameters:  N/A
 
-   Encoding considerations:  only &quot;7bit&quot;, &quot;8bit&quot;, or &quot;binary&quot; are
+   Encoding considerations:  only "7bit", "8bit", or "binary" are
       permitted
 
-   Security considerations:  see <a href="#section-6">Section 6</a>
+   Security considerations:  see Section 6
 
    Interoperability considerations:  N/A
 
-   Published specification:  This specification (see <a href="#appendix-A">Appendix A</a>).
+   Published specification:  This specification (see Appendix A).
 
    Applications that use this media type:  HTTP components supporting
       multiple ranges in a single request.
@@ -1171,13 +1156,13 @@ Table of Contents
       Macintosh file type code(s):  N/A
 
    Person and email address to contact for further information:  See
-      Authors&#x27; Addresses section.
+      Authors' Addresses section.
 
    Intended usage:  COMMON
 
    Restrictions on usage:  N/A
 
-   Author:  See Authors&#x27; Addresses section.
+   Author:  See Authors' Addresses section.
 
    Change controller:  IESG
 
@@ -1187,19 +1172,19 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 18]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-19" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 18]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="section-6" href="#section-6">6</a>.  Security Considerations</span>
+6.  Security Considerations
 
    This section is meant to inform developers, information providers,
    and users of known security concerns specific to the HTTP range
    request mechanisms.  More general security considerations are
-   addressed in HTTP messaging [<a href="/doc/html/rfc7230" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing&quot;">RFC7230</a>] and semantics [<a href="/doc/html/rfc7231" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content&quot;">RFC7231</a>].
+   addressed in HTTP messaging [RFC7230] and semantics [RFC7231].
 
-<span class="h3"><a class="selflink" id="section-6.1" href="#section-6.1">6.1</a>.  Denial-of-Service Attacks Using Range</span>
+6.1.  Denial-of-Service Attacks Using Range
 
    Unconstrained multiple range requests are susceptible to denial-of-
    service attacks because the effort required to request many
@@ -1212,11 +1197,9 @@ Table of Contents
    apparent reason.  Multipart range requests are not designed to
    support random access.
 
-<span class="h2"><a class="selflink" id="section-7" href="#section-7">7</a>.  Acknowledgments</span>
+7.  Acknowledgments
 
-   See <a href="/doc/html/rfc7230#section-10">Section&nbsp;10 of [RFC7230]</a>.
-
-
+   See Section 10 of [RFC7230].
 
 
 
@@ -1243,73 +1226,75 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 19]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-20" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
 
 
-<span class="h2"><a class="selflink" id="section-8" href="#section-8">8</a>.  References</span>
+Fielding, et al.             Standards Track                   [Page 19]
 
-<span class="h3"><a class="selflink" id="section-8.1" href="#section-8.1">8.1</a>.  Normative References</span>
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
-   [<a id="ref-RFC2046">RFC2046</a>]  Freed, N. and N. Borenstein, &quot;Multipurpose Internet Mail
-              Extensions (MIME) Part Two: Media Types&quot;, <a href="/doc/html/rfc2046">RFC 2046</a>,
+
+8.  References
+
+8.1.  Normative References
+
+   [RFC2046]  Freed, N. and N. Borenstein, "Multipurpose Internet Mail
+              Extensions (MIME) Part Two: Media Types", RFC 2046,
               November 1996.
 
-   [<a id="ref-RFC2119">RFC2119</a>]  Bradner, S., &quot;Key words for use in RFCs to Indicate
-              Requirement Levels&quot;, <a href="/doc/html/bcp14">BCP 14</a>, <a href="/doc/html/rfc2119">RFC 2119</a>, March 1997.
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [<a id="ref-RFC5234">RFC5234</a>]  Crocker, D., Ed. and P. Overell, &quot;Augmented BNF for Syntax
-              Specifications: ABNF&quot;, STD 68, <a href="/doc/html/rfc5234">RFC 5234</a>, January 2008.
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234, January 2008.
 
-   [<a id="ref-RFC7230">RFC7230</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Message Syntax and Routing&quot;,
-              <a href="/doc/html/rfc7230">RFC 7230</a>, June 2014.
+   [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Message Syntax and Routing",
+              RFC 7230, June 2014.
 
-   [<a id="ref-RFC7231">RFC7231</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Semantics and Content&quot;, <a href="/doc/html/rfc7231">RFC 7231</a>,
+   [RFC7231]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               June 2014.
 
-   [<a id="ref-RFC7232">RFC7232</a>]  Fielding, R., Ed. and J. Reschke, Ed., &quot;Hypertext Transfer
-              Protocol (HTTP/1.1): Conditional Requests&quot;, <a href="/doc/html/rfc7232">RFC 7232</a>,
+   [RFC7232]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Conditional Requests", RFC 7232,
               June 2014.
 
-   [<a id="ref-RFC7234">RFC7234</a>]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
-              Ed., &quot;Hypertext Transfer Protocol (HTTP/1.1): Caching&quot;,
-              <a href="/doc/html/rfc7234">RFC 7234</a>, June 2014.
+   [RFC7234]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "Hypertext Transfer Protocol (HTTP/1.1): Caching",
+              RFC 7234, June 2014.
 
-<span class="h3"><a class="selflink" id="section-8.2" href="#section-8.2">8.2</a>.  Informative References</span>
+8.2.  Informative References
 
-   [<a id="ref-BCP13">BCP13</a>]    Freed, N., Klensin, J., and T. Hansen, &quot;Media Type
-              Specifications and Registration Procedures&quot;, <a href="/doc/html/bcp13">BCP 13</a>,
-              <a href="/doc/html/rfc6838">RFC 6838</a>, January 2013.
+   [BCP13]    Freed, N., Klensin, J., and T. Hansen, "Media Type
+              Specifications and Registration Procedures", BCP 13,
+              RFC 6838, January 2013.
 
-   [<a id="ref-BCP90">BCP90</a>]    Klyne, G., Nottingham, M., and J. Mogul, &quot;Registration
-              Procedures for Message Header Fields&quot;, <a href="/doc/html/bcp90">BCP 90</a>, <a href="/doc/html/rfc3864">RFC 3864</a>,
+   [BCP90]    Klyne, G., Nottingham, M., and J. Mogul, "Registration
+              Procedures for Message Header Fields", BCP 90, RFC 3864,
               September 2004.
 
-   [<a id="ref-RFC2616">RFC2616</a>]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
-              Masinter, L., Leach, P., and T. Berners-Lee, &quot;Hypertext
-              Transfer Protocol -- HTTP/1.1&quot;, <a href="/doc/html/rfc2616">RFC 2616</a>, June 1999.
+   [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
+              Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
+              Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
 
-   [<a id="ref-RFC5226">RFC5226</a>]  Narten, T. and H. Alvestrand, &quot;Guidelines for Writing an
-              IANA Considerations Section in RFCs&quot;, <a href="/doc/html/bcp26">BCP 26</a>, <a href="/doc/html/rfc5226">RFC 5226</a>,
+   [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
+              IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               May 2008.
 
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 20]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-21" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 20]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="appendix-A" href="#appendix-A">Appendix A</a>.  Internet Media Type multipart/byteranges</span>
+Appendix A.  Internet Media Type multipart/byteranges
 
    When a 206 (Partial Content) response message includes the content of
    multiple ranges, they are transmitted as body parts in a multipart
-   message body (<a href="/doc/html/rfc2046#section-5.1">[RFC2046], Section&nbsp;5.1</a>) with the media type of
-   &quot;multipart/byteranges&quot;.
+   message body ([RFC2046], Section 5.1) with the media type of
+   "multipart/byteranges".
 
    The multipart/byteranges media type includes one or more body parts,
    each with its own Content-Type and Content-Range fields.  The
@@ -1321,7 +1306,7 @@ Table of Contents
    1.  Additional CRLFs might precede the first boundary string in the
        body.
 
-   2.  Although [<a href="/doc/html/rfc2046" title="&quot;Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types&quot;">RFC2046</a>] permits the boundary string to be quoted, some
+   2.  Although [RFC2046] permits the boundary string to be quoted, some
        existing implementations handle a quoted boundary string
        incorrectly.
 
@@ -1330,8 +1315,8 @@ Table of Contents
        x-byteranges, which is almost (but not quite) compatible with
        this type.
 
-   Despite the name, the &quot;multipart/byteranges&quot; media type is not
-   limited to byte ranges.  The following example uses an &quot;exampleunit&quot;
+   Despite the name, the "multipart/byteranges" media type is not
+   limited to byte ranges.  The following example uses an "exampleunit"
    range unit:
 
      HTTP/1.1 206 Partial Content
@@ -1355,30 +1340,30 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 21]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-22" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 21]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="appendix-B" href="#appendix-B">Appendix B</a>.  Changes from <a href="/doc/html/rfc2616">RFC 2616</a></span>
+Appendix B.  Changes from RFC 2616
 
    Servers are given more leeway in how they respond to a range request,
    in order to mitigate abuse by malicious (or just greedy) clients.
-   (<a href="#section-3.1">Section 3.1</a>)
+   (Section 3.1)
 
-   A weak validator cannot be used in a 206 response.  (<a href="#section-4.1">Section 4.1</a>)
+   A weak validator cannot be used in a 206 response.  (Section 4.1)
 
    The Content-Range header field only has meaning when the status code
-   explicitly defines its use.  (<a href="#section-4.2">Section 4.2</a>)
+   explicitly defines its use.  (Section 4.2)
 
-   This specification introduces a Range Unit Registry.  (<a href="#section-5.1">Section 5.1</a>)
+   This specification introduces a Range Unit Registry.  (Section 5.1)
 
    multipart/byteranges can consist of a single part.  (Appendix A)
 
-<span class="h2"><a class="selflink" id="appendix-C" href="#appendix-C">Appendix C</a>.  Imported ABNF</span>
+Appendix C.  Imported ABNF
 
    The following core rules are included by reference, as defined in
-   <a href="/doc/html/rfc5234#appendix-B.1">Appendix&nbsp;B.1 of [RFC5234]</a>: ALPHA (letters), CR (carriage return),
+   Appendix B.1 of [RFC5234]: ALPHA (letters), CR (carriage return),
    CRLF (CR LF), CTL (controls), DIGIT (decimal 0-9), DQUOTE (double
    quote), HEXDIG (hexadecimal 0-9/A-F/a-f), LF (line feed), OCTET (any
    8-bit sequence of data), SP (space), and VCHAR (any visible US-ASCII
@@ -1387,15 +1372,15 @@ Table of Contents
    Note that all rules derived from token are to be compared
    case-insensitively, like range-unit and acceptable-ranges.
 
-   The rules below are defined in [<a href="/doc/html/rfc7230" title="&quot;Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing&quot;">RFC7230</a>]:
+   The rules below are defined in [RFC7230]:
 
-     OWS        = &lt;OWS, see <a href="/doc/html/rfc7230#section-3.2.3">[RFC7230], Section&nbsp;3.2.3</a>&gt;
-     token      = &lt;token, see <a href="/doc/html/rfc7230#section-3.2.6">[RFC7230], Section&nbsp;3.2.6</a>&gt;
+     OWS        = <OWS, see [RFC7230], Section 3.2.3>
+     token      = <token, see [RFC7230], Section 3.2.6>
 
    The rules below are defined in other parts:
 
-     HTTP-date  = &lt;HTTP-date, see <a href="/doc/html/rfc7231#section-7.1.1.1">[RFC7231], Section&nbsp;7.1.1.1</a>&gt;
-     entity-tag = &lt;entity-tag, see <a href="/doc/html/rfc7232#section-2.3">[RFC7232], Section&nbsp;2.3</a>&gt;
+     HTTP-date  = <HTTP-date, see [RFC7231], Section 7.1.1.1>
+     entity-tag = <entity-tag, see [RFC7232], Section 2.3>
 
 
 
@@ -1411,45 +1396,45 @@ Table of Contents
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 22]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-23" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 22]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
-<span class="h2"><a class="selflink" id="appendix-D" href="#appendix-D">Appendix D</a>.  Collected ABNF</span>
+Appendix D.  Collected ABNF
 
-   In the collected ABNF below, list rules are expanded as per <a href="/doc/html/rfc7230#section-1.2">Section</a>
-   <a href="/doc/html/rfc7230#section-1.2">1.2 of [RFC7230]</a>.
+   In the collected ABNF below, list rules are expanded as per Section
+   1.2 of [RFC7230].
 
    Accept-Ranges = acceptable-ranges
 
    Content-Range = byte-content-range / other-content-range
 
-   HTTP-date = &lt;HTTP-date, see <a href="/doc/html/rfc7231#section-7.1.1.1">[RFC7231], Section&nbsp;7.1.1.1</a>&gt;
+   HTTP-date = <HTTP-date, see [RFC7231], Section 7.1.1.1>
 
    If-Range = entity-tag / HTTP-date
 
-   OWS = &lt;OWS, see <a href="/doc/html/rfc7230#section-3.2.3">[RFC7230], Section&nbsp;3.2.3</a>&gt;
+   OWS = <OWS, see [RFC7230], Section 3.2.3>
 
    Range = byte-ranges-specifier / other-ranges-specifier
 
-   acceptable-ranges = ( *( &quot;,&quot; OWS ) range-unit *( OWS &quot;,&quot; [ OWS
-    range-unit ] ) ) / &quot;none&quot;
+   acceptable-ranges = ( *( "," OWS ) range-unit *( OWS "," [ OWS
+    range-unit ] ) ) / "none"
 
    byte-content-range = bytes-unit SP ( byte-range-resp /
     unsatisfied-range )
-   byte-range = first-byte-pos &quot;-&quot; last-byte-pos
-   byte-range-resp = byte-range &quot;/&quot; ( complete-length / &quot;*&quot; )
-   byte-range-set = *( &quot;,&quot; OWS ) ( byte-range-spec /
-    suffix-byte-range-spec ) *( OWS &quot;,&quot; [ OWS ( byte-range-spec /
+   byte-range = first-byte-pos "-" last-byte-pos
+   byte-range-resp = byte-range "/" ( complete-length / "*" )
+   byte-range-set = *( "," OWS ) ( byte-range-spec /
+    suffix-byte-range-spec ) *( OWS "," [ OWS ( byte-range-spec /
     suffix-byte-range-spec ) ] )
-   byte-range-spec = first-byte-pos &quot;-&quot; [ last-byte-pos ]
-   byte-ranges-specifier = bytes-unit &quot;=&quot; byte-range-set
-   bytes-unit = &quot;bytes&quot;
+   byte-range-spec = first-byte-pos "-" [ last-byte-pos ]
+   byte-ranges-specifier = bytes-unit "=" byte-range-set
+   bytes-unit = "bytes"
 
    complete-length = 1*DIGIT
 
-   entity-tag = &lt;entity-tag, see <a href="/doc/html/rfc7232#section-2.3">[RFC7232], Section&nbsp;2.3</a>&gt;
+   entity-tag = <entity-tag, see [RFC7232], Section 2.3>
 
    first-byte-pos = 1*DIGIT
 
@@ -1459,24 +1444,24 @@ Table of Contents
    other-range-resp = *CHAR
    other-range-set = 1*VCHAR
    other-range-unit = token
-   other-ranges-specifier = other-range-unit &quot;=&quot; other-range-set
+   other-ranges-specifier = other-range-unit "=" other-range-set
 
    range-unit = bytes-unit / other-range-unit
 
-   suffix-byte-range-spec = &quot;-&quot; suffix-length
+   suffix-byte-range-spec = "-" suffix-length
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 23]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-24" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 23]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    suffix-length = 1*DIGIT
 
-   token = &lt;token, see <a href="/doc/html/rfc7230#section-3.2.6">[RFC7230], Section&nbsp;3.2.6</a>&gt;
+   token = <token, see [RFC7230], Section 3.2.6>
 
-   unsatisfied-range = &quot;*/&quot; complete-length
+   unsatisfied-range = "*/" complete-length
 
 Index
 
@@ -1523,9 +1508,9 @@ Index
 
 
 
-<span class="grey">Fielding, et al.             Standards Track                   [Page 24]</span></pre>
-<hr class='noprint'/><!--NewPage--><pre class='newpage'><span id="page-25" ></span>
-<span class="grey"><a href="/doc/html/rfc7233">RFC 7233</a>                 HTTP/1.1 Range Requests               June 2014</span>
+Fielding, et al.             Standards Track                   [Page 24]
+
+RFC 7233                 HTTP/1.1 Range Requests               June 2014
 
 
    I
@@ -1541,7 +1526,7 @@ Index
    R
       Range header field  8
 
-Authors&#x27; Addresses
+Authors' Addresses
 
    Roy T. Fielding (editor)
    Adobe Systems Incorporated
@@ -1550,7 +1535,7 @@ Authors&#x27; Addresses
    USA
 
    EMail: fielding@gbiv.com
-   URI:   <a href="http://roy.gbiv.com/">http://roy.gbiv.com/</a>
+   URI:   http://roy.gbiv.com/
 
 
    Yves Lafon (editor)
@@ -1561,7 +1546,7 @@ Authors&#x27; Addresses
    France
 
    EMail: ylafon@w3.org
-   URI:   <a href="http://www.raubacapeu.net/people/yves/">http://www.raubacapeu.net/people/yves/</a>
+   URI:   http://www.raubacapeu.net/people/yves/
 
 
    Julian F. Reschke (editor)
@@ -1571,7 +1556,7 @@ Authors&#x27; Addresses
    Germany
 
    EMail: julian.reschke@greenbytes.de
-   URI:   <a href="http://greenbytes.de/tech/webdav/">http://greenbytes.de/tech/webdav/</a>
+   URI:   http://greenbytes.de/tech/webdav/
 
 
 
@@ -1580,48 +1565,37 @@ Authors&#x27; Addresses
 
 
 Fielding, et al.             Standards Track                   [Page 25]
-</pre>
-    </div>
 
-  </div>
+    
 
-
+            
         
-	  </div>
+        
+    
+    
+        var legend_html = 'Color legend: \
+         \
+        Unknown:                        \
+        Draft:                          \
+        Informational:                  \
+        Experimental:                   \
+        Best Common Practice:           \
+        Proposed Standard:              \
+        Draft Standard (old designation):      \
+        Internet Standard:              \
+        Historic:                       \
+        Obsolete:                       \
+        ';
+        function showLegend() {
+            var elem = document.getElementById('legend');
+            elem.innerHTML = legend_html
+            elem.style.visibility='visible';
+        }
+        function hideLegend() {
+            var elem = document.getElementById('legend');
+            elem.style.visibility='hidden';
+            elem.innerHTML = "";
+        }
+    
 
-	
-
-	
-
-    </div>
-
-      
-    <script type="text/javascript"><!--
-    var legend_html = "Colour legend:<br /> \
-     <table> \
-        <tr><td>Unknown:</td>                   <td><span class='cplate bgwhite'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Draft:</td>                     <td><span class='cplate bgred'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Informational:</td>             <td><span class='cplate bgorange'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Experimental:</td>              <td><span class='cplate bgyellow'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Best Common Practice:</td>      <td><span class='cplate bgmagenta'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Proposed Standard:</td>         <td><span class='cplate bgblue'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Draft Standard (old designation):</td> <td><span class='cplate bgcyan'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Internet Standard:</td>         <td><span class='cplate bggreen'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Historic:</td>                  <td><span class='cplate bggrey'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-        <tr><td>Obsolete:</td>                  <td><span class='cplate bgbrown'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td></tr> \
-    </table>";
-    function showLegend() {
-        var elem = document.getElementById('legend');
-        elem.innerHTML = legend_html
-        elem.style.visibility='visible';
-    }
-    function hideLegend() {
-        var elem = document.getElementById('legend');
-        elem.style.visibility='hidden';
-        elem.innerHTML = "";
-    }
-    // -->
-    </script>
-
-  </body>
-</html>
+(function(){window['__CF$cv$params']={r:'70603667da81253c',m:'wbvhLTMsZsz27w642vi1G6EkiRxKNzLdUOJN4wgIXZA-1651656572-0-AVZOWw816+tdkHKFAI2AbzC10FGXXQ5og91L1x4BejbZPC45OLVAMbTOHqQpAWamHbWYw5xNimP5ZnkDUbOktdgiUw5Dn1FmizJuoGl47mNSn+pj/S86TS3qJupxtGiu5bOYsC7DzDYCma95qYSFo5M=',s:[0x3c838087ea,0xcc74ff1f04],}})();
