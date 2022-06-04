@@ -53,11 +53,9 @@
       "port": 9054
     },
     "weblogic-server": {
-      "host": "202.112.51.130",
       "port": 7001
     },
     "iis-server": {
-      "host": "202.112.51.160",
       "port": 80
     }
   }
