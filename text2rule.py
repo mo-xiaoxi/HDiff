@@ -8,6 +8,7 @@ from spacy.matcher import DependencyMatcher, PhraseMatcher
 from config import SR_DIR, ROLE_DIR, TMP_DIR, CORE, TE_THRESHOLD, KEYWORDS_PATH, logger
 from src.clause_analyzer import ClauseAnalyzer
 from src.tree2rules import generate_rule_tree, expand_rule_tree
+from src.util import save_json
 
 # RFC 中定义的HTTP角色
 ROLES = [
@@ -324,6 +325,7 @@ def run_rfcs():
 
 def run_analysis(rfc_number):
     input_path = "{}/{}.csv".format(ROLE_DIR, rfc_number)
+    ouput_path = "{}/{}.json".format(ROLE_DIR, rfc_number)
     df = pd.read_csv(input_path)
     data = df['sentences'].drop_duplicates().values.tolist()
     results = []
@@ -331,11 +333,12 @@ def run_analysis(rfc_number):
         res = analysis(d)
         if res:
             results.append(res)
-    print(results)
+    # print(results)
+    save_json(results, ouput_path)
 
 
 if __name__ == '__main__':
     # debug()
-    rfc_number = 7230
-    run_analysis(rfc_number)
-    # run_rfcs()
+    # rfc_number = 7230
+    # run_analysis(rfc_number)
+    run_rfcs()
