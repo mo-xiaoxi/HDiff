@@ -1,0 +1,62 @@
+{
+    "proxy_prefix": "proxy",
+    "proxy_targets": {
+      "apache": {
+        "port": 8002,
+        "log_path": "/usr/local/apache2/logs/access.log",
+        "echo_container_name": "apache-echo-server",
+        "echo_log_path": "/var/log/echo.log"
+      },
+      "nginx": {
+        "port": 8003,
+        "log_path": "/var/log/nginx/access.log",
+        "echo_container_name": "nginx-echo-server",
+        "echo_log_path": "/var/log/echo.log"
+      },
+      "apache_traffic_server": {
+        "port": 8004,
+        "log_path": "/opt/ts/var/log/trafficserver/ats.log",
+        "echo_container_name": "apache_traffic_server-echo-server",
+        "echo_log_path": "/var/log/echo.log"
+      },
+      "squid": {
+        "port": 8005,
+        "log_path": "/var/log/squid/access.log",
+        "echo_container_name": "squid-echo-server",
+        "echo_log_path": "/var/log/echo.log"
+      },
+      "haproxy": {
+        "port": 8006,
+        "log_path": "/var/log/haproxy.log",
+        "log_container_name": "rsyslog",
+        "echo_container_name": "haproxy-echo-server",
+        "echo_log_path": "/var/log/echo.log"
+      },
+      "varnish": {
+        "port": 8007,
+        "log_path": "/var/log/varnish/varnishncsa.log",
+        "echo_container_name": "varnish-echo-server",
+        "echo_log_path": "/var/log/echo.log"
+      }
+    },
+    "server_targets": {
+      "nginx-server": {
+        "port": 9051
+      },
+      "apache-server": {
+        "port": 9052
+      },
+      "lighttpd-server": {
+        "port": 9053
+      },
+      "tomcat-server": {
+        "port": 9054
+      },
+      "weblogic-server": {
+        "port": 7001
+      },
+      "iis-server": {
+        "port": 80
+      }
+    }
+  }
