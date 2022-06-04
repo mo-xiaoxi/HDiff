@@ -10,7 +10,7 @@
             "name": "HTTP-version",
             "relation": []
         },
-        "assertion": {
+        "HMetrics": {
             "comment": "example"
         }
     },
@@ -27,7 +27,7 @@
                 "invalid"
             ]
         },
-        "assertion": {
+        "HMetrics": {
             "proxy_version": "own HTTP-version",
             "comment": "HTTP-version1"
         }
@@ -45,7 +45,7 @@
                 "empty"
             ]
         },
-        "assertion": {
+        "HMetrics": {
             "status_code": "!200",
             "comment": "empty_host"
         }
@@ -62,7 +62,7 @@
                 "invalid"
             ]
         },
-        "assertion": {
+        "HMetrics": {
             "status_code": "!200",
             "comment": "whitespace_first_header"
         }
@@ -79,7 +79,7 @@
                 "invalid"
             ]
         },
-        "assertion": {
+        "HMetrics": {
             "status_code": "400|301",
             "comment": "invalid_request_line"
         }
@@ -94,7 +94,7 @@
             "name": "",
             "relation": []
         },
-        "assertion": {
+        "HMetrics": {
             "status_code": "!200",
             "comment": "CL-CL"
         }
@@ -109,7 +109,7 @@
             "name": "",
             "relation": []
         },
-        "assertion": {
+        "HMetrics": {
             "status_code": "!200",
             "comment": "CL-TE"
         }
@@ -124,7 +124,7 @@
             "name": "",
             "relation": []
         },
-        "assertion": {
+        "HMetrics": {
             "status_code": "!200",
             "comment": "TE-TE"
         }

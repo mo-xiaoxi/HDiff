@@ -4,7 +4,8 @@
             "Content-Length: -1\r\n",
             "Content-Length: 88, 88\r\n",
             "Content-Length: 0xff\r\n",
-            "Content-Length abcd: 6\r\n"
+            "Content-Length abcd: 6\r\n",
+            "Content-Length: 0x123456789123456789\r\n"
         ],
         "valid": [
             "Content-Length: {{CT_value}}"

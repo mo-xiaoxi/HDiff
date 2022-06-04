@@ -114,7 +114,7 @@ def stage_1(single_file=None, is_try=False):
         logger.info('Stage 1: %s' % file_name)
         sentence = data['sentence']
         payloads = list(map(lambda x: easy_encode(x), data['reqs']))
-        assertion = data['assertion']
+        assertion = data['HMetrics']
 
         result_path = file_name.replace('payload', 'result/stage_1')
         # 临时存储进度，用于进度恢复
@@ -311,7 +311,7 @@ def direct(single_file=None, is_try=False):
         logger.info('Direct : %s' % file_name)
         sentence = data['sentence']
         payloads = list(map(lambda x: easy_encode(x), data['reqs']))
-        assertion = data['assertion']
+        assertion = data['HMetrics']
 
         if is_try:
             payloads = payloads[:DATA_NUM_WHEN_TRY]

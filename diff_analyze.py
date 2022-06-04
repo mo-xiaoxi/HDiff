@@ -11,7 +11,7 @@ from config import RESULT_STAGE_1_DIR, RESULT_STAGE_2_DIR, DIRECT_RESULT_DIR, lo
 def show_info(data, name):
     sentence = data['sentence']
     req = data['req']
-    assertion = data['assertion']
+    assertion = data['HMetrics']
     try:
         result = data['proxy_result']
     except Exception as e:
@@ -47,7 +47,7 @@ def stage_1(single_file):
             data = results[i]
             sentence = data['sentence']
             req = data['req']
-            assertion = data['assertion']
+            assertion = data['HMetrics']
             proxy_result = data['proxy_result']
             for name in proxy_result:
                 # 直接忽略proxy拒绝的数据包
@@ -181,7 +181,7 @@ def special_char(filename):
         data = results[i]
         sentence = data['sentence']
         req = data['req']
-        assertion = data['assertion']
+        assertion = data['HMetrics']
         proxy_result = data['proxy_result']
         for name in proxy_result:
             semantic = proxy_result[name]['semantic']
@@ -249,7 +249,7 @@ def direct(filename):
         data = results[i]
         sentence = data['sentence']
         req = data['req']
-        assertion = data['assertion']
+        assertion = data['HMetrics']
         server_result = data['server_result']
         for name in server_result:
             semantic = server_result[name]['semantic']
@@ -399,7 +399,7 @@ def analyze_proxy(filename):
         data = results[i]
         sentence = data['sentence']
         req = data['req']
-        assertion = data['assertion']
+        assertion = data['HMetrics']
         proxy_result = data['proxy_result']
         for name in proxy_result:
             semantic = proxy_result[name]['semantic']
@@ -591,7 +591,7 @@ def host_of_troubles_1(filename):
         data = results[i]
         sentence = data['sentence']
         req = data['req']
-        assertion = data['assertion']
+        assertion = data['HMetrics']
         proxy_result = data['proxy_result']
         for name in proxy_result:
             semantic = proxy_result[name]['semantic']
@@ -683,7 +683,7 @@ def host_of_troubles_2(filename):
         data = results[i]
         sentence = data['sentence']
         req = data['req']
-        assertion = data['assertion']
+        assertion = data['HMetrics']
         proxy_result = data['proxy_result']
         replay_result = data['replay_result']
         for server in replay_result:

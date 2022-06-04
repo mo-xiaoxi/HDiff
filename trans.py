@@ -11,7 +11,6 @@ from src.builder import ABNFGrammarNodeBuilder
 from src.util import format_abnf, banner, read_data, read_json, save_json
 from config import TEST_CASE_DIR, BGrammar_PATH, SR_PATH, HCONFIG_PATH
 
-
 """
 将发现的行为规范翻译到测试数据包里
 1. 基于普通语法树生成正常的数据包
@@ -186,7 +185,7 @@ def spchar():
     return data
 
 
-# spchar TODO The current method is very violent and needs to be modified later
+# spchar TODO The current method is ugly and needs to be modified later
 def gen_spchar(value):
     # value ='[]Ho[]st[]:[]localhost[]\r\n'
     pos = -1
@@ -296,7 +295,6 @@ def valid_header(req, name, target):
 def cacu_valid_CT(req):
     data = req.split('\r\n\r\n')[1]
     return str(len(data))
-
 
 
 def parse_options():
