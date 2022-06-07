@@ -3,44 +3,25 @@ import os
 import pandas as pd
 import graphviz
 import spacy
+import string
+import copy
 from spacy import displacy
-from spacy.matcher import DependencyMatcher, PhraseMatcher
-from config import SR_DIR, ROLE_DIR, TMP_DIR, CORE, TE_THRESHOLD, KEYWORDS_PATH, logger
+from spacy.matcher import DependencyMatcher, PhraseMatcher, Matcher
+from config import SR_DIR, ROLE_DIR, TMP_DIR, CORE, TE_THRESHOLD, KEYWORDS_PATH, ROLES, KEYWORDS, CLEANED_RFC_DIR
+from config import logger
+from src.util import save_json, read_data
 from src.clause_analyzer import ClauseAnalyzer
-from src.tree2rules import generate_rule_tree, expand_rule_tree
-from src.util import save_json
 
-# RFC 中定义的HTTP角色
-ROLES = [
-    "server", "origin server", "recipient", "response",
-    "message", "request", "header",
-    "client", "user agent", "sender",
-
-    "accelerator", "gateway", "tunnel", "cache",
-    "inbound", "outbound", "upstream", "downstream",
-    "proxy", "reverse proxy", "interception proxy",
-    "intermediary",
-]
-
-KEYWORDS = [
-    "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL"
-]
-
-OTHERS = ['will', 'would', "can", 'might', 'could', 'ought to']
-
-
-# 其他的情感动词, will（would），shall（should），can（could），may（might），must，need，dare，ought to，used to，had better
+NLP = spacy.load(CORE)
 
 
 def clean_keys(data):
     """
      将两个单词的字符转换成一个,spacy匹配时，是按单词来匹配的
     """
-    nlp = spacy.load(CORE)
     results = []
     for d in data:
-        doc = nlp(d)
+        doc = NLP(d)
         for i in doc:
             token = i.lemma_.lower()
             results.append(token)
@@ -48,15 +29,24 @@ def clean_keys(data):
     return results
 
 
-def analyze_role_behavior(data):
+def clean_s(s):
     """
-    检查句子是否满足 role must/should/may, 返回results [] 表征提取出来的句子
+    替换字符串，把不必要的空格删除
+    :param s:
+    :return:
     """
-    nlp = spacy.load(CORE)
-    doc = nlp(data)
-    matcher = DependencyMatcher(nlp.vocab)
-    description = 'role-behavior'  # 仅用于作为唯一描述
+
+    for c in string.punctuation:
+        s = s.replace(" " + c, c)
+        if c == '-':
+            s = s.replace(c + " ", c)
+    return s.strip()
+
+
+def expand_role_behavior(sent):
     roles = clean_keys(ROLES)
+    matcher = DependencyMatcher(NLP.vocab)
+    description = 'role-behavior'  # 仅用于作为唯一描述
     # 一些关键的表达
     keywords = clean_keys(KEYWORDS)
     pattern = [
@@ -105,122 +95,188 @@ def analyze_role_behavior(data):
     # ]
     # matcher.add(description, [pattern])
     # print(pattern)
+    return matcher(sent)
+
+
+def analyze_role_behavior(data):
+    """
+    检查句子是否满足 role must/should/may, 返回results [] 表征提取出来的句子
+    """
+    doc = NLP(data)
     results = []
     for sent in doc.sents:
-        flag = matcher(sent)
+        flag = expand_role_behavior(sent)
         if len(flag):
             # print(sent[flag[0][1][0]], sent[flag[0][1][1]], sent[flag[0][1][2]])
             results.append(str(sent).strip())
     return results
 
 
-def subtree(token, exclude=None):
+def split_clause(token):
     """
-    返回排除了部分依赖关系的子树
+    返回一个句子的子句
     :param token: 以 token 为根的子树
-    :param exclude: list, 每个元素为 str，表示排除的依赖关系
     """
-    if exclude is None:
-        exclude = []
+    exclude = [
+        'mark',  # if, when
+        'punct',  # 符号， 比如逗号之类
+        'advcl',  # 状语从句
+        'advmod',  # 状语修饰语, 如then
+    ]
     ret = list(token.subtree)
     for child in token.children:
         if child.dep_ in exclude:
             for ex_token in child.subtree:
                 if ex_token in ret:
                     ret.remove(ex_token)
-    return ret
+    s = ' '.join(map(lambda x: str(x), ret))
+    result = clean_s(s)
+    return result
 
 
-def subtree2str(subtree):
-    """ 将 [Token, ...] 格式的列表转为字符串 """
-    ret = ' '.join(map(lambda x: str(x), subtree))
-    return ret.replace(' - ', '-').replace('( ', '(').replace(' )', ')')
+def split_phrase(sent):
+    """
+    切分短语，将条件和结果的句子切分成一个个清晰的短语
+    :param sent:
+    :return:
+    """
+    doc = NLP(sent)
+    root = None
+    for token in doc:
+        if token.dep_ == 'ROOT':
+            root = token
+    data = result_handle(subtree(root))
+    return data
 
 
-def recursive_prepend(clause, prefix, sep=' '):
+def concat_prepend(clause, prefix, sep=' '):
     """
     为 clause 表示的三元组树状结构递归添加前缀，返回添加完毕之后的元组
     :param clause: 三元组树状结构的根
     :param prefix: 要添加的前缀
     :param sep: 字符串拼接时的间隔符
     """
-    if isinstance(clause, tuple):
-        return (recursive_prepend(clause[0], prefix),
-                recursive_prepend(clause[1], prefix), clause[2])
+    if isinstance(clause, list):
+        assert len(clause) == 3
+        return [concat_prepend(clause[0], prefix),
+                concat_prepend(clause[1], prefix), clause[2]]
+    elif isinstance(prefix, list):
+        assert len(prefix) == 3
+        return [concat_prepend(clause, prefix[0]),
+                concat_prepend(clause, prefix[1]), prefix[2]]
     else:
-        return prefix + sep + clause
+        return clean_s(prefix + sep + str(clause))
 
 
-def cut_clause(token):
+def result2string(data):
     """
-    切割 and / or 等子句，返回格式形如 ret_clause := (clause, clause, 'and'/'or') 或者单个最小子句
-    :param token: 以 token 为根的子树开始切割
+    将结果转换成string
+    :param data:
+    :return:
     """
+    result = ""
+    for token in data:
+        result = concat_prepend(token, result)
+    return result
 
-    AND = 'and'
-    OR = 'or'
-    CUT_TARGET = [AND, OR]
-    # prep/pcomp 用于特殊处理 with/with 后的子句这类结构
-    # 其余用于找到当前小子句，其中 preconj 用于筛去 either 这类词，mark 用于筛去 if 这类词，cc 用于筛去 and/or 这类词，advmod 用于筛去 then 这类词等等
-    CUT_EXCLUDE = ['mark', 'punct', 'cc', 'conj', 'advcl', 'ccomp', 'prep', 'pcomp', 'preconj', 'advmod']
+
+def result_handle(result):
+    """
+    返回结果callback函数
+    :param result:
+    :return:
+    """
+    data, cc = result
+    if cc:
+        c1 = result2string(data[0])
+        c2 = result2string(data[1])
+        return [c1, c2, cc]
+    else:
+        s = result2string(data)
+        return s
+
+
+def subtree(root):
+    """
+     基于根节点进行切割
+    :param root:
+    :return:
+    """
+    children = list(root.children)
     cc = None
-    sub_root = None  # 子句的 root
-    nsubj = None
-    prep = None
-    pcomp = None  # token、prep 和 pcomp 都可能出现 cc 儿子，此时需要进行递归切割
-    for child in token.children:
-        if child.dep_ == 'cc' and child.lemma_ in CUT_TARGET:
-            assert cc is None, '理应不会出现两个 cc'
-            cc = child.lemma_
-        if child.dep_ == 'conj':
-            assert sub_root is None, '理应不会出现两个 conj'
-            sub_root = child
-        if child.dep_ == 'nsubj':
-            assert nsubj is None, '理应不会出现两个 nsubj'
-            nsubj = child
-        # prep: with/without
-        if child.dep_ == 'prep':
-            assert prep is None, '理应不会出现两个 prep'
-            prep = child
-        if child.dep_ == 'pcomp':
-            assert pcomp is None, '理应不会出现两个 pcomp'
-            pcomp = child
-        # 当不存在 prep、pcomp 时，clause1 为第一个子句或整个句子（取决于 token 子依赖中是否存在 cc）
-        # 当存在 prep 或 pcomp 时，clause1 为需要递归添加的前缀
-    clause1 = subtree(token, exclude=CUT_EXCLUDE)
-    clause1 = subtree2str(clause1)
+    if not children:
+        return [root], cc
 
-    if cc is None:
-        if prep is not None:
-            return recursive_prepend(cut_clause(prep), clause1)
-        elif pcomp is not None:
-            return recursive_prepend(cut_clause(pcomp), clause1)
-        else:
-            return clause1
-    else:
-        assert sub_root is not None, '出现 and/or 时理应有 conj'
-        clause2 = cut_clause(sub_root)
+    # 正常， left + root + right
+    # 存在cc, left + root+ right  以cc位置切开， [left, root, :cc], [cc+1:end], cc
+    left_clause = []
+    right_clause = []
+    i = 0
+    index = 0
+    for l in root.lefts:
+        left = result_handle(subtree(l))
+        left_clause.append(left)
+        i += 1
+    for r in root.rights:
+        right = result_handle(subtree(r))
+        right_clause.append(right)
+        i += 1
+        if r.dep_ == 'cc' and r.lower_ in ["or", "and"]:
+            index = i
+    # print(index)
+    # 存在cc
+    clause = left_clause + [root] + right_clause
+    if index:
+        clause1 = clause[:index]
+        clause2 = clause[index + 1:]
+        cc = clause[index]
+        return [clause1, clause2], cc
+    return clause, cc
 
-        # 考虑是否传递 clause1 的主语给 clause2
-        nsubj_sent = subtree2str(subtree(nsubj)) if nsubj is not None else None
-        need_pass_nsubj = True
-        for child in sub_root.children:
-            if child.dep_ == 'nsubj':
-                need_pass_nsubj = False  # clause2 有主语，不需要传递
-        if need_pass_nsubj and nsubj_sent is not None:
-            clause2 = recursive_prepend(clause2, nsubj_sent)
 
-        return (clause1, clause2, cc)
+def dereference(data, rfc_number):
+    rfc_path = "{}/{}.txt".format(CLEANED_RFC_DIR, rfc_number)
+    rfc_data = NLP(read_data(rfc_path))
+    lib = [
+        "this is a request message",
+        "this is a response message",
+        "this message",
+        "such message",
+        "such request",
+    ]
+    sents = list(map(lambda x: str(x), rfc_data.sents))
+    for l in lib:
+        for i in range(len(data)):
+            if l in data[i]:
+                r = pre_find(data[i], sents)
+                if r:
+                    data[i] = data[i].replace(l, r)
+                break
+    return data
+
+
+def pre_find(data, sents, maxstep=5):
+    flag = [
+        "request is",
+        "message is"
+    ]
+    index = sents.index(data)
+    for j in range(index - 1, index - maxstep, -1):
+        for f in flag:
+            if f in sents[j]:
+                r = sents[j][sents[j].find(f):].split(',')[0].split('.')[0]
+                return r
+    logger.warning("Not Found...")
+    return None
 
 
 def analyze_if_clauses(data):
     """
     检查句子是否满足 条件子句, 返回results [] 表征提取出来的句子
     """
-    nlp = spacy.load(CORE)
-    doc = nlp(data)
-    matcher = DependencyMatcher(nlp.vocab)
-    description = 'if-then'  # 仅用于作为唯一描述
+    doc = NLP(data)
+    matcher = DependencyMatcher(NLP.vocab)
+    description = 'if-result'  # 仅用于作为唯一描述
     pattern = [
         {
             "RIGHT_ID": "if",
@@ -238,10 +294,12 @@ def analyze_if_clauses(data):
         flag = matcher(sent)
         if len(flag) > 0:
             if_verb = sent[flag[0][1][1]]
-            then_verb = if_verb.head
-            ret = {'if': cut_clause(if_verb), 'then': cut_clause(then_verb)}
-            if then_verb.dep_ == 'ccomp':
-                ret['then'] = (ret['then'], cut_clause(then_verb.head), 'and')
+            result_verb = if_verb.head
+            ret = {'if': split_clause(if_verb), 'result': split_clause(result_verb)}
+
+            # TODO ccomp — 从句补语，一般由两个动词构成，中心语引导后一个动词所在的从句(IP) （出现，纳入）
+            # if result_verb.dep_ == 'ccomp':  # ccomp — 从句补语，一般由两个动词构成，中心语引导后一个动词所在的从句(IP) （出现，纳入）
+            #     ret['result'] = [ret['result'], split_clause(result_verb.head), 'and']
             return ret
     return None
 
@@ -277,8 +335,7 @@ def draw_dependency_tree(sent, use_graphviz=True, filename='dp.gv'):
     :param use_graphviz: 为 True 时使用 graphviz 绘制, False 时使用 displacy 绘制
     :param filename: 使用 graphviz 绘制时的文件名
     """
-    nlp = spacy.load(CORE)
-    doc = nlp(sent)
+    doc = NLP(sent)
     if not use_graphviz:
         displacy.serve(doc, style='dep')
     else:
@@ -291,37 +348,119 @@ def draw_dependency_tree(sent, use_graphviz=True, filename='dp.gv'):
         dot.render(filepath, view=True)
 
 
+def generate_rule_tree(ca, phrase_tree, type):
+    """
+    遍历 DependencyAnalyzer 得到的 clause 树状结构，并使用 ClauseAnalyzer 进行处理
+    :param ca: ClauseAnalyzer object，用于对每个子句进行处理
+    :param phrase_tree: tuple，由子句组成的三元组树状结构的根
+    :return rule_tree: tuple，由准模板项组成的三元组树状结构的根
+    """
+    if isinstance(phrase_tree, list):
+        assert len(phrase_tree) == 3
+        rule_tree = [generate_rule_tree(ca, phrase_tree[0], type), generate_rule_tree(ca, phrase_tree[1], type),
+                     phrase_tree[2]]
+    elif isinstance(phrase_tree, str):
+        rule_tree = ca.analyze_clause(phrase_tree, type)
+    else:
+        assert False, 'phrase_tree 类型错误：%s，必须为 list/str' % str(type(phrase_tree))
+    return rule_tree
+
+
+def expand_rule_tree(rule_tree, rule_sets):
+    """
+    展开准模板树，生成准模板列表
+    :param rule_tree: tuple，由准模板项组成的三元组树状结构的根
+    :param rule_sets: list，需要对这个列表中的每一项附加上当前子树对应的规则，最外层传入时应为 [{}]
+    :ret ret_rule_sets: list，更新后的规则集列表
+    """
+    ret_rule_sets = []
+    if isinstance(rule_tree, list):
+        assert len(rule_tree) == 3
+        if rule_tree[2].lower() == "or":
+            ret_rule_sets.extend(expand_rule_tree(rule_tree[0], rule_sets))
+            ret_rule_sets.extend(expand_rule_tree(rule_tree[1], rule_sets))
+        elif rule_tree[2].lower() == "and":
+            ret_rule_sets = expand_rule_tree(rule_tree[0], rule_sets)
+            ret_rule_sets = expand_rule_tree(rule_tree[1], ret_rule_sets)
+        else:
+            assert False, '逻辑类型错误，%s' % str(rule_tree[2])
+    elif isinstance(rule_tree, dict):
+        # TODO 相同规则，多个属性 不能重复更新，需要变成列表 比如header_exists a, header_exists b。 当前算法只能保留一个语义
+        ret_rule_sets = copy.deepcopy(rule_sets)
+        for rule_set in ret_rule_sets:
+            rule_set.update(rule_tree)
+    else:
+        assert False, 'rule_tree 类型错误：%s，必须为 list/str' % str(type(rule_tree))
+    return ret_rule_sets
+
+
 def analysis(sent):
-    """ 给入一个句子，从依赖树分析开始走到准模板生成 """
-    clause_tree = analyze_if_clauses(sent)
-    logger.debug(clause_tree)
-    if clause_tree is None:
-        logger.info('Not If-Then.')
-        return None
+    tokens = NLP(sent)
+    result = {}
+
+    # ROLE
+    flag = expand_role_behavior(tokens)
+    role = tokens[flag[0][1][0]]
+    verb = tokens[flag[0][1][1]]
+    emotional = tokens[flag[0][1][2]]
+
+    # check if-result
+    for token in tokens:
+        if token.lower_ == 'if':
+            result = analysis_if(sent)
+            if not result:
+                result = {}
+                break
+            result['role'] = str(role)
+            result['origin'] = sent
+            logger.debug(result)
+            return result
+
     ca = ClauseAnalyzer(CORE, KEYWORDS_PATH, TE_THRESHOLD)
-    results = {}
-    results['if'] = generate_rule_tree(ca, clause_tree['if'], type='if')
-    results['then'] = generate_rule_tree(ca, clause_tree['then'], type='then')
-    logger.debug(results)
-    return results
+    # check role MUST 直接TE推导
+    result['if'] = ca.analyze_clause(sent, type='if')
+    result['result'] = ca.analyze_clause(sent, type='result')
+    result['role'] = str(role)
+    result['origin'] = sent
+    logger.debug(result)
+    return result
 
 
-# 子句进行文本蕴含
-def debug():
-    sent = "If a message is received without Transfer-Encoding and with either multiple Content-Length header fields having differing field-values or a single Content-Length header field having an invalid value, then the message framing is invalid and the recipient MUST treat it as an unrecoverable error."
-    draw_dependency_tree(sent)
-    res = analysis(sent)
-    # res = analyze_role_behavior(sent)
-    print(res)
+def analysis_if(sent):
+    """
+    给入一个句子，从依赖树分析开始走到准模板生成
+    :param sent:
+    :return:
+    """
+    logger.debug(sent)
+    # 获取一个句子的if-result结果
+    clause_tree = analyze_if_clauses(sent)
+    if clause_tree is None:
+        logger.info('Not If-Result.')
+        return None
+    logger.debug(clause_tree)
+    phrase_tree = {}
+    for k in clause_tree:
+        phrase = split_phrase(clause_tree[k])
+        phrase_tree[k] = phrase
+    logger.debug(phrase_tree)
+    ca = ClauseAnalyzer(CORE, KEYWORDS_PATH, TE_THRESHOLD)
 
+    rule_tree = {}
+    for k in phrase_tree:
+        rule_tree[k] = generate_rule_tree(ca, phrase_tree[k], type=k)
+    logger.debug(rule_tree)
 
-def run_rfcs():
-    for i in range(0, 6, 1):
-        rfc_number = 7320 + i
-        input_path = "{}/{}.csv".format(SR_DIR, rfc_number)
-        output_path = "{}/{}.csv".format(ROLE_DIR, rfc_number)
-        extract_role_behavior_from_rfc(input_path, output_path)
-        run_analysis(rfc_number)
+    rule_sets = {}
+    for k in rule_tree:
+        rule_sets[k] = expand_rule_tree(rule_tree[k], [{}])
+        for rule in rule_sets[k]:
+            if rule == {}:
+                rule_sets[k].remove(rule)
+    logger.debug(rule_sets)
+
+    return rule_sets
+
 
 def run_analysis(rfc_number):
     input_path = "{}/{}.csv".format(ROLE_DIR, rfc_number)
@@ -329,16 +468,33 @@ def run_analysis(rfc_number):
     df = pd.read_csv(input_path)
     data = df['sentences'].drop_duplicates().values.tolist()
     results = []
+    # 消引用
+    data = dereference(data, rfc_number)
     for d in data:
         res = analysis(d)
         if res:
+            for k in res:
+                if len(res[k]):
+                    continue
             results.append(res)
     # print(results)
     save_json(results, ouput_path)
 
 
+def run_rfcs():
+    for i in range(3, 6, 1):
+        rfc_number = 7230 + i
+        input_path = "{}/{}.csv".format(SR_DIR, rfc_number)
+        output_path = "{}/{}.csv".format(ROLE_DIR, rfc_number)
+        extract_role_behavior_from_rfc(input_path, output_path)
+        run_analysis(rfc_number)
+
+
 if __name__ == '__main__':
-    # debug()
-    # rfc_number = 7230
+    # sent = "A server MUST reject any received request message that contains whitespace between a header field-name and colon with a response code of 400 (Bad Request)."
+    # draw_dependency_tree(sent)
+    # rfc_number = '7232'
     # run_analysis(rfc_number)
+    # sent = "If terminating the request message body with a line-ending is desired, then the user agent MUST count the terminating CRLF octets as part of the message body length."
+    # analysis(sent)
     run_rfcs()

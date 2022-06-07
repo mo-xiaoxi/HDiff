@@ -1,0 +1,719 @@
+[
+    {
+        "if": {
+            "multiple": "end"
+        },
+        "result": {},
+        "role": "sender",
+        "origin": "An HTTP sender MAY generate, and a recipient MUST be able to parse, line breaks in text media that consist of CRLF, bare CR, or bare LF."
+    },
+    {
+        "if": {
+            "exist": "protocol"
+        },
+        "result": {},
+        "role": "sender",
+        "origin": "The message body is itself a protocol element; a sender MUST generate only CRLF to represent line breaks between body parts."
+    },
+    {
+        "if": {
+            "exist": "Content-Type"
+        },
+        "result": {},
+        "role": "sender",
+        "origin": "A sender that generates a message containing a payload body SHOULD generate a Content-Type header field in that message unless the intended media type of the enclosed representation is unknown to the sender."
+    },
+    {
+        "if": [
+            {
+                "not_exists": "Content-Type"
+            }
+        ],
+        "result": [
+            {}
+        ],
+        "role": "recipient",
+        "origin": "If a Content-Type header field is not present, the recipient MAY either assume a media type of \"application/octet-stream\" ([RFC2046], Section\u00a04.5.1) or examine the data to determine its type."
+    },
+    {
+        "if": [
+            {
+                "multiple": "codings"
+            }
+        ],
+        "result": [],
+        "role": "sender",
+        "origin": "If one or more encodings have been applied to a representation, the sender that applied the encodings MUST generate a Content-Encoding header field that lists the content codings in the order in which they were applied."
+    },
+    {
+        "if": [],
+        "result": [
+            {
+                "status_code": "415"
+            }
+        ],
+        "role": "server",
+        "origin": "An origin server MAY respond with a status code of 415 (Unsupported Media Type) if a representation in the request message has a content coding that is not acceptable."
+    },
+    {
+        "if": {
+            "exist": "URI"
+        },
+        "result": {},
+        "role": "recipient",
+        "origin": "message and its value refers (after conversion to absolute form) to a URI that is the same as the effective request URI, then the recipient MAY consider the payload to be a current representation of that resource at the time indicated by the message origination date."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "message",
+        "origin": "message MUST treat the information as transitory request context rather than as metadata to be saved verbatim as part of the representation."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "However, an origin server MUST NOT use such context information to alter the request semantics."
+    },
+    {
+        "if": {
+            "not_implement": "method"
+        },
+        "result": {
+            "status_code": "501"
+        },
+        "role": "server",
+        "origin": "When a request method is received that is unrecognized or not implemented by an origin server, the origin server SHOULD respond with the 501 (Not Implemented) status code."
+    },
+    {
+        "if": {},
+        "result": {
+            "status_code": "405"
+        },
+        "role": "server",
+        "origin": "When a request method is received that is known by an origin server but not allowed for the target resource, the origin server SHOULD respond with the 405 (Method Not Allowed) status code."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "agent",
+        "origin": "A user agent SHOULD distinguish between safe and unsafe methods when presenting potential actions to a user, such that the user can be made aware of an unsafe action before it is requested."
+    },
+    {
+        "if": {
+            "exist": "Cache-Control"
+        },
+        "result": {},
+        "role": "cache",
+        "origin": "The response to a GET request is cacheable; a cache MAY use it to satisfy subsequent GET and HEAD requests unless otherwise indicated by the Cache-Control header field (Section\u00a05.2 of [RFC7234])."
+    },
+    {
+        "if": {
+            "exist": "end"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "The HEAD method is identical to GET except that the server MUST NOT send a message body in the response (i.e., the response terminates at the end of the header section)."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "The server SHOULD send the same header fields in response to a HEAD request as it would have sent if the request had been a GET, except that the payload header fields (Section 3.3) MAY be omitted."
+    },
+    {
+        "if": {
+            "exist": "Cache-Control"
+        },
+        "result": {},
+        "role": "cache",
+        "origin": "The response to a HEAD request is cacheable; a cache MAY use it to satisfy subsequent HEAD requests unless otherwise indicated by the Cache-Control header field (Section\u00a05.2 of [RFC7234])."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "If the result of processing a POST would be equivalent to a representation of an existing resource, an origin server MAY redirect the user agent to that resource by sending a 303 (See Other) response with the existing resource's identifier in the Location field."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "If the target resource does not have a current representation and the PUT successfully creates one, then the origin server MUST inform the user agent by sending a 201 (Created) response."
+    },
+    {
+        "if": [],
+        "result": [
+            {
+                "status_code": "200"
+            },
+            {
+                "status_code": "204"
+            }
+        ],
+        "role": "server",
+        "origin": "If the target resource does have a current representation and that representation is successfully modified in accordance with the state of the enclosed representation, then the origin server MUST send either a 200 (OK) or a 204 (No Content) response to indicate successful completion of the request."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "An origin server SHOULD ignore unrecognized header fields received in a PUT request (i.e., do not save them as part of the resource state)."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "An origin server SHOULD verify that the PUT representation is consistent with any constraints the server has for the target resource that cannot or will not be changed by the PUT."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "When a PUT representation is inconsistent with the target resource, the origin server SHOULD either make them consistent, by transforming the representation or changing the resource configuration, or respond with an appropriate error message containing sufficient information to explain why the representation is unsuitable."
+    },
+    {
+        "if": {
+            "not_exists": "ETag"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "An origin server MUST NOT send a validator header field (Section 7.2), such as an ETag or Last-Modified field, in a successful response to PUT unless the request's representation data was saved without any transformation applied to the body (i.e., the resource's new representation data is identical to the representation data received in the PUT request) and the validator field value reflects the new representation."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "If the origin server will not make the requested PUT state change to the target resource and instead wishes to have it applied to a different resource, such as when the resource has been moved to a different URI, then the origin server MUST send an appropriate 3xx (Redirection) response; the user agent MAY then make its own decision regarding whether or not to redirect the request."
+    },
+    {
+        "if": {
+            "exist": "Content-Range"
+        },
+        "result": {
+            "status_code": "400",
+            "error_status": true
+        },
+        "role": "server",
+        "origin": "An origin server that allows PUT on a given target resource MUST send a 400 (Bad Request) response to a PUT request that contains a Content-Range header field (Section\u00a04.2 of [RFC7233]), since the payload is likely to be partial content that has been mistakenly PUT as a full representation."
+    },
+    {
+        "if": [],
+        "result": [
+            {
+                "status_code": "202"
+            }
+        ],
+        "role": "server",
+        "origin": "If a DELETE method is successfully applied, the origin server SHOULD send a 202 (Accepted) status code if the action will likely succeed but has not yet been enacted, a 204 (No Content) status code if the action has been enacted and no further information is to be supplied, or a 200 (OK) status code if the action has been enacted and the response message includes a representation describing the status."
+    },
+    {
+        "if": {},
+        "result": {
+            "close_connection": true
+        },
+        "role": "intermediary",
+        "origin": "A tunnel is closed when a tunnel intermediary detects that either side has closed its connection: the intermediary MUST attempt to send any outstanding data that came from the closed side to the other side, close both connections, and then discard any remaining data left undelivered."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "Proxies",
+        "origin": "Proxies that support CONNECT SHOULD restrict its use to a limited set of known ports or a configurable whitelist of safe request targets."
+    },
+    {
+        "if": {
+            "not_exists": "Content-Length",
+            "no_both_TE_CL": true
+        },
+        "result": {},
+        "role": "server",
+        "origin": "A server MUST NOT send any Transfer-Encoding or Content-Length header fields in a 2xx (Successful) response to CONNECT."
+    },
+    {
+        "if": {
+            "not_exists": "Content-Length"
+        },
+        "result": {},
+        "role": "client",
+        "origin": "A client MUST ignore any Content-Length or Transfer-Encoding header fields received in a successful response to CONNECT."
+    },
+    {
+        "if": {
+            "exist": "Allow"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "A server generating a successful response to OPTIONS SHOULD send any header fields that might indicate optional features implemented by the server and applicable to the target resource (e.g., Allow), including potential extensions not defined by this specification."
+    },
+    {
+        "if": [
+            {
+                "not_exists": "response"
+            }
+        ],
+        "result": [],
+        "role": "server",
+        "origin": "A server MUST generate a Content-Length field with a value of \"0\" if no payload body is to be sent in the response."
+    },
+    {
+        "if": {
+            "not_exists": "Max-Forwards"
+        },
+        "result": {},
+        "role": "proxy",
+        "origin": "A proxy MUST NOT generate a Max-Forwards header field while forwarding a request unless that request was received with a Max-Forwards field."
+    },
+    {
+        "if": {
+            "exist": "Content-Type"
+        },
+        "result": {},
+        "role": "client",
+        "origin": "A client that generates an OPTIONS request containing a payload body MUST send a valid Content-Type header field describing the representation media type."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "client",
+        "origin": "A client MUST NOT send a message body in a TRACE request."
+    },
+    {
+        "if": {
+            "exist": "Expect"
+        },
+        "result": {
+            "status_code": "417",
+            "error_status": true
+        },
+        "role": "server",
+        "origin": "A server that receives an Expect field-value other than 100-continue MAY respond with a 417 (Expectation Failed) status code to indicate that the unexpected expectation cannot be met."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "client",
+        "origin": "A client MUST NOT generate a 100-continue expectation in a request that does not include a message body."
+    },
+    {
+        "if": {
+            "exist": "Expect"
+        },
+        "result": {
+            "status_code": "100"
+        },
+        "role": "client",
+        "origin": "A client that will wait for a 100 (Continue) response before sending the request message body MUST send an Expect header field containing a 100-continue expectation."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "client",
+        "origin": "wait for any specific length of time; such a client MAY proceed to send the message body even if it has not yet received a response."
+    },
+    {
+        "if": {
+            "multiple": "response"
+        },
+        "result": {},
+        "role": "client",
+        "origin": "Furthermore, since 100 (Continue) responses cannot be sent through an HTTP/1.0 intermediary, such a client SHOULD NOT wait for an indefinite period before sending the message body."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "client",
+        "origin": "A client that receives a 417 (Expectation Failed) status code in response to a request containing a 100-continue expectation SHOULD repeat that request without a 100-continue expectation, since the 417 response merely indicates that the response chain does not support expectations (e.g., it passes through an HTTP/1.0 server)."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "A server that receives a 100-continue expectation in an HTTP/1.0 request MUST ignore that expectation."
+    },
+    {
+        "if": [
+            {}
+        ],
+        "result": [
+            {
+                "status_code": "100"
+            }
+        ],
+        "role": "server",
+        "origin": "A server MAY omit sending a 100 (Continue) response if it has already received some or all of the message body for the corresponding request, or if the framing indicates that there is no message body."
+    },
+    {
+        "if": {
+            "multiple": "response",
+            "not_first": "response"
+        },
+        "result": {
+            "status_code": "100"
+        },
+        "role": "server",
+        "origin": "A server that sends a 100 (Continue) response MUST ultimately send a final status code, once the message body is received and processed, unless the connection is closed prematurely."
+    },
+    {
+        "if": {},
+        "result": {
+            "status_code": "100"
+        },
+        "role": "server",
+        "origin": "The origin server MUST NOT wait for the message body before sending the 100 (Continue) response."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "intermediary",
+        "origin": "If the received value is zero (0), the intermediary MUST NOT forward the request; instead, the intermediary MUST respond as the final recipient."
+    },
+    {
+        "if": [],
+        "result": [
+            {}
+        ],
+        "role": "intermediary",
+        "origin": "If the received Max-Forwards value is greater than zero, the intermediary MUST generate an updated Max-Forwards field in the forwarded message with a field-value that is the lesser of a) the received value decremented by one (1) or b) the recipient's maximum supported value for Max-Forwards."
+    },
+    {
+        "if": {
+            "multiple": "method"
+        },
+        "result": {},
+        "role": "recipient",
+        "origin": "A recipient MAY ignore a Max-Forwards header field received with any other request methods."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "sender",
+        "origin": "A sender of qvalue MUST NOT generate more than three digits after the decimal point."
+    },
+    {
+        "if": {
+            "exist": "Accept",
+            "not_exists": "content-coding"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "If an Accept-Encoding header field is present in a request and none of the available representations for the response have a content-coding that is listed as acceptable, the origin server SHOULD send a response without any content-coding."
+    },
+    {
+        "if": {
+            "not_exists": "Accept"
+        },
+        "result": {},
+        "role": "agent",
+        "origin": "A user agent that does not provide such control to the user MUST NOT send an Accept-Language header field."
+    },
+    {
+        "if": {
+            "exist": "From",
+            "not_exists": "From"
+        },
+        "result": {},
+        "role": "agent",
+        "origin": "A user agent SHOULD NOT send a From header field without explicit configuration by the user, since that might conflict with the user's privacy interests or their site's security policy."
+    },
+    {
+        "if": {
+            "not_exists": "From"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "A server SHOULD NOT use the From header field for access control or authentication, since most recipients will assume that the field value is public information."
+    },
+    {
+        "if": {
+            "not_exists": "Referer"
+        },
+        "result": {},
+        "role": "agent",
+        "origin": "A user agent MUST NOT include the fragment and userinfo components of the URI reference [RFC3986], if any, when generating the Referer field value."
+    },
+    {
+        "if": [
+            {}
+        ],
+        "result": [
+            {}
+        ],
+        "role": "agent",
+        "origin": "If the target URI was obtained from a source that does not have its own URI (e.g., input from the user keyboard, or an entry within the user's bookmarks/favorites), the user agent MUST either exclude the Referer field or send it with a value of \"about:blank\"."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "agent",
+        "origin": "A user agent MUST NOT send a Referer header field in an unsecured HTTP request if the referring page was received with a secure protocol."
+    },
+    {
+        "if": {
+            "exist": "Referer"
+        },
+        "result": {},
+        "role": "intermediary",
+        "origin": "An intermediary SHOULD NOT modify or delete the Referer header field when the field value shares the same scheme and host as the request target."
+    },
+    {
+        "if": {
+            "exist": "User-Agent"
+        },
+        "result": {},
+        "role": "agent",
+        "origin": "A user agent SHOULD send a User-Agent field in each request unless specifically configured not to do so."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "sender",
+        "origin": "A sender SHOULD limit generated product identifiers to what is necessary to identify the product; a sender MUST NOT generate advertising or other nonessential information within the product identifier."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "sender",
+        "origin": "A sender SHOULD NOT generate information in product-version that is not a version identifier (i.e., successive versions of the same product name ought to differ only in the product-version portion of the product identifier)."
+    },
+    {
+        "if": {
+            "not_exists": "response"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "Since HTTP/1.0 did not define any 1xx status codes, a server MUST NOT send a 1xx response to an HTTP/1.0 client."
+    },
+    {
+        "if": [],
+        "result": [
+            {}
+        ],
+        "role": "client",
+        "origin": "A client MUST be able to parse one or more 1xx responses received prior to a final response, even if the client does not expect one."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "proxy",
+        "origin": "A proxy MUST forward 1xx responses unless the proxy itself requested the generation of the 1xx response."
+    },
+    {
+        "if": {
+            "exist": "response"
+        },
+        "result": {
+            "status_code": "200"
+        },
+        "role": "server",
+        "origin": "Aside from responses to CONNECT, a 200 response always has a payload, though an origin server MAY generate a payload body of zero length."
+    },
+    {
+        "if": {},
+        "result": {
+            "status_code": "205"
+        },
+        "role": "server",
+        "origin": "Since the 205 status code implies that no additional content will be provided, a server MUST NOT generate a payload in a 205 response."
+    },
+    {
+        "if": {
+            "exist": "Content-Length",
+            "multiple": "response"
+        },
+        "result": {
+            "close_connection": true,
+            "status_code": "205"
+        },
+        "role": "server",
+        "origin": "In other words, a server MUST do one of the following for a 205 response: a) indicate a zero-length body for the response by including a Content-Length header field with a value of 0; b) indicate a zero-length payload for the response by including a Transfer-Encoding header field with a value of chunked and a message body consisting of a single chunk of zero-length; or, c) close the connection immediately after sending the blank line terminating the header section."
+    },
+    {
+        "if": [
+            {
+                "exist": "Location"
+            }
+        ],
+        "result": [],
+        "role": "agent",
+        "origin": "If a Location header field (Section 7.1.2) is provided, the user agent MAY automatically redirect its request to the URI referenced by the Location field value, even if the specific status code is not understood."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "client",
+        "origin": "A client SHOULD detect and intervene in cyclical redirections (i.e., \"infinite\" redirection loops)."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "If the server has a preferred choice, the server SHOULD generate a Location header field containing a preferred choice's URI reference."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "agent",
+        "origin": "The 307 (Temporary Redirect) status code indicates that the target resource resides temporarily under a different URI and the user agent MUST NOT change the request method if it performs an automatic redirection to that URI."
+    },
+    {
+        "if": {},
+        "result": {
+            "error_status": true
+        },
+        "role": "server",
+        "origin": "Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent condition."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "client",
+        "origin": "The client SHOULD NOT automatically repeat the request with the same credentials."
+    },
+    {
+        "if": {},
+        "result": {
+            "status_code": "404"
+        },
+        "role": "server",
+        "origin": "An origin server that wishes to \"hide\" the current existence of a forbidden target resource MAY instead respond with a status code of 404 (Not Found)."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "The server SHOULD generate a payload containing a list of available representation characteristics and corresponding resource identifiers from which the user or user agent can choose the one most appropriate."
+    },
+    {
+        "if": {
+            "exist": "response",
+            "assign": "response"
+        },
+        "result": {
+            "close_connection": true,
+            "status_code": "408"
+        },
+        "role": "server",
+        "origin": "A server SHOULD send the \"close\" connection option (Section\u00a06.1 of [RFC7230]) in the response, since 408 implies that the server has decided to close the connection rather than continue waiting."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "client",
+        "origin": "If the client has an outstanding request in transit, the client MAY repeat that request on a new connection."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "server",
+        "origin": "The server SHOULD generate a payload that includes enough information for a user to recognize the source of the conflict."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "If the condition is temporary, the server SHOULD generate a Retry-After header field to indicate that it is temporary and after what time the client MAY try again."
+    },
+    {
+        "if": {},
+        "result": {
+            "error_status": true
+        },
+        "role": "server",
+        "origin": "Except when responding to a HEAD request, the server SHOULD send a representation containing an explanation of the error situation, and whether it is a temporary or permanent to the user."
+    },
+    {
+        "if": {
+            "exist": "Retry-After"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "The server MAY send a Retry-After header field (Section 7.1.3) to suggest an appropriate amount of time for the client to wait before retrying the request."
+    },
+    {
+        "if": {
+            "multiple": "protocol"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "The server SHOULD generate a representation for the 505 response that describes why that version is not supported and what other protocols are supported by that server."
+    },
+    {
+        "if": {
+            "exist": "date"
+        },
+        "result": {},
+        "role": "Recipients",
+        "origin": "Recipients of a timestamp value in rfc850-date format, which uses a two-digit year, MUST interpret a timestamp that appears to be more than 50 years in the future as representing the most recent year in the past that had the same last two digits."
+    },
+    {
+        "if": {
+            "exist": "Date"
+        },
+        "result": {},
+        "role": "sender",
+        "origin": "When a Date header field is generated, the sender SHOULD generate its field value as the best available approximation of the date and time of message generation."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "server",
+        "origin": "An origin server MUST NOT send a Date header field if it does not have a clock capable of providing a reasonable approximation of the current instance in Coordinated Universal Time."
+    },
+    {
+        "if": {
+            "exist": "Date"
+        },
+        "result": {},
+        "role": "agent",
+        "origin": "A user agent MAY send a Date header field in a request, though generally will not do so unless it is believed to convey useful information to the server."
+    },
+    {
+        "if": [],
+        "result": [],
+        "role": "agent",
+        "origin": "If the Location value provided in a 3xx (Redirection) response does not have a fragment component, a user agent MUST process the redirection as if the value inherits the fragment component of the URI reference used to generate the request target (i.e., the redirection inherits the original reference's fragment, if any)."
+    },
+    {
+        "if": {},
+        "result": {},
+        "role": "proxy",
+        "origin": "A proxy MUST NOT generate a Vary field with a \"*\" value."
+    },
+    {
+        "if": {
+            "exist": "Vary",
+            "multiple": "algorithm"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "An origin server SHOULD send a Vary header field when its algorithm for selecting a representation varies based on aspects of the request message other than the method and request target, unless the variance cannot be crossed or the origin server has been deliberately configured to prevent cache transparency."
+    },
+    {
+        "if": {
+            "exist": "Allow"
+        },
+        "result": {
+            "status_code": "405"
+        },
+        "role": "server",
+        "origin": "An origin server MUST generate an Allow field in a 405 (Method Not Allowed) response and MAY do so in any other response."
+    },
+    {
+        "if": {
+            "exist": "Allow"
+        },
+        "result": {},
+        "role": "proxy",
+        "origin": "A proxy MUST NOT modify the Allow header field -- it does not need to understand all of the indicated methods in order to handle them according to the generic message handling rules."
+    },
+    {
+        "if": {
+            "not_exists": "Server",
+            "multiple": "product"
+        },
+        "result": {},
+        "role": "server",
+        "origin": "An origin server SHOULD NOT generate a Server field containing needlessly fine-grained detail and SHOULD limit the addition of subproducts by third parties."
+    }
+]

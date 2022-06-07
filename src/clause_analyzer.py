@@ -22,33 +22,38 @@ class ClauseAnalyzer:
 
     # note: 负向语义不能通过第二个参数来获取，会有误报。所以，只能通过人工指定正负语义，然后文本蕴含
     condition = [
-        # example:
-        {'name': 'header_exists', 'hypothesis': 'include %s header', 'param_types': [PARAM_KEYWORD]},  # exist, represent, in, is
-        {'name': 'header_not_exists', 'hypothesis': 'not include %s header', 'param_types': [PARAM_KEYWORD]},
-        {'name': "multiple_header", 'hypothesis': 'with multiple %s header', 'param_types': [PARAM_KEYWORD]},
-        {'name': "invalid_header", 'hypothesis': '%s header field having an invalid value', 'param_types': [PARAM_KEYWORD]},
+        # just for demo
+        {'name': 'exist', 'hypothesis': 'include %s header', 'param_types': [PARAM_KEYWORD]},
+        # exist, represent, in, is
+        {'name': 'not_exists', 'hypothesis': 'not include %s header', 'param_types': [PARAM_KEYWORD]},
+        {'name': "multiple", 'hypothesis': 'with multiple %s header', 'param_types': [PARAM_KEYWORD]},
+        {'name': "invalid", 'hypothesis': '%s header field having an invalid value', 'param_types': [PARAM_KEYWORD]},
         {'name': 'assign', 'hypothesis': '%s header field should be "%s"', 'param_types': [PARAM_KEYWORD, PARAM_REGEX],
          'param_regex': [r'(?<=").*?(?=")']},
-        {'name': 'not implement', 'hypothesis': '%s is not implemented', 'param_types': [PARAM_KEYWORD]},  # 与定义不符合
+        {'name': 'not_implement', 'hypothesis': '%s is not implemented', 'param_types': [PARAM_KEYWORD]},  # 与定义不符合
         {'name': 'final', 'hypothesis': '%s is final', 'param_types': [PARAM_KEYWORD]},
-        {'name': 'not final', 'hypothesis': '%s is not final', 'param_types': [PARAM_KEYWORD]},  # 不是最后
+        {'name': 'not_final', 'hypothesis': '%s is not final', 'param_types': [PARAM_KEYWORD]},  # 不是最后
         {'name': 'first', 'hypothesis': '%s is first', 'param_types': [PARAM_KEYWORD]},  # 第一个数据包
-        {'name': 'not first', 'hypothesis': '%s is not first', 'param_types': [PARAM_KEYWORD]},  # 非第一个数据包
+        {'name': 'not_first', 'hypothesis': '%s is not first', 'param_types': [PARAM_KEYWORD]},  # 非第一个数据包
         {'name': 'twice', 'hypothesis': '%s is applied twice', 'param_types': [PARAM_KEYWORD]},  # repeat, 重复  两次等等
-        {'name': 'chunked not twice', 'hypothesis': 'chunked should not be applied twice', 'param_types': []},
-        {'name': 'not both Transfer-Encoding and Content-Length',
+        {'name': 'chunked_not_twice', 'hypothesis': 'chunked should not be applied twice', 'param_types': []},
+        {'name': 'no_both_TE_CL',
          'hypothesis': 'not both Transfer-Encoding and Content-Length', 'param_types': []},
+        {'name': 'request_version', 'hypothesis': 'send %s request',
+         'param_types': [PARAM_REGEX], 'param_regex': [r'HTTP/\d\.\d']}
     ]
     result = [
-        # example
+        # just for demo
         {'name': 'close_connection', 'hypothesis': 'close the connection', 'param_types': []},  # 关闭请求
         # {'name': 'reject', 'hypothesis': 'reject the request', 'param_types': []},  # 拒绝请求
         {'name': 'status_code', 'hypothesis': 'respond %s code', 'param_types': [PARAM_REGEX],
          'param_regex': [r'\b\d\d\d\b']},  # 以什么状态码回复
         {'name': 'error_status', 'hypothesis': 'treat as an error', 'param_types': []},  # 认为为错误 !200 状态码返回
+        {'name': 'response_version', 'hypothesis': 'send %s response',
+         'param_types': [PARAM_REGEX], 'param_regex': [r'HTTP/\d\.\d']}
     ]
 
-    def __init__(self, core, keywords_path, threshold):
+    def __init__(self, core=CORE, keywords_path=KEYWORDS_PATH, threshold=TE_THRESHOLD):
         """
         初始化 ClauseAnalyzer 实例
         :param core: str，spacy 使用的 core
@@ -62,7 +67,7 @@ class ClauseAnalyzer:
         for keyword in self.keywords:
             self._nlp.tokenizer.add_special_case(keyword, [{ORTH: keyword}])
 
-    def analyze_clause(self, clause, type='then'):
+    def analyze_clause(self, clause, type='result'):
         """
         用于对简单的子句进行分析，生成准模板。
         :return: 返回形如 {target_name1: [keyword_list1, keyword_list2, ...], ...} 的字典
@@ -79,7 +84,7 @@ class ClauseAnalyzer:
         # 优化条件和结果搜寻
         if type == 'if':
             targets = self.condition
-        elif type == 'then':
+        elif type == 'result':
             targets = self.result
         else:
             print('ERROR type:{}'.format(type))

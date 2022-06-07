@@ -86,5 +86,26 @@ SERVER_PROCESSES = 8
 CORE = 'en_core_web_sm'  # 小型单词库，但是快
 TE_THRESHOLD = 0.5
 
+
 # log
-trace = logger.add(BASE_DIR + '/data/log/runtime.log', rotation="100 MB")
+trace = logger.add(BASE_DIR + '/data/log/runtime.log', rotation="100 MB", level='DEBUG')
+
+# RFC 中定义的HTTP角色
+ROLES = [
+    "server", "origin server", "recipient", "response",
+    "message", "request", "header",
+    "client", "user agent", "sender",
+    "accelerator", "gateway", "tunnel", "cache",
+    "inbound", "outbound", "upstream", "downstream",
+    "proxy", "reverse proxy", "interception proxy",
+    "intermediary",
+]
+
+KEYWORDS = [
+    "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", "OPTIONAL"
+]
+
+# 其他的情感动词, will（would），shall（should），can（could），may（might），must，need，dare，ought to，used to，had better
+OTHERS = ['will', 'would', "can", 'might', 'could', 'ought to']
+

@@ -1,0 +1,22 @@
+[
+    {
+        "if": {
+            "exist": "WWW-Authenticate"
+        },
+        "result": {
+            "status_code": "401"
+        },
+        "role": "server",
+        "origin": "Upon receipt of a request for a protected resource that omits credentials, contains invalid credentials (e.g., a bad password) or partial credentials (e.g., when the authentication scheme requires more than one round trip), an origin server SHOULD send a 401 (Unauthorized) response that contains a WWW-Authenticate header field with at least one (possibly new) challenge applicable to the requested resource."
+    },
+    {
+        "if": [
+            {
+                "exist": "challenge"
+            }
+        ],
+        "result": [],
+        "role": "agent",
+        "origin": "If the 401 response contains the same challenge as the prior response, and the user agent has already attempted authentication at least once, then the user agent SHOULD present the enclosed representation to the user, since it usually contains relevant diagnostic information."
+    }
+]

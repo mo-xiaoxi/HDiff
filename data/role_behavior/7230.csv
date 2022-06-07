@@ -7,7 +7,6 @@ A sender MUST NOT generate protocol elements that do not match the grammar defin
 "At a minimum, a recipient MUST be able to parse and process protocol element lengths that are at least as long as the values that it generates for those same protocol elements in other messages."
 "A recipient MUST interpret a received protocol element according to the semantics defined for it by this specification, including extensions to this specification, unless the recipient has determined (through experience or configuration) that the sender incorrectly implements what is implied by those semantics."
 "Unless noted otherwise, a recipient MAY attempt to recover a usable protocol element from an invalid construct."
-"Intermediaries that process HTTP messages (i.e., all intermediaries other than those acting as tunnels) MUST send their own HTTP-version in forwarded messages."
 "A client SHOULD send a request version equal to the highest version to which the client is conformant and whose major version is no higher than the highest version supported by the server, if this is known."
 A client MUST NOT send a version to which it is not conformant.
 "A client MAY send a lower request version if it is known that the server incorrectly implements the HTTP specification, but only after the client has attempted at least one normal request and determined from the response status code or header fields (e.g., Server) that the server improperly handles higher request versions."
@@ -25,80 +24,92 @@ A sender MUST NOT send whitespace between the start-line and the first header fi
 Recipients of an invalid request-line SHOULD respond with either a 400 (Bad Request) error or a 301 (Moved Permanently) redirect with the request-target properly encoded.
 "A recipient SHOULD NOT attempt to autocorrect and then process the request without a redirect, since the invalid request-line might be deliberately crafted to bypass security filters along the request chain."
 A server that receives a method longer than any that it implements SHOULD respond with a 501 (Not Implemented) status code.
+A client SHOULD ignore the reason-phrase content.
 "A proxy MUST forward unrecognized header fields unless the field-name is listed in the Connection header field (Section 6.1) or the proxy is specifically configured to block, or otherwise transform, such fields."
+"A server MUST NOT apply a request to the target resource until the entire request header section is received, since later header fields might include conditionals, authentication credentials, or deliberately misleading duplicate header fields that would impact request processing."
+"A sender MUST NOT generate multiple header fields with the same field name in a message unless either the entire field value for that header field is defined as a comma-separated list [i.e., #(values)] or the header field is a well-known exception (as noted below)."
+"A recipient MAY combine multiple header fields with the same field name into one ""field-name: field-value"" pair, without changing the semantics of the message, by appending each subsequent field value to the combined field value in order, separated by a comma."
+The order in which header fields with the same field name are received is therefore significant to the interpretation of the combined field value; a proxy MUST NOT change the order of these field values when forwarding a message.
+"For protocol elements where optional whitespace is preferred to improve readability, a sender SHOULD generate the optional whitespace as a single SP; otherwise, a sender SHOULD NOT generate optional whitespace except as needed to white out invalid or unwanted protocol elements during in-place message filtering."
 A server MUST reject any received request message that contains whitespace between a header field-name and colon with a response code of 400 (Bad Request).
 A proxy MUST remove any such whitespace from a response message before forwarding the message downstream.
 "A sender MUST NOT generate a message that includes line folding (i.e., that has any field-value that contains a match to the obs-fold rule) unless the message is intended for packaging within the message/http media type."
+"A server that receives an obs-fold in a request message that is not within a message/http container MUST either reject the message by sending a 400 (Bad Request), preferably with a representation explaining that obsolete line folding is unacceptable, or replace each received obs-fold with one or more SP octets prior to interpreting the field value or forwarding the message downstream."
 "A proxy or gateway that receives an obs-fold in a response message that is not within a message/http container MUST either discard the message and replace it with a 502 (Bad Gateway) response, preferably with a representation explaining that unacceptable line folding was received, or replace each received obs-fold with one or more SP octets prior to interpreting the field value or forwarding the message downstream."
 A user agent that receives an obs-fold in a response message that is not within a message/http container MUST replace each received obs-fold with one or more SP octets prior to interpreting the field value.
+Recipients that process the value of a quoted-string MUST handle a quoted-pair as if it were replaced by the octet following the backslash.
 A sender SHOULD NOT generate a quoted-pair in a quoted-string except where necessary to quote DQUOTE and backslash octets occurring within that string.
 "A sender SHOULD NOT generate a quoted-pair in a comment except where necessary to quote parentheses [""("" and "")""] and backslash octets occurring within that comment."
+A recipient MUST be able to parse the chunked transfer coding (Section 4.1) because it plays a crucial role in framing messages when the payload body size is not known in advance.
 "A sender MUST NOT apply chunked more than once to a message body (i.e., chunking an already chunked message is not allowed)."
 "If any transfer coding other than chunked is applied to a request payload body, the sender MUST apply chunked as the final transfer coding to ensure that the message is properly framed."
 "If any transfer coding other than chunked is applied to a response payload body, the sender MUST either apply chunked as the final transfer coding or terminate the message by closing the connection."
 A server MUST NOT send a Transfer-Encoding header field in any response with a status code of 1xx (Informational) or 204 (No Content).
-A server MUST NOT send a Transfer-Encoding header field in any 2xx (Successful) response to a CONNECT request (Section 4.3.6 of [RFC7231]).
-A client MUST NOT send a request containing Transfer-Encoding unless it knows the be in the form of specific user configuration or by remembering the version of a prior received response.
+A server MUST NOT send a Transfer-Encoding header field in any 2xx (Successful) response to a CONNECT request (Section 4.3.6 of [RFC7231]).
+A client MUST NOT send a request containing Transfer-Encoding unless it knows the server will handle HTTP/1.1 (or later) requests; such knowledge might be in the form of specific user configuration or by remembering the version of a prior received response.
 A server MUST NOT send a response containing Transfer-Encoding unless the corresponding request indicates HTTP/1.1 (or later).
 A server that receives a request message with a transfer coding it does not understand SHOULD respond with 501 (Not Implemented).
-An example is Content-Length: 3495 A sender MUST NOT send a Content-Length header field in any message that contains a Transfer-Encoding header field.
+A sender MUST NOT send a Content-Length header field in any message that contains a Transfer-Encoding header field.
 A user agent SHOULD send a Content-Length in a request message when no Transfer-Encoding is sent and the request method defines a meaning for an enclosed payload body.
 A user agent SHOULD NOT send a Content-Length header field when the request message does not contain a payload body and the method semantics do not anticipate such a body.
-A server MAY send a Content-Length header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server MUST NOT send Content-Length in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
-A server MAY send a Content-Length header field in a 304 (Not Modified) response to a conditional GET request (Section 4.1 of [RFC7232]); a server MUST NOT send Content-Length in such a response have been sent in the payload body of a 200 (OK) response to the same request.
+A server MAY send a Content-Length header field in a response to a HEAD request (Section 4.3.2 of [RFC7231]); a server MUST NOT send Content-Length in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a response if the same request had used the GET method.
+A server MAY send a Content-Length header field in a 304 (Not Modified) response to a conditional GET request (Section 4.1 of [RFC7232]); a server MUST NOT send Content-Length in such a response unless its field-value equals the decimal number of octets that would have been sent in the payload body of a 200 (OK) response to the same request.
 A server MUST NOT send a Content-Length header field in any response with a status code of 1xx (Informational) or 204 (No Content).
-A server MUST NOT send a Content-Length header field in any 2xx (Successful) response to a CONNECT request (Section 4.3.6 of [RFC7231]).
+A server MUST NOT send a Content-Length header field in any 2xx (Successful) response to a CONNECT request (Section 4.3.6 of [RFC7231]).
 "Since there is no predefined limit to the length of a payload, a recipient MUST anticipate potentially large decimal numerals and prevent parsing errors due to integer conversion overflows (Section 9.3)."
-A client MUST ignore any Content-Length or Transfer-Encoding header fields received in such a message.
 "If a Transfer-Encoding header field is present in a request and the chunked transfer coding is not the final encoding, the message body length cannot be determined reliably; the server MUST respond with the 400 (Bad Request) status code and then close the connection."
 A sender MUST remove the received Content-Length field prior to forwarding such a message downstream.
 "If a message is received without Transfer-Encoding and with either multiple Content-Length header fields having differing field-values or a single Content-Length header field having an invalid value, then the message framing is invalid and the recipient MUST treat it as an unrecoverable error."
 "If this is a request message, the server MUST respond with a 400 (Bad Request) status code and then close the connection."
-"If this is a response message received by a proxy, the proxy MUST close the connection to the server, discard the received response, and send a 502 (Bad received by a user agent, the user agent MUST close the connection to the server and discard the received response."
+"If this is a response message received by a proxy, the proxy MUST close the connection to the server, discard the received response, and send a 502 (Bad Gateway) response to the client."
+"If this is a response message received by a user agent, the user agent MUST close the connection to the server and discard the received response."
 "Since there is no way to distinguish a successfully completed, close-delimited message from a partially received message interrupted by network failure, a server SHOULD generate encoding or length-delimited messages whenever possible."
 A server MAY reject a request that contains a message body but not a Content-Length by responding with 411 (Length Required).
 A user agent that sends a request containing a message body MUST send a valid Content-Length header field if it does not know the server will handle HTTP/1.1 (or later) requests; such knowledge can be in the form of specific user configuration or by remembering the version of a prior received response.
-"If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent MAY discard the remaining data or attempt to determine if that case if the prior message's Content-Length value is incorrect."
+"If the final response to the last request on a connection has been completely received and there remains additional data to read, a user agent MAY discard the remaining data or attempt to determine if that data belongs as part of the prior response body, which might be the case if the prior message's Content-Length value is incorrect."
 "A client MUST NOT process, cache, or forward such extra data as a separate response, since such behavior would be vulnerable to cache poisoning."
 "A server that receives an incomplete request message, usually due to a canceled request or a triggered timeout exception, MAY send an error response prior to closing the connection."
 "A client that receives an incomplete response message, which can occur when a connection is closed prematurely or when decoding a supposedly chunked transfer coding fails, MUST record the message as incomplete."
 An HTTP/1.1 user agent MUST NOT preface or follow a request with an extra CRLF.
 "If terminating the request message body with a line-ending is desired, then the user agent MUST count the terminating CRLF octets as part of the message body length."
 "In the interest of robustness, a server that is expecting to receive and parse a request-line SHOULD ignore at least one empty line (CRLF) received prior to the request-line."
-"the sequence CRLF, a recipient MAY recognize a single LF as a line terminator and ignore any preceding CR."
+"Although the line terminator for the start-line and header fields is the sequence CRLF, a recipient MAY recognize a single LF as a line terminator and ignore any preceding CR."
 "Although the request-line and status-line grammar rules require that each of the component elements be separated by a single SP octet, recipients MAY instead parse on whitespace-delimited word boundaries and, aside from the CRLF terminator, treat any form of whitespace as the SP separator while ignoring preceding or trailing whitespace; such whitespace includes one or more of the following octets: SP, HTAB, VT (%x0B), FF (%x0C), or bare CR."
 "When a server listening only for HTTP request messages, or processing what appears from the start-line to be an HTTP request message, receives a sequence of octets that does not match the HTTP-message grammar aside from the robustness exceptions listed above, the server SHOULD respond with a 400 (Bad Request) response."
+"A sender MUST NOT generate a trailer that contains a field necessary for message framing (e.g., Transfer-Encoding and Content-Length), routing (e.g., Host), request modifiers (e.g., controls and conditionals in Section 5 of [RFC7231]), authentication (e.g., see [RFC7235] and [RFC6265]), response control data (e.g., see Section 7.1 of [RFC7231]), or determining how to process the payload (e.g., Content-Encoding, Content-Type, Content-Range, and Trailer)."
+"When a chunked message containing a non-empty trailer is received, the recipient MAY process the fields (aside from those forbidden above) as if they were appended to the message's header section."
+"A recipient MUST ignore (or consider as an error) any fields that are forbidden to be sent in a trailer, since processing them as if they were present in the header section might bypass external security filters."
+"Unless the request includes a TE header field indicating ""trailers"" is acceptable, as described in Section 4.3, a server SHOULD NOT generate trailer fields that it believes are necessary for the user agent to receive."
 "A recipient SHOULD consider ""x-compress"" to be equivalent to ""compress""."
 "A recipient SHOULD consider ""x-gzip"" to be equivalent to ""gzip""."
 A client MUST NOT send the chunked transfer coding name in TE; chunked is always acceptable for HTTP/1.1 recipients.
-"When multiple transfer codings are acceptable, the client MAY rank the codings by preference using a case-insensitive ""q"" parameter (similar to the qvalues used in content negotiation fields, Section through 1, where 0.001 is the least preferred and 1 is the most preferred; a value of 0 means ""not acceptable""."
+"When multiple transfer codings are acceptable, the client MAY rank the codings by preference using a case-insensitive ""q"" parameter (similar to the qvalues used in content negotiation fields, Section 5.3.1 of [RFC7231])."
 "Since the TE header field only applies to the immediate connection, a sender of TE MUST also send a ""TE"" connection option within the Connection header field (Section 6.1) in order to prevent the TE field from being forwarded by intermediaries that do not support its semantics."
+"When a message includes a message body encoded with the chunked transfer coding and the sender desires to send metadata in the form of trailer fields at the end of the message, the sender SHOULD generate a Trailer header field before the message body to indicate which fields will be present in the trailers."
 "If the target URI's path component is empty, the client MUST send ""/"" as the path within the origin-form of request-target."
-"""
-If a proxy receives an OPTIONS request with an absolute-form of request-target in which the URI has an empty path and no query component, then the last proxy on the request chain MUST send a request-target of ""*"" when it forwards the request to the indicated origin server."
+"If a proxy receives an OPTIONS request with an absolute-form of request-target in which the URI has an empty path and no query component, then the last proxy on the request chain MUST send a request-target of ""*"" when it forwards the request to the indicated origin server."
 "If the authority component is missing or undefined for the target URI, then a client MUST send a Host header field with an empty field-value."
 "Since the Host field-value is critical information for handling a request, a user agent SHOULD generate Host as the first header field following the request-line."
+"When a proxy receives a request with an absolute-form of request-target, the proxy MUST ignore the received Host header field (if any) and instead replace it with the host information of the request-target."
 A proxy that forwards such a request MUST generate a new Host field-value based on the received request-target rather than forward the received Host field-value.
+A server MUST respond with a 400 (Bad Request) status code to any HTTP/1.1 request message that lacks a Host header field and to any request message that contains more than one Host header field or a Host header field with an invalid field-value.
+A client that has more than one outstanding request on a connection MUST maintain a list of outstanding requests in the order sent and MUST associate each received response message on that connection to the highest ordered request that has not yet received a final (non-1xx) response.
 "An intermediary not acting as a tunnel MUST implement the Connection header field, as specified in Section 6.1, and exclude fields from being forwarded that are only intended for the incoming connection."
 An intermediary MUST NOT forward a message to itself unless it is protected from an infinite request loop.
 An HTTP-to-HTTP gateway MUST send an appropriate Via header field in each inbound request message and MAY send a Via header field in forwarded response messages.
 "If a port is not provided, a recipient MAY interpret that as meaning it was received on the default TCP port, if any, for the received-protocol."
-"A sender MAY generate comments in the Via header field to identify the software of each recipient, analogous to the User-Agent and Server header fields."
-An intermediary used as a portal through a network firewall SHOULD NOT forward the names and ports of hosts within the firewall region unless it is explicitly enabled to do so.
-"If not enabled, such an intermediary SHOULD replace each received-by host of any host behind the firewall by an appropriate pseudonym for that host."
+A sender SHOULD NOT combine multiple entries unless they are all under the same organizational control and the hosts have already been replaced by pseudonyms.
 A sender MUST NOT combine entries that have different received-protocol values.
-A proxy MAY modify the message body through application or removal of a transfer coding (Section 4).
-A proxy MUST NOT transform the payload (Section 3.3 of [RFC7231]) of a message that contains a no-transform cache-control directive (Section 5.2 of [RFC7234]).
+A proxy MUST NOT transform the payload (Section 3.3 of [RFC7231]) of a message that contains a no-transform cache-control directive (Section 5.2 of [RFC7234]).
 A proxy MAY transform the payload of a message that does not contain a no-transform cache-control directive.
 "A proxy SHOULD NOT modify header fields that provide information about the endpoints of the communication chain, the resource state, or the selected representation (other than the payload) unless the field's definition specifically allows such modification or the modification is deemed necessary for privacy or security."
 "In order to avoid confusing downstream recipients, a proxy or gateway MUST remove or replace any received connection options before forwarding the message."
-"A proxy or gateway MUST parse a received Connection header field before a message is forwarded and, for each connection-option in this field, remove any header field(s) from the message with the same name as the connection-option, and then remove the Connection header field itself (or replace it with the intermediary's own connection options for the forwarded message)."
 A sender MUST NOT send a connection option corresponding to a header field that is intended for all recipients of the payload.
 "A client that does not support persistent connections MUST send the ""close"" connection option in every request message."
 "A server that does not support persistent connections MUST send the ""close"" connection option in every response message that does not have a 1xx (Informational) status code."
-"A client MAY send additional requests on a persistent connection until it sends or receives a ""close"" connection option or receives an HTTP/1.0 response without a ""keep-alive"" connection option."
 "A server MUST read the entire request message body or close the connection after sending its response, since otherwise the remaining data on a persistent connection would be misinterpreted as the next request."
-A proxy server MUST NOT maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the Keep-Alive header field implemented by many HTTP/1.0 clients).
+A proxy server MUST NOT maintain a persistent connection with an HTTP/1.0 client (see Section 19.7.1 of [RFC2068] for information and discussion of the problems with the Keep-Alive header field implemented by many HTTP/1.0 clients).
+"When an inbound connection is closed prematurely, a client MAY open a new connection and automatically retransmit an aborted sequence of requests if all of those requests have idempotent methods (Section 4.2.2 of [RFC7231])."
 A proxy MUST NOT automatically retry non-idempotent requests.
 "A user agent MUST NOT automatically retry a request with a non- idempotent method unless it has some means to know that the request semantics are actually idempotent, regardless of the method, or some means to detect that the original request was never applied."
 A client SHOULD NOT automatically retry a failed automatic retry.
@@ -111,12 +122,10 @@ A client or server that wishes to time out SHOULD issue a graceful close on the 
 A client sending a message body SHOULD monitor the network connection for an error response while it is transmitting the request.
 "If the client sees a response that indicates the server does not wish to receive the message body and is closing the connection, the client SHOULD immediately cease transmitting the body and close its side of the connection."
 "A client that sends a ""close"" connection option MUST NOT send further requests on that connection (after the one containing ""close"") and MUST close the connection after reading the final response message corresponding to this request."
-"The server SHOULD send a ""close"" connection option in its final response on that connection."
 The server MUST NOT process any further requests received on that connection.
+"A server that sends a ""close"" connection option MUST initiate a close of the connection (see below) after it sends the response containing ""close""."
 "A client that receives a ""close"" connection option MUST cease sending requests on that connection and close the connection after reading the response message containing the ""close""; if additional pipelined requests had been sent on the connection, the client SHOULD NOT assume that they will be processed by the server."
 A server MAY ignore a received Upgrade header field if it wishes to continue using the current protocol on that connection.
 A server MUST NOT switch to a protocol that was not indicated by the client in the corresponding request's Upgrade header field.
-"A server that sends a 426 (Upgrade Required) response MUST send an Upgrade header field to indicate the acceptable protocols, in order of descending preference."
-A server MUST NOT switch protocols unless the received message semantics can be honored by the new protocol; an OPTIONS request can be honored by any protocol.
 "When Upgrade is sent, the sender MUST also send a Connection header field (Section 6.1) that contains an ""upgrade"" connection option, in order to prevent Upgrade from being accidentally forwarded by intermediaries that might not implement the listed protocols."
 A server MUST ignore an Upgrade header field that is received in an HTTP/1.0 request.
